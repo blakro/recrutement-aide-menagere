@@ -1,0 +1,1855 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Entretien aide ménagère — Niamey</title>
+<style>
+:root{
+  --fond:#ffffff; --texte:#111111; --gris:#5a5a5a; --trait:#9a9a9a;
+  --bleu:#0b4f9e; --bleu-clair:#e7f0fb;
+  --vert:#14632c; --vert-clair:#e3f3e7;
+  --orange:#8a4b00; --orange-clair:#fdeedd;
+  --rouge:#9b0f14; --rouge-clair:#fce9e9;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--fond); color:var(--texte);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  font-size:18px; line-height:1.45;
+  -webkit-text-size-adjust:100%;
+}
+.enveloppe{max-width:720px;margin:0 auto;padding:12px 14px 96px}
+h1{font-size:1.35rem;margin:.2em 0 .1em}
+h2{font-size:1.2rem;margin:1.1em 0 .4em}
+h3{font-size:1.02rem;margin:1em 0 .3em}
+p{margin:.5em 0}
+small{font-size:.82rem;color:var(--gris)}
+a{color:var(--bleu)}
+
+.bandeau{background:var(--bleu);color:#fff;padding:10px 14px}
+.bandeau .enveloppe{padding:0;max-width:720px}
+.bandeau b{font-size:1.05rem}
+.bandeau small{color:#dce8f7;display:block}
+
+.avertissement{
+  background:var(--orange-clair); border:2px solid var(--orange); color:#3a2000;
+  border-radius:10px; padding:10px 12px; margin:12px 0; font-size:.95rem;
+}
+.avertissement b{color:var(--orange)}
+
+.carte{border:2px solid var(--trait);border-radius:12px;padding:12px;margin:12px 0;background:#fff}
+.carte.actif{border-color:var(--bleu)}
+
+label{display:block;font-weight:700;margin:.8em 0 .25em}
+input[type=text],input[type=date],input[type=tel],select,textarea{
+  width:100%; font:inherit; padding:12px; border:2px solid var(--trait);
+  border-radius:10px; background:#fff; color:var(--texte);
+}
+textarea{min-height:76px;resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus{outline:3px solid var(--bleu);outline-offset:2px}
+
+button{font:inherit;cursor:pointer}
+.bouton{
+  display:block;width:100%;padding:16px;margin:10px 0;border-radius:12px;
+  border:2px solid var(--bleu); background:var(--bleu); color:#fff;
+  font-weight:700; font-size:1.05rem; text-align:center;
+}
+.bouton.secondaire{background:#fff;color:var(--bleu)}
+.bouton.danger{background:#fff;color:var(--rouge);border-color:var(--rouge)}
+.bouton:disabled{opacity:.45;cursor:not-allowed}
+.rangee{display:flex;gap:10px;flex-wrap:wrap}
+.rangee .bouton{flex:1 1 140px;width:auto}
+
+/* Options à cocher : gros boutons, fort contraste */
+.options{margin:.4em 0}
+.option{
+  display:flex;gap:12px;align-items:flex-start;
+  border:2px solid var(--trait); border-radius:12px;
+  padding:14px; margin:8px 0; background:#fff; cursor:pointer;
+}
+.option:has(input:checked){border-color:var(--bleu);background:var(--bleu-clair)}
+.option input{width:26px;height:26px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--bleu)}
+.option .libelle{font-weight:600}
+.option .meta{display:block;font-size:.8rem;color:var(--gris);font-weight:400}
+.option .detail{display:block;font-size:.88rem;color:var(--gris);font-weight:400;margin-top:2px}
+
+.progression{height:12px;background:#e3e3e3;border-radius:999px;overflow:hidden;margin:10px 0 4px}
+.progression i{display:block;height:100%;background:var(--bleu)}
+.etape{font-size:.85rem;color:var(--gris)}
+
+.traductions{margin:.5em 0}
+.traductions summary{cursor:pointer;font-weight:700;color:var(--bleu);padding:8px 0}
+.traduction{border-left:4px solid var(--trait);padding:2px 0 2px 10px;margin:8px 0}
+.traduction b{display:block;font-size:.85rem;color:var(--gris);text-transform:uppercase;letter-spacing:.03em}
+.traduction .aValider{display:block;font-size:.78rem;color:var(--orange);font-weight:700}
+
+.enonce{font-size:1.15rem;font-weight:700;margin:.4em 0}
+.consigne{background:#f4f4f4;border-radius:10px;padding:10px;font-size:.92rem;margin:.5em 0}
+
+.barre-bas{
+  position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:2px solid var(--trait);
+  padding:8px 14px calc(8px + env(safe-area-inset-bottom));
+}
+.barre-bas .enveloppe{padding:0;margin:0 auto}
+.barre-bas .rangee{gap:8px}
+.barre-bas .bouton{margin:0;padding:14px}
+
+/* Résultat */
+.score-global{text-align:center;border:3px solid var(--bleu);border-radius:14px;padding:14px;margin:12px 0}
+.score-global .chiffre{font-size:3rem;font-weight:800;line-height:1}
+.verdict{border-radius:12px;padding:12px;margin:10px 0;border:3px solid;font-weight:700}
+.verdict.essai{background:var(--vert-clair);border-color:var(--vert);color:var(--vert)}
+.verdict.approfondir{background:var(--orange-clair);border-color:var(--orange);color:var(--orange)}
+.verdict.non_recommande{background:var(--rouge-clair);border-color:var(--rouge);color:var(--rouge)}
+.sous-score{margin:10px 0}
+.sous-score .ligne{display:flex;justify-content:space-between;font-weight:700}
+.jauge{height:14px;background:#e3e3e3;border-radius:999px;overflow:hidden;margin-top:4px}
+.jauge i{display:block;height:100%;background:var(--bleu)}
+.drapeau{border-radius:10px;padding:10px 12px;margin:8px 0;border:2px solid}
+.drapeau.bloquant{background:var(--rouge-clair);border-color:var(--rouge)}
+.drapeau.leger{background:var(--orange-clair);border-color:var(--orange)}
+.drapeau .niveau{display:inline-block;font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.drapeau.bloquant .niveau{color:var(--rouge)}
+.drapeau.leger .niveau{color:var(--orange)}
+ul.verifs{padding-left:1.1em;margin:.4em 0}
+ul.verifs li{margin:.35em 0}
+
+table{border-collapse:collapse;width:100%;font-size:.9rem;margin:.5em 0}
+th,td{border:1px solid var(--trait);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:#f0f0f0}
+
+.liste-historique{list-style:none;padding:0;margin:0}
+.liste-historique li{border:2px solid var(--trait);border-radius:10px;padding:10px;margin:8px 0}
+.cache{display:none}
+.selftest-ok{color:var(--vert);font-weight:700}
+.selftest-ko{color:var(--rouge);font-weight:700}
+pre{white-space:pre-wrap;word-break:break-word;background:#f4f4f4;padding:10px;border-radius:8px;font-size:.82rem}
+
+@media (min-width:600px){ body{font-size:19px} }
+
+@media print{
+  .bandeau,.barre-bas,.sansImpression{display:none !important}
+  body{font-size:12pt}
+  .enveloppe{max-width:none;padding:0}
+  .carte,.verdict,.drapeau,.score-global{break-inside:avoid}
+  .avertissement{border-width:1px}
+  a[href]:after{content:""}
+}
+</style>
+</head>
+<body>
+<div class="bandeau sansImpression">
+  <div class="enveloppe">
+    <b>Entretien aide ménagère / aide cuisinière</b>
+    <small>Aide à la décision. Ce n'est pas un détecteur de mensonge.</small>
+  </div>
+</div>
+<main class="enveloppe" id="ecran"></main>
+<div class="barre-bas sansImpression" id="barre"></div>
+<script>
+// @@SCORING-START
+/* Barème de l'entretien — bloc pur (aucun accès au navigateur ni au stockage).
+   Contrat : docs/SPEC.md § 8. Contenu validé : docs/QUESTIONS.md.
+
+   Entrée lue par computeScore, et rien d'autre :
+   {
+     poste: 'menage' | 'cuisine' | 'polyvalent',
+     reponses: {
+       q1:  { familles: ['f_menage', 'f_lessive', ...] },
+       q2:  { famille: 'f_cuisine' | null, tache: 'texte libre' | null, option: 'precise' | ... },
+       q3:  { mains: 'complet' | ..., legumes: ..., viande: ..., restes: ..., eau: ... },
+       q4:  { variante: 'huile' | 'gaz' | 'melange', option: '...' },
+       q5:  { option: '...' },
+       q6:  { variante: 'argent' | 'objet' | 'nourriture', option: '...' },
+       q7:  { option: '...' },
+       q8:  { option: '...' },
+       q9:  { premiereExperience: false, dureeDernier: '...', motifDernier: '...',
+              dureeAvantDernier: '...', reference: '...' },
+       q10: { duree: '...', conges: '...', calendrier: '...', coherence: '...' }
+     },
+     pratique: { g1: 'reussi' | 'partiel' | 'non_fait' | 'non_observe', ... }   // facultatif
+   }
+
+   Les renseignements d'état civil saisis à l'écran ne sont jamais transmis ici : ni la situation
+   de famille, ni l'origine, ni la croyance, ni la langue de l'entretien n'entrent dans le score. */
+
+const CONFIG = {
+  version: '1.0.0',
+
+  postes: [
+    { id: 'menage', libelle: 'Aide ménagère' },
+    { id: 'cuisine', libelle: 'Aide cuisinière' },
+    { id: 'polyvalent', libelle: 'Polyvalente (les deux)' }
+  ],
+
+  sousScores: [
+    { id: 'competences', libelle: 'Compétences' },
+    { id: 'hygieneSecurite', libelle: 'Hygiène & sécurité' },
+    { id: 'integrite', libelle: 'Intégrité' },
+    { id: 'coherence', libelle: 'Cohérence' },
+    { id: 'stabilite', libelle: 'Stabilité' }
+  ],
+
+  // SPEC § 5 — chaque poste totalise 100.
+  ponderations: {
+    menage:     { competences: 25, hygieneSecurite: 20, integrite: 25, coherence: 15, stabilite: 15 },
+    cuisine:    { competences: 25, hygieneSecurite: 30, integrite: 20, coherence: 15, stabilite: 10 },
+    polyvalent: { competences: 25, hygieneSecurite: 25, integrite: 20, coherence: 15, stabilite: 15 }
+  },
+
+  seuils: { essai: 70, approfondir: 50 },
+
+  plafonnement: { bloquantsNonRecommande: 2, legersApprofondir: 3 },
+
+  // Valeur d'un sous-score dont aucune question n'a été posée.
+  neutre: 50,
+
+  // Toujours rappelés, quel que soit le résultat.
+  verifsSystematiques: [
+    "Faire un essai court et payé de quelques jours avant d\u2019embaucher.",
+    "Écrire ensemble les tâches, les horaires et les règles de la maison avant le premier jour."
+  ],
+
+  drapeaux: {
+    incoherence_q1_q2: {
+      bloquant: "Compétence annoncée mais impossible à expliquer. À faire montrer avant toute embauche."
+    },
+    geste_dangereux: {
+      bloquant: "Geste dangereux avec le feu, le gaz ou les produits. À corriger avant qu'elle touche à la cuisine."
+    },
+    electromenager_sans_autorisation: {
+      leger: "Utiliserait un appareil sans demander. Poser la règle par écrit dès le premier jour."
+    },
+    integrite: {
+      bloquant: "Réponse à risque sur l'honnêteté. Appeler les références avant de décider.",
+      leger: "Réponse en demi-teinte sur l'honnêteté. À reposer autrement et à vérifier auprès des références."
+    },
+    se_sert_sans_demander: {
+      leger: "Se servirait sans demander. Dire clairement ce qui est permis pour les repas."
+    },
+    surdeclaration: {
+      bloquant: "Dit connaître un produit qui n'existe pas. Vérifier une par une les compétences annoncées."
+    },
+    reponse_trop_parfaite: {
+      leger: "Réponses trop parfaites. Creuser avec des exemples concrets, sans conclure au mensonge."
+    },
+    refus_reference: {
+      bloquant: "Refuse une référence alors qu'elle a déjà travaillé. Demander pourquoi, ne pas embaucher sans vérification."
+    },
+    engagement_irrealiste: {
+      leger: "Promet de ne jamais prendre de congés. Risque de départ brusque : fixer un calendrier écrit."
+    },
+    incoherence_q9_q10: {
+      leger: "Emplois courts mais promesse de rester longtemps. À confronter aux références."
+    },
+    hygiene_risquee: {
+      leger: "Pratique d'hygiène à risque. Montrer la façon de faire de la maison dès le premier jour."
+    }
+  },
+
+  verdicts: {
+    essai: { libelle: 'Période d’essai recommandée', detail: 'Faire quand même un essai court et payé, et appeler les références.' },
+    approfondir: { libelle: 'À approfondir', detail: 'Vérifier les références et faire un essai court avant de décider.' },
+    non_recommande: { libelle: 'Non recommandé', detail: 'Les points ci-dessous demandent trop de vérifications pour embaucher en l’état.' }
+  },
+
+  // Épreuve pratique (SPEC § 4) — alimente le sous-score Compétences.
+  pratique: {
+    partEntretien: 0.7,
+    partPratique: 0.3,
+    notes: { reussi: 2, partiel: 1, non_fait: 0 },
+    libellesNotes: { reussi: 'Réussi', partiel: 'Partiel', non_fait: 'Non fait', non_observe: 'Non observé' },
+    gestes: [
+      { id: 'g1', libelle: 'Lavage des mains', coefficients: { menage: 1, cuisine: 2, polyvalent: 2 } },
+      { id: 'g2', libelle: 'Nettoyage d’un plan de travail ou d’un sanitaire', coefficients: { menage: 2, cuisine: 1, polyvalent: 2 } },
+      { id: 'g3', libelle: 'Épluchage et découpe de légumes', coefficients: { menage: 1, cuisine: 3, polyvalent: 2 } },
+      { id: 'g4', libelle: 'Vaisselle', coefficients: { menage: 2, cuisine: 2, polyvalent: 2 } },
+      { id: 'g5', libelle: 'Tri et pliage du linge', coefficients: { menage: 2, cuisine: 1, polyvalent: 1 } }
+    ]
+  },
+
+  preambule: {
+    fr: "Bonjour. Je vais te poser dix questions sur le travail. Je note tes réponses sur mon téléphone, pour m’aider à me souvenir et à comparer. Il n’y a pas de piège. Si tu ne sais pas, dis-le, ce n’est pas grave. Tu peux me poser des questions toi aussi.",
+    za: "Fofo. Ay ga hã ni se hãayan way goyo boŋ. Ay ga ni tuyaney hantum ay telefono ra, zama ay ma fongu k’i care nda care. Fafaga si no. Da ni si bay, ma ci, manti taali. Nin mo ga hin ka hã ay se.",
+    ha: "Sannu. Zan yi miki tambayoyi goma game da aiki. Ina rubuta amsoshinki a wayata, don in tuna kuma in kwatanta. Babu tarko. In ba ki sani ba, ki faɗa, ba laifi. Ke ma kina iya tambayata."
+  },
+
+  questions: [
+    {
+      id: 'q1', numero: 1, titre: 'Compétences déclarées', type: 'familles',
+      sousScores: ['competences'],
+      textes: {
+        fr: "Dis-moi ce que tu sais faire dans une maison. Je coche au fur et à mesure. Si tu ne sais pas faire une chose, dis-le, ce n’est pas grave.",
+        za: "Ma ci ay se haya kaŋ ni ga hin ka te fu ra. Ay ga hantum sanda ni ga ci. Da hay fo go kaŋ ni si hin, ma ci ay se, manti taali.",
+        ha: "Faɗa mini abin da kika iya yi a gida. Ina rubutawa yayin da kike faɗa. In akwai abin da ba ki iya ba, ki faɗa, ba laifi."
+      },
+      consigne: "Coche ce qu’elle dit savoir faire. Rien n’est obligatoire : Q2 vérifiera ce qui est réel.",
+      familles: [
+        {
+          id: 'f_menage', libelle: 'Ménage',
+          detail: 'balayer et laver les sols, nettoyer les sanitaires, faire les vitres et la poussière',
+          points: { competences: { menage: 4, cuisine: 2, polyvalent: 3 } },
+          aVerifier: "Faire refaire le ménage (sols, sanitaires, vitres) pendant l’essai.",
+          demonstrations: ['nettoyer des toilettes', 'laver un sol carrelé', 'faire les vitres sans laisser de traces']
+        },
+        {
+          id: 'f_lessive', libelle: 'Lessive et repassage',
+          detail: 'laver le linge à la main, étendre, trier, repasser',
+          points: { competences: { menage: 4, cuisine: 1, polyvalent: 3 } },
+          aVerifier: "Faire refaire la lessive et le repassage pendant l’essai.",
+          demonstrations: ['détacher et laver du linge à la main', 'repasser une chemise', 'trier et plier le linge']
+        },
+        {
+          id: 'f_vaisselle', libelle: 'Vaisselle',
+          detail: 'vaisselle, casseroles, rangement de la cuisine',
+          points: { competences: { menage: 4, cuisine: 3, polyvalent: 3 } },
+          aVerifier: "Faire refaire la vaisselle et le rangement de la cuisine pendant l’essai.",
+          demonstrations: ['faire la vaisselle grasse sans eau chaude', 'récurer une marmite brûlée']
+        },
+        {
+          id: 'f_cuisine', libelle: 'Aide cuisine',
+          detail: 'éplucher et découper, laver et trier le riz, plats locaux, sauces',
+          // null pour le poste « menage » : ne pas savoir cuisiner n'est pas une lacune pour ce poste,
+          // la famille sort alors du maximum applicable.
+          points: { competences: { menage: null, cuisine: 6, polyvalent: 3 } },
+          aVerifier: "Faire refaire un plat ou une sauce pendant l’essai.",
+          prioritaireQ2: ['cuisine', 'polyvalent'],
+          demonstrations: ['laver et trier le riz', 'éplucher et découper des légumes', 'préparer une sauce arachide', 'préparer une sauce feuille']
+        }
+      ]
+    },
+
+    {
+      id: 'q2', numero: 2, titre: 'Démonstration orale', type: 'critere',
+      sousScores: ['competences', 'coherence'],
+      textes: {
+        fr: "Explique-moi, étape par étape, comment tu fais [TACHE]. Prends ton temps. Commence par le début.",
+        za: "Ma ci ay se, ce fo-fo, mate kaŋ ni ga [TACHE] te d’a. Ma te suuru. Ma sintin za sintina gaa.",
+        ha: "Ki bayyana mini, mataki-mataki, yadda kike yin [TACHE]. Ki yi a hankali. Ki fara daga farko."
+      },
+      consigne: "La tâche est tirée au hasard parmi celles cochées en Q1. Ne pénalise pas le vocabulaire : une explication juste en zarma ou en haoussa vaut une explication en français.",
+      critere: {
+        id: 'option',
+        options: [
+          { id: 'precise', libelle: 'Explication précise et complète', detail: 'étapes dans l’ordre, produits, finition', points: { competences: 18, coherence: 10 } },
+          { id: 'approximative', libelle: 'Explication approximative', detail: 'grandes lignes, étapes manquantes', points: { competences: 9, coherence: 5 },
+            aVerifier: "Faire refaire la tâche demandée en Q2 devant toi le premier jour." },
+          { id: 'incapable', libelle: 'Incapable d’expliquer, ou décrit autre chose', points: { competences: 0, coherence: 0 },
+            drapeau: { id: 'incoherence_q1_q2', niveau: 'bloquant' },
+            aVerifier: "Faire refaire la tâche demandée en Q2 devant toi le premier jour." },
+          { id: 'non_posee', libelle: 'Question non posée (aucune tâche cochée en Q1)', nonPosee: true }
+        ]
+      }
+    },
+
+    {
+      id: 'q3', numero: 3, titre: 'Hygiène alimentaire', type: 'criteres',
+      sousScores: ['hygieneSecurite'],
+      textes: {
+        fr: "Maintenant, parlons de la nourriture et de l’eau.",
+        za: "Sohõ iri ma salaŋ ŋwaari nda hari boŋ.",
+        ha: "Yanzu mu yi magana a kan abinci da ruwa."
+      },
+      criteres: [
+        {
+          id: 'mains', titre: 'Lavage des mains',
+          textes: {
+            fr: "Avant de cuisiner, comment tu te laves les mains ?",
+            za: "Za ni mana ŋwaari te, mate kaŋ ni ga ni kambey nyun d’a?",
+            ha: "Kafin ki girka, yaya kike wanke hannunki?"
+          },
+          aVerifier: "Montrer la règle de la maison sur le lavage des mains le premier jour.",
+          options: [
+            { id: 'complet', libelle: "À l’eau et au savon, avant de cuisiner et après les toilettes", points: { hygieneSecurite: 3 } },
+            { id: 'partiel', libelle: "À l’eau et au savon, mais seulement quand les mains sont sales", points: { hygieneSecurite: 1 } },
+            { id: 'risque', libelle: "À l’eau seulement, ou « je m’essuie sur le pagne »", points: { hygieneSecurite: 0 }, drapeau: { id: 'hygiene_risquee', niveau: 'leger' } }
+          ]
+        },
+        {
+          id: 'legumes', titre: 'Légumes mangés crus',
+          textes: {
+            fr: "La salade et les tomates qu’on mange sans les cuire, comment tu les prépares ?",
+            za: "Salaati nda tomaati kaŋ i si hina, mate kaŋ ni g’i soola d’a?",
+            ha: "Salatin da tumatir da ake ci ba tare da dafa su ba, yaya kike shirya su?"
+          },
+          aVerifier: "Montrer la règle de la maison sur le lavage des légumes crus le premier jour.",
+          options: [
+            { id: 'complet', libelle: "Lavés à l’eau propre, trempés (eau javellisée pour aliments, vinaigre, permanganate) puis rincés", points: { hygieneSecurite: 3 } },
+            { id: 'partiel', libelle: "Rincés rapidement à l’eau", points: { hygieneSecurite: 1 } },
+            { id: 'risque', libelle: "Pas lavés, ou « je les essuie »", points: { hygieneSecurite: 0 }, drapeau: { id: 'hygiene_risquee', niveau: 'leger' } }
+          ]
+        },
+        {
+          id: 'viande', titre: 'Viande crue et aliments cuits',
+          textes: {
+            fr: "Tu viens de découper de la viande crue. Maintenant tu dois couper des légumes déjà cuits. Que fais-tu avec le couteau et la planche ?",
+            za: "Ni na ham kaŋ si hina dumbu. Sohõ ni ga ŋwaari kaŋ i hina dumbu. Ifo no ni ga te nda zaama nda dumbuyan-bundo?",
+            ha: "Kin yanka nama danye. Yanzu za ki yanka kayan da aka riga aka dafa. Me za ki yi da wuƙa da katakon yanka?"
+          },
+          aVerifier: "Montrer la règle de la maison sur la viande crue et les planches le premier jour.",
+          options: [
+            { id: 'complet', libelle: "Couteau et planche lavés à l’eau et au savon entre les deux, ou deux planches différentes", points: { hygieneSecurite: 3 } },
+            { id: 'partiel', libelle: "Rincés à l’eau seulement", points: { hygieneSecurite: 1 } },
+            { id: 'risque', libelle: "Rien, on continue avec le même couteau et la même planche", points: { hygieneSecurite: 0 }, drapeau: { id: 'hygiene_risquee', niveau: 'leger' } }
+          ]
+        },
+        {
+          id: 'restes', titre: 'Restes',
+          textes: {
+            fr: "Il reste de la sauce du midi. Que fais-tu avec, jusqu’au soir ?",
+            za: "Zaari ŋwaari cindo go no. Ifo no ni ga te d’a kala wiciri-kambu?",
+            ha: "Miyar rana ta rage. Me za ki yi da ita har zuwa dare?"
+          },
+          aVerifier: "Montrer la règle de la maison sur la conservation des restes le premier jour.",
+          options: [
+            { id: 'complet', libelle: "Couverte et mise au frigo, puis bien rebouillie avant de servir", points: { hygieneSecurite: 3 } },
+            { id: 'partiel', libelle: "Laissée couverte hors du frigo, puis réchauffée", points: { hygieneSecurite: 1 } },
+            { id: 'risque', libelle: "Laissée dehors à découvert, ou servie sans réchauffer", points: { hygieneSecurite: 0 }, drapeau: { id: 'hygiene_risquee', niveau: 'leger' } },
+            { id: 'sans_frigo', libelle: "La maison n’a pas de frigo (question retirée du calcul)", nonPosee: true }
+          ]
+        },
+        {
+          id: 'eau', titre: 'Eau de boisson',
+          textes: {
+            fr: "L’eau que la famille boit, d’où elle vient et comment tu la gardes ?",
+            za: "Hari kaŋ almayaaley ga haŋ, man gaa no a ga fun, mate kaŋ ni g’a gaay d’a?",
+            ha: "Ruwan sha na iyali, daga ina yake zuwa, kuma yaya kike ajiye shi?"
+          },
+          aVerifier: "Montrer la règle de la maison sur l’eau de boisson le premier jour.",
+          options: [
+            { id: 'complet', libelle: "Eau filtrée, bouillie ou en sachet, récipient couvert, louche ou gobelet propre", points: { hygieneSecurite: 3 } },
+            { id: 'partiel', libelle: "Récipient couvert, mais on y plonge le gobelet de tout le monde", points: { hygieneSecurite: 1 } },
+            { id: 'risque', libelle: "Récipient ouvert, on puise avec la main ou un gobelet sale", points: { hygieneSecurite: 0 }, drapeau: { id: 'hygiene_risquee', niveau: 'leger' } }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: 'q4', numero: 4, titre: 'Sécurité', type: 'variantes',
+      sousScores: ['hygieneSecurite'],
+      consigne: "Une variante est tirée au hasard. Lis-la telle quelle, sans souffler la réponse.",
+      variantes: [
+        {
+          id: 'huile', libelle: 'Huile en feu',
+          textes: {
+            fr: "Tu fais frire. L’huile prend feu dans la marmite. Que fais-tu tout de suite ?",
+            za: "Ni go soyyan gaa. Danji na ji di kuso ra. Ifo no ni ga te sohõ?",
+            ha: "Kina soya. Man ya kama wuta a cikin tukunya. Me za ki yi nan take?"
+          },
+          aVerifier: "Reprendre ce geste avec elle avant qu’elle touche au gaz ou aux produits.",
+          options: [
+            { id: 'couvrir', libelle: "Je coupe le feu ou le gaz, et je couvre la marmite (couvercle, grand plat, linge mouillé essoré)", points: { hygieneSecurite: 15 } },
+            { id: 'couper', libelle: "Je coupe le feu et j’attends sans rien poser dessus", points: { hygieneSecurite: 8 } },
+            { id: 'appeler', libelle: "Je sors et j’appelle quelqu’un", points: { hygieneSecurite: 5 } },
+            { id: 'ne_sait_pas', libelle: "Je ne sais pas", points: { hygieneSecurite: 2 } },
+            { id: 'eau', libelle: "Je verse de l’eau dessus", points: { hygieneSecurite: 0 }, drapeau: { id: 'geste_dangereux', niveau: 'bloquant' } },
+            { id: 'deplacer', libelle: "Je prends la marmite en feu pour la sortir", points: { hygieneSecurite: 0 }, drapeau: { id: 'geste_dangereux', niveau: 'bloquant' } }
+          ]
+        },
+        {
+          id: 'gaz', libelle: 'Odeur de gaz',
+          textes: {
+            fr: "Tu entres dans la cuisine le matin et ça sent le gaz. Que fais-tu ?",
+            za: "Ni furo ŋwaari-teeyan fuwo ra susubay, gaazu hã go no. Ifo no ni ga te?",
+            ha: "Kin shiga ɗakin girki da safe, kika ji ƙamshin gas. Me za ki yi?"
+          },
+          aVerifier: "Reprendre ce geste avec elle avant qu’elle touche au gaz ou aux produits.",
+          options: [
+            { id: 'fermer', libelle: "Je ne touche à rien d’électrique, je ferme la bouteille, j’ouvre portes et fenêtres, je préviens", points: { hygieneSecurite: 15 } },
+            { id: 'ouvrir', libelle: "J’ouvre la fenêtre et je fais sortir tout le monde", points: { hygieneSecurite: 8 } },
+            { id: 'sortir', libelle: "Je sors et j’appelle quelqu’un", points: { hygieneSecurite: 6 } },
+            { id: 'ne_sait_pas', libelle: "Je ne sais pas", points: { hygieneSecurite: 2 } },
+            { id: 'flamme', libelle: "J’allume une allumette ou un briquet pour voir d’où ça vient", points: { hygieneSecurite: 0 }, drapeau: { id: 'geste_dangereux', niveau: 'bloquant' } },
+            { id: 'electrique', libelle: "J’allume la lumière, le ventilateur ou la clim", points: { hygieneSecurite: 0 }, drapeau: { id: 'geste_dangereux', niveau: 'bloquant' } }
+          ]
+        },
+        {
+          id: 'melange', libelle: 'Mélange de produits',
+          textes: {
+            fr: "Tu veux que les toilettes soient vraiment propres. Est-ce que tu mélanges l’eau de Javel avec un autre produit ? Lequel ?",
+            za: "Ni ga ba kaŋ kawyan fuwo ma hanan gumo. Ni ga javel margu nda dooro fo? Woofo dumi no?",
+            ha: "Kina son bayan gida ya yi tsabta sosai. Shin kina haɗa ruwan Javel da wani magani? Wanne?"
+          },
+          aVerifier: "Reprendre ce geste avec elle avant qu’elle touche au gaz ou aux produits.",
+          options: [
+            { id: 'jamais', libelle: "Non, jamais deux produits ensemble : la Javel seule, bien rincée, fenêtre ouverte", points: { hygieneSecurite: 15 } },
+            { id: 'demander', libelle: "Je n’ai jamais essayé, je demanderais d’abord", points: { hygieneSecurite: 12 } },
+            { id: 'savon', libelle: "Je mélange la Javel avec du savon ou de la poudre à laver", points: { hygieneSecurite: 5 } },
+            { id: 'ne_sait_pas', libelle: "Je ne sais pas", points: { hygieneSecurite: 2 } },
+            { id: 'vinaigre', libelle: "Je mélange la Javel avec du vinaigre ou du citron", points: { hygieneSecurite: 0 }, drapeau: { id: 'geste_dangereux', niveau: 'bloquant' } },
+            { id: 'ammoniaque', libelle: "Je mélange la Javel avec de l’ammoniaque, un détartrant ou de l’acide", points: { hygieneSecurite: 0 }, drapeau: { id: 'geste_dangereux', niveau: 'bloquant' } }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: 'q5', numero: 5, titre: 'Règles de la maison', type: 'critere',
+      sousScores: ['integrite'],
+      textes: {
+        fr: "Il n’y a personne à la maison. Tu veux réchauffer ton repas. Le micro-ondes est là. Que fais-tu ?",
+        za: "Boro kulu si fuwo ra. Ni ga ba ni ŋwaaro ma dungu. Mikro-onda go noodin. Ifo no ni ga te?",
+        ha: "Babu kowa a gida. Kina son ki ɗuma abincinki. Mikrowef ɗin nan yana nan. Me za ki yi?"
+      },
+      consigne: "La bonne réponse est « demander », pas « savoir s’en servir ». Si elle demande la règle de la maison d’elle-même, c’est un bon signe.",
+      critere: {
+        id: 'option',
+        aVerifier: "Écrire la règle sur les appareils dans l’accord de départ.",
+        options: [
+          { id: 'demander', libelle: "Je demande d’abord à Madame ou Monsieur, ou j’attends leur retour", points: { integrite: 10 } },
+          { id: 'autrement', libelle: "Je réchauffe sur le feu, ou je mange froid : je ne touche pas aux appareils", points: { integrite: 10 } },
+          { id: 'message', libelle: "J’envoie un message et j’attends la réponse", points: { integrite: 8 } },
+          { id: 'autre_employe', libelle: "Je demande à une autre personne qui travaille dans la maison", points: { integrite: 5 } },
+          { id: 'utilise_dit', libelle: "Je l’utilise, je sais m’en servir, et je le dis après", points: { integrite: 2 }, drapeau: { id: 'electromenager_sans_autorisation', niveau: 'leger' } },
+          { id: 'utilise_silence', libelle: "Je l’utilise et je ne dis rien", points: { integrite: 0 }, drapeau: { id: 'electromenager_sans_autorisation', niveau: 'leger' } }
+        ]
+      }
+    },
+
+    {
+      id: 'q6', numero: 6, titre: 'Intégrité', type: 'variantes',
+      sousScores: ['integrite'],
+      consigne: "Une variante est tirée au hasard. Lis-la telle quelle, sans souffler la réponse.",
+      variantes: [
+        {
+          id: 'argent', libelle: 'Argent trouvé',
+          textes: {
+            fr: "Tu fais le ménage dans la chambre. Tu trouves un billet de 10 000 francs par terre, sous le lit. Que fais-tu ?",
+            za: "Ni go fu ra hanandiyan gaa. Ni na nooru takarda zambar way gar ganda, daari cire. Ifo no ni ga te?",
+            ha: "Kina share ɗaki. Kika tarar da takardar kuɗi dubu goma a ƙasa, ƙarƙashin gado. Me za ki yi?"
+          },
+          aVerifier: "Appeler les anciens employeurs et poser la question de la confiance.",
+          options: [
+            { id: 'pose', libelle: "Je le pose bien en vue et je le dis tout de suite", points: { integrite: 15 } },
+            { id: 'laisse', libelle: "Je le laisse où il est et je le signale", points: { integrite: 15 } },
+            { id: 'garde_rend', libelle: "Je le garde de côté et je le rends si on me le demande", points: { integrite: 3 }, drapeau: { id: 'integrite', niveau: 'leger' } },
+            { id: 'garde', libelle: "Je le garde, personne ne le réclamera", points: { integrite: 0 }, drapeau: { id: 'integrite', niveau: 'bloquant' } }
+          ]
+        },
+        {
+          id: 'objet', libelle: 'Objet cassé',
+          textes: {
+            fr: "En faisant le ménage, tu casses un verre. Personne ne t’a vue. Que fais-tu ?",
+            za: "Ni go hanandiyan gaa, ni na gaasu fo ceeri. Boro kulu mana di ni. Ifo no ni ga te?",
+            ha: "Kina share ɗaki, sai kika fasa gilashi. Ba wanda ya gan ki. Me za ki yi?"
+          },
+          aVerifier: "Appeler les anciens employeurs et poser la question de la confiance.",
+          options: [
+            { id: 'dit_tout_de_suite', libelle: "Je le dis tout de suite, même si j’ai peur", points: { integrite: 15 } },
+            { id: 'range_puis_dit', libelle: "Je ramasse les morceaux, je les mets de côté et je le dis dès que quelqu’un rentre", points: { integrite: 12 } },
+            { id: 'attend', libelle: "J’attends qu’on s’en aperçoive", points: { integrite: 4 }, drapeau: { id: 'integrite', niveau: 'leger' } },
+            { id: 'cache', libelle: "Je jette les morceaux et je ne dis rien", points: { integrite: 0 }, drapeau: { id: 'integrite', niveau: 'bloquant' } }
+          ]
+        },
+        {
+          id: 'nourriture', libelle: 'Nourriture de la maison',
+          textes: {
+            fr: "Il y a de la nourriture dans la maison. Personne ne t’a dit de te servir. Tu as faim. Que fais-tu ?",
+            za: "Ŋwaari go fuwo ra. Boro kulu mana ci ni se ni ma ŋwa. Haray go ni gaa. Ifo no ni ga te?",
+            ha: "Akwai abinci a gida. Ba wanda ya ce ki ci. Kina jin yunwa. Me za ki yi?"
+          },
+          aVerifier: "Dire dès le premier jour ce qui est permis pour les repas.",
+          options: [
+            { id: 'demande', libelle: "Je demande avant de me servir", points: { integrite: 15 } },
+            { id: 'attend', libelle: "J’attends qu’on me propose, ou je mange ce que j’ai apporté", points: { integrite: 15 } },
+            { id: 'un_peu', libelle: "Je prends un peu, je pense que ce n’est pas grave", points: { integrite: 5 }, drapeau: { id: 'se_sert_sans_demander', niveau: 'leger' } },
+            { id: 'sert_silence', libelle: "Je me sers et je ne dis rien", points: { integrite: 2 }, drapeau: { id: 'se_sert_sans_demander', niveau: 'leger' } }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: 'q7', numero: 7, titre: 'Produit fictif', type: 'critere',
+      sousScores: ['coherence'],
+      produitParDefaut: 'Sablonet',
+      usageParDefaut: 'récurer les marmites et les sanitaires',
+      textes: {
+        fr: "Est-ce que tu connais le produit [PRODUIT] ? Tu l’as déjà utilisé ?",
+        za: "Ni ga [PRODUIT] bay? Ni na goy nd’a ce fo?",
+        ha: "Kin san maganin [PRODUIT]? Kin taɓa amfani da shi?"
+      },
+      consigne: "Ce produit n’existe pas. Relance une seule fois (« tu es sûre ? c’est celui pour [USAGE] »), puis passe à la suite sans commenter, quelle que soit la réponse. Le nom se change dans Réglages.",
+      critere: {
+        id: 'option',
+        aVerifier: "Reprendre une par une les tâches cochées en Q1 et les faire montrer.",
+        options: [
+          { id: 'inconnu', libelle: "« Je ne connais pas ce produit »", points: { coherence: 10 } },
+          { id: 'apprend', libelle: "« Je ne connais pas, montre-moi et j’apprends »", points: { coherence: 10 } },
+          { id: 'hesite', libelle: "Hésite, puis reconnaît ne pas connaître après la relance", points: { coherence: 6 } },
+          { id: 'connait', libelle: "« Oui, je connais / je l’ai déjà utilisé », et elle en décrit un usage", points: { coherence: 0 }, drapeau: { id: 'surdeclaration', niveau: 'bloquant' } }
+        ]
+      }
+    },
+
+    {
+      id: 'q8', numero: 8, titre: 'Désirabilité sociale', type: 'critere',
+      sousScores: ['coherence'],
+      textes: {
+        fr: "Personne n’est parfait. Est-ce qu’il t’est déjà arrivé, même une seule fois, d’arriver en retard ou de te fâcher au travail ? Raconte-moi.",
+        za: "Boro kulu si no kaŋ si taali te. Ni na gay ce fo, wala ni bina tun goyo do? Ma dumandi ay se.",
+        ha: "Babu wanda ba ya kuskure. Shin ya taɓa faruwa, ko sau ɗaya, kika makara ko kika yi fushi a wurin aiki? Ki ba ni labari."
+      },
+      consigne: "Relance une fois (« même quand tu étais fatiguée ou malade ? ») avant de cocher « jamais ». Une réponse trop parfaite n’est pas une faute : c’est un signal à creuser.",
+      critere: {
+        id: 'option',
+        aVerifier: "Demander aux références un exemple de jour difficile.",
+        options: [
+          { id: 'exemple', libelle: "« Oui », avec un exemple concret et ce qu’elle a fait ensuite", points: { coherence: 5 } },
+          { id: 'oui_sans_exemple', libelle: "« Oui, ça arrive », sans exemple", points: { coherence: 3 } },
+          { id: 'rarement', libelle: "« Rarement, je ne me souviens pas »", points: { coherence: 2 } },
+          { id: 'jamais', libelle: "« Jamais, pas une seule fois », même après une relance", points: { coherence: 0 }, drapeau: { id: 'reponse_trop_parfaite', niveau: 'leger' } }
+        ]
+      }
+    },
+
+    {
+      id: 'q9', numero: 9, titre: 'Parcours', type: 'criteres',
+      sousScores: ['stabilite'],
+      textes: {
+        fr: "Parle-moi de tes deux derniers travails. Pour chacun : combien de temps tu es restée, pourquoi tu es partie, et le nom et le numéro d’une personne qui peut parler de ton travail.",
+        za: "Ma ci ay se ni goy hinka kaŋ ga ban gaa. Afo kulu se : han marge no ni te, ifo se no ni fun, nda boro fo maa nda telefon kaŋ ga hin ka salaŋ ni goyo boŋ.",
+        ha: "Ki gaya mini game da ayyukanki biyu na ƙarshe. Ga kowanne: tsawon lokacin da kika yi, dalilin barin aikin, da sunan mutum da lambar wayarsa wanda zai iya magana a kan aikinki."
+      },
+      consigne: "Première expérience : coche la case ci-dessous. Aucun drapeau n’est levé et le sous-score Stabilité est neutralisé.",
+      // ✱ QUESTIONS.md, décision 4 : première expérience -> part Q9 neutralisée à la valeur médiane.
+      neutralisation: { quand: 'premiereExperience', sousScore: 'stabilite', obtenus: 10, max: 20 },
+      criteres: [
+        {
+          id: 'dureeDernier', titre: 'Durée du dernier emploi',
+          options: [
+            { id: 'deux_ans', libelle: '2 ans ou plus', points: { stabilite: 6 } },
+            { id: 'un_deux', libelle: '1 à 2 ans', points: { stabilite: 5 } },
+            { id: 'six_douze', libelle: '6 à 12 mois', points: { stabilite: 3 } },
+            { id: 'trois_six', libelle: '3 à 6 mois', points: { stabilite: 2 } },
+            { id: 'moins_trois', libelle: 'Moins de 3 mois', points: { stabilite: 1 } }
+          ]
+        },
+        {
+          id: 'motifDernier', titre: 'Motif de départ du dernier emploi',
+          options: [
+            { id: 'clair', libelle: 'Motif clair et vérifiable (fin de contrat, employeurs partis, déménagement)', points: { stabilite: 3 } },
+            { id: 'personnel', libelle: 'Motif personnel mais cohérent et assumé', points: { stabilite: 2 } },
+            { id: 'flou', libelle: 'Motif flou, ou la version change pendant l’entretien', points: { stabilite: 1 } },
+            { id: 'sans_prevenir', libelle: 'Partie sans prévenir', points: { stabilite: 0 } }
+          ]
+        },
+        {
+          id: 'dureeAvantDernier', titre: "Durée de l’avant-dernier emploi",
+          options: [
+            { id: 'un_an', libelle: '1 an ou plus', points: { stabilite: 3 } },
+            { id: 'trois_douze', libelle: '3 à 12 mois', points: { stabilite: 2 } },
+            { id: 'moins_trois', libelle: 'Moins de 3 mois', points: { stabilite: 1 } },
+            { id: 'aucun', libelle: 'Un seul emploi avant celui-ci (question retirée du calcul)', nonPosee: true }
+          ]
+        },
+        {
+          id: 'reference', titre: 'Référence',
+          aVerifierToujours: "Appeler la référence du dernier emploi : durée réelle, ponctualité, honnêteté, raison du départ, « la reprendriez-vous ? ».",
+          options: [
+            { id: 'complete', libelle: 'Accepte, donne un nom et un numéro tout de suite', points: { stabilite: 8 } },
+            { id: 'nom_seul', libelle: "Donne un nom, dit qu’elle doit demander le numéro", points: { stabilite: 4 } },
+            { id: 'autre_temoin', libelle: 'Ancienne employeuse injoignable, mais un autre témoin est proposé', points: { stabilite: 4 } },
+            { id: 'refus', libelle: 'Refuse de donner une référence alors qu’elle a déjà travaillé', points: { stabilite: 0 }, drapeau: { id: 'refus_reference', niveau: 'bloquant' } }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: 'q10', numero: 10, titre: 'Projet et congés', type: 'criteres',
+      sousScores: ['stabilite', 'coherence'],
+      textes: {
+        fr: "Si on travaille ensemble, combien de temps tu penses rester ? Combien de fois dans l’année tu veux des jours de congé, et combien de jours à chaque fois ? Est-ce qu’on écrit ces dates ensemble maintenant ?",
+        za: "Da iri goy care banda, alwaati marge no ni ga miila ni ga goro? Sorro marge no jiiro ra no ni ga ba fulanzamay jirbiyaŋ, jirbi marge sorro fo kulu? Iri ma zaarey din hantum care banda sohõ?",
+        ha: "In muka yi aiki tare, tsawon wane lokaci kike tunanin za ki zauna? Sau nawa a shekara kike son hutu, kuma kwana nawa a kowane lokaci? Mu rubuta waɗannan kwanakin tare yanzu?"
+      },
+      consigne: "Question posée à toutes les candidates, dans les mêmes termes. Elle porte sur l’organisation du travail : ne demande pas si elle est mariée ni où vivent ses proches, cela n’entre pas dans le score.",
+      criteres: [
+        {
+          id: 'duree', titre: "Durée d’engagement souhaitée",
+          options: [
+            { id: 'un_an', libelle: '1 an ou plus', points: { stabilite: 4 } },
+            { id: 'six_douze', libelle: '6 à 12 mois', points: { stabilite: 3 } },
+            { id: 'court', libelle: "Moins de 6 mois, ou « je ne sais pas »", points: { stabilite: 1 } }
+          ]
+        },
+        {
+          id: 'conges', titre: 'Congés',
+          aVerifierToujours: "Écrire le calendrier des congés avant le premier jour.",
+          options: [
+            { id: 'realiste', libelle: 'Fréquence et durée annoncées clairement et réalistes', points: { stabilite: 3 } },
+            { id: 'vague', libelle: "Réponse vague (« quand il faudra »)", points: { stabilite: 1 } },
+            { id: 'jamais', libelle: "« Je n’aurai jamais besoin de congés » alors qu’elle annonce une longue durée", points: { stabilite: 0 }, drapeau: { id: 'engagement_irrealiste', niveau: 'leger' } }
+          ]
+        },
+        {
+          id: 'calendrier', titre: 'Accord sur un calendrier écrit',
+          options: [
+            { id: 'oui', libelle: "D’accord pour écrire les dates ensemble maintenant", points: { stabilite: 3 } },
+            { id: 'reparler', libelle: "D’accord sur le principe, veut en reparler", points: { stabilite: 1 } },
+            { id: 'refus', libelle: "Refuse d’en parler", points: { stabilite: 0 } }
+          ]
+        },
+        {
+          id: 'coherence', titre: 'Cohérence avec le parcours (Q9)',
+          options: [
+            { id: 'coherent', libelle: 'Le projet annoncé est cohérent avec les emplois précédents', points: { coherence: 5 } },
+            { id: 'incoherent', libelle: 'Emplois précédents tous courts (moins de 3 mois) mais promesse de plusieurs années', points: { coherence: 0 }, drapeau: { id: 'incoherence_q9_q10', niveau: 'leger' } },
+            { id: 'premiere_experience', libelle: 'Première expérience : rien à comparer (question retirée du calcul)', nonPosee: true }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+/* Calcul du score. Fonction pure : mêmes entrées, même sortie.
+   Sortie : { total, sousScores, drapeaux, verdict, pointsAVerifier } — voir docs/SPEC.md § 8. */
+function computeScore(answers, config) {
+  const entree = answers || {};
+  const ponderations = config.ponderations || {};
+  const poste = ponderations[entree.poste] ? entree.poste : 'polyvalent';
+  const reponses = entree.reponses || {};
+  const gestesSaisis = entree.pratique || {};
+
+  const acc = {};
+  config.sousScores.forEach(function (s) { acc[s.id] = { obtenus: 0, max: 0 }; });
+  const drapeaux = [];
+  const pointsAVerifier = [];
+
+  function ajouterVerif(texte) {
+    if (texte && pointsAVerifier.indexOf(texte) === -1) pointsAVerifier.push(texte);
+  }
+
+  // Un barème peut valoir un nombre, ou un nombre par poste. null = hors périmètre du poste.
+  function resoudre(valeur) {
+    if (typeof valeur === 'number') return valeur;
+    if (valeur && typeof valeur === 'object') {
+      const v = valeur[poste];
+      return typeof v === 'number' ? v : null;
+    }
+    return null;
+  }
+
+  function ajouterDrapeau(drapeau, contexte) {
+    if (!drapeau) return;
+    const dico = (config.drapeaux || {})[drapeau.id] || {};
+    const base = dico[drapeau.niveau] || drapeau.id;
+    drapeaux.push({
+      id: drapeau.id,
+      niveau: drapeau.niveau,
+      message: contexte ? base + ' (' + contexte + ')' : base
+    });
+  }
+
+  /* Un critère = une série d'options concurrentes dont une seule est retenue.
+     Le maximum applicable est le meilleur score possible du critère ; une option marquée
+     « nonPosee » retire le critère du maximum, sans pénaliser la candidate. */
+  function appliquerCritere(critere, optionId, contexte) {
+    if (!critere) return null;
+    const options = critere.options || [];
+    let choisie = null;
+    options.forEach(function (o) { if (o.id === optionId) choisie = o; });
+    if (!choisie || choisie.nonPosee) return null;
+
+    const cles = {};
+    options.forEach(function (o) {
+      if (o.nonPosee || !o.points) return;
+      Object.keys(o.points).forEach(function (k) { cles[k] = true; });
+    });
+
+    let auMaximum = true;
+    Object.keys(cles).forEach(function (k) {
+      if (!acc[k]) return;
+      let max = 0;
+      options.forEach(function (o) {
+        if (o.nonPosee) return;
+        const v = resoudre(o.points ? o.points[k] : null);
+        if (v !== null && v > max) max = v;
+      });
+      const obtenu = resoudre(choisie.points ? choisie.points[k] : null) || 0;
+      acc[k].max += max;
+      acc[k].obtenus += obtenu;
+      if (obtenu < max) auMaximum = false;
+    });
+
+    ajouterDrapeau(choisie.drapeau, contexte);
+    ajouterVerif(choisie.aVerifier);
+    ajouterVerif(critere.aVerifierToujours);
+    if (!auMaximum || choisie.drapeau) ajouterVerif(critere.aVerifier);
+    return choisie;
+  }
+
+  (config.questions || []).forEach(function (question) {
+    const rep = reponses[question.id] || {};
+
+    if (question.type === 'familles') {
+      const cochees = Array.isArray(rep.familles) ? rep.familles : [];
+      const testee = (reponses.q2 || {}).famille;
+      (question.familles || []).forEach(function (famille) {
+        const points = famille.points || {};
+        Object.keys(points).forEach(function (k) {
+          if (!acc[k]) return;
+          const v = resoudre(points[k]);
+          if (v === null) return;
+          acc[k].max += v;
+          if (cochees.indexOf(famille.id) !== -1) acc[k].obtenus += v;
+        });
+        if (cochees.indexOf(famille.id) !== -1 && famille.id !== testee) ajouterVerif(famille.aVerifier);
+      });
+      return;
+    }
+
+    if (question.type === 'critere') {
+      appliquerCritere(question.critere, rep.option, null);
+      return;
+    }
+
+    if (question.type === 'criteres') {
+      const neutralisation = question.neutralisation;
+      if (neutralisation && rep[neutralisation.quand] === true) {
+        const cible = acc[neutralisation.sousScore];
+        if (cible) { cible.obtenus += neutralisation.obtenus; cible.max += neutralisation.max; }
+        return;
+      }
+      (question.criteres || []).forEach(function (critere) {
+        appliquerCritere(critere, rep[critere.id], critere.titre);
+      });
+      return;
+    }
+
+    if (question.type === 'variantes') {
+      let variante = null;
+      (question.variantes || []).forEach(function (v) { if (v.id === rep.variante) variante = v; });
+      appliquerCritere(variante, rep.option, variante ? variante.libelle : null);
+    }
+  });
+
+  // Épreuve pratique (facultative) : « non observé » et non renseigné sortent du calcul.
+  const reglagePratique = config.pratique || {};
+  const notes = reglagePratique.notes || {};
+  let pratiqueObtenus = 0;
+  let pratiqueMax = 0;
+  (reglagePratique.gestes || []).forEach(function (geste) {
+    const note = gestesSaisis[geste.id];
+    const valeur = notes[note];
+    if (typeof valeur !== 'number') return;
+    const coef = (geste.coefficients || {})[poste] || 0;
+    if (!coef) return;
+    pratiqueObtenus += coef * valeur;
+    pratiqueMax += coef * (notes.reussi || 0);
+    if (note !== 'reussi') ajouterVerif('Reprendre « ' + geste.libelle + ' » le premier jour.');
+  });
+
+  const sousScores = {};
+  config.sousScores.forEach(function (s) {
+    const a = acc[s.id];
+    const valeur = a.max > 0 ? Math.round((a.obtenus / a.max) * 100) : config.neutre;
+    sousScores[s.id] = Math.max(0, Math.min(100, valeur));
+  });
+
+  if (pratiqueMax > 0 && typeof sousScores.competences === 'number') {
+    const notePratique = Math.round((pratiqueObtenus / pratiqueMax) * 100);
+    const melange = sousScores.competences * (reglagePratique.partEntretien || 0) +
+                    notePratique * (reglagePratique.partPratique || 0);
+    sousScores.competences = Math.max(0, Math.min(100, Math.round(melange)));
+  }
+
+  const pond = ponderations[poste];
+  let total = 0;
+  config.sousScores.forEach(function (s) { total += sousScores[s.id] * (pond[s.id] || 0); });
+  total = Math.max(0, Math.min(100, Math.round(total / 100)));
+
+  const seuils = config.seuils || {};
+  let verdict = 'non_recommande';
+  if (total >= seuils.essai) verdict = 'essai';
+  else if (total >= seuils.approfondir) verdict = 'approfondir';
+
+  let bloquants = 0;
+  let legers = 0;
+  drapeaux.forEach(function (d) {
+    if (d.niveau === 'bloquant') bloquants++;
+    else if (d.niveau === 'leger') legers++;
+  });
+
+  const plafonnement = config.plafonnement || {};
+  if (bloquants >= (plafonnement.bloquantsNonRecommande || 2)) verdict = 'non_recommande';
+  else if ((bloquants >= 1 || legers >= (plafonnement.legersApprofondir || 3)) && verdict === 'essai') verdict = 'approfondir';
+
+  drapeaux.sort(function (a, b) {
+    if (a.niveau === b.niveau) return 0;
+    return a.niveau === 'bloquant' ? -1 : 1;
+  });
+
+  (config.verifsSystematiques || []).forEach(ajouterVerif);
+
+  return { total: total, sousScores: sousScores, drapeaux: drapeaux, verdict: verdict, pointsAVerifier: pointsAVerifier };
+}
+// @@SCORING-END
+
+// @@TESTS-START
+/* Cas de test du barème — SPEC § 8. Exécutés par tests/run-selftest.mjs et par index.html?selftest=1.
+   Les 8 premiers cas sont ceux exigés par la SPEC ; les suivants couvrent les règles décidées
+   dans docs/QUESTIONS.md. */
+function reponsesSolides() {
+  return {
+    q1: { familles: ['f_menage', 'f_lessive', 'f_vaisselle'] },
+    q2: { famille: 'f_menage', tache: 'nettoyer des toilettes', option: 'precise' },
+    q3: { mains: 'complet', legumes: 'complet', viande: 'complet', restes: 'complet', eau: 'complet' },
+    q4: { variante: 'huile', option: 'couvrir' },
+    q5: { option: 'demander' },
+    q6: { variante: 'argent', option: 'pose' },
+    q7: { option: 'inconnu' },
+    q8: { option: 'exemple' },
+    q9: { premiereExperience: false, dureeDernier: 'deux_ans', motifDernier: 'clair', dureeAvantDernier: 'un_an', reference: 'complete' },
+    q10: { duree: 'un_an', conges: 'realiste', calendrier: 'oui', coherence: 'coherent' }
+  };
+}
+
+function candidate(poste, modifications, pratique) {
+  const reponses = reponsesSolides();
+  const mods = modifications || {};
+  Object.keys(mods).forEach(function (q) {
+    reponses[q] = Object.assign({}, reponses[q], mods[q]);
+  });
+  const answers = { poste: poste, reponses: reponses };
+  if (pratique) answers.pratique = pratique;
+  return answers;
+}
+
+const TEST_CASES = [
+  {
+    name: '1. Candidate solide, sans drapeau',
+    answers: candidate('menage', {}),
+    expect: { verdict: 'essai', minTotal: 95, drapeauxExclus: ['geste_dangereux', 'surdeclaration', 'integrite', 'refus_reference'] }
+  },
+  {
+    name: '2. Même candidate, mais jette de l’eau sur l’huile en feu',
+    answers: candidate('menage', { q4: { option: 'eau' } }),
+    expect: { verdict: 'approfondir', drapeauxInclus: ['geste_dangereux'] }
+  },
+  {
+    name: '3. Dit connaître le produit fictif et garde l’argent trouvé',
+    answers: candidate('menage', { q7: { option: 'connait' }, q6: { option: 'garde' } }),
+    expect: { verdict: 'non_recommande', drapeauxInclus: ['surdeclaration', 'integrite'] }
+  },
+  {
+    name: '4. Répond « jamais » en Q8, sinon solide',
+    answers: candidate('menage', { q8: { option: 'jamais' } }),
+    expect: { verdict: 'essai', drapeauxInclus: ['reponse_trop_parfaite'], drapeauxExclus: ['refus_reference'] }
+  },
+  {
+    name: '5. Première expérience, sans référence',
+    answers: candidate('menage', {
+      q9: { premiereExperience: true, dureeDernier: null, motifDernier: null, dureeAvantDernier: null, reference: null },
+      q10: { coherence: 'premiere_experience' }
+    }),
+    expect: { verdict: 'essai', drapeauxExclus: ['refus_reference', 'incoherence_q9_q10'] }
+  },
+  {
+    name: '6. Déclare savoir cuisiner mais incapable d’expliquer',
+    answers: candidate('cuisine', {
+      q1: { familles: ['f_menage', 'f_lessive', 'f_vaisselle', 'f_cuisine'] },
+      q2: { famille: 'f_cuisine', tache: 'préparer une sauce arachide', option: 'incapable' }
+    }),
+    expect: { verdict: 'approfondir', drapeauxInclus: ['incoherence_q1_q2'] }
+  },
+  {
+    name: '7a. Faible en hygiène alimentaire, poste menage',
+    answers: candidate('menage', {
+      q1: { familles: ['f_menage', 'f_lessive', 'f_vaisselle', 'f_cuisine'] },
+      q3: { mains: 'partiel', legumes: 'partiel', viande: 'partiel', restes: 'partiel', eau: 'partiel' },
+      q4: { option: 'couper' }
+    }),
+    expect: { verdict: 'essai', minTotal: 86, maxTotal: 92, drapeauxExclus: ['hygiene_risquee'] }
+  },
+  {
+    name: '7b. Même candidate, poste cuisine : le total baisse (pondération)',
+    answers: candidate('cuisine', {
+      q1: { familles: ['f_menage', 'f_lessive', 'f_vaisselle', 'f_cuisine'] },
+      q3: { mains: 'partiel', legumes: 'partiel', viande: 'partiel', restes: 'partiel', eau: 'partiel' },
+      q4: { option: 'couper' }
+    }),
+    expect: { verdict: 'essai', minTotal: 79, maxTotal: 85, drapeauxExclus: ['hygiene_risquee'] }
+  },
+  {
+    name: '8. Trois gestes d’hygiène à risque : trois drapeaux légers plafonnent le verdict',
+    answers: candidate('menage', { q3: { mains: 'risque', legumes: 'risque', viande: 'risque' } }),
+    expect: { verdict: 'approfondir', drapeauxInclus: ['hygiene_risquee'] }
+  },
+  {
+    name: '9. Refuse de donner une référence alors qu’elle a travaillé',
+    answers: candidate('menage', { q9: { reference: 'refus' } }),
+    expect: { verdict: 'approfondir', drapeauxInclus: ['refus_reference'] }
+  },
+  {
+    name: '10. Garde l’argent de côté : drapeau léger d’intégrité',
+    answers: candidate('menage', { q6: { option: 'garde_rend' } }),
+    expect: { verdict: 'essai', drapeauxInclus: ['integrite'] }
+  },
+  {
+    name: '11. Micro-ondes sans autorisation, se sert sans demander, réponse trop parfaite',
+    answers: candidate('menage', {
+      q5: { option: 'utilise_dit' },
+      q6: { variante: 'nourriture', option: 'un_peu' },
+      q8: { option: 'jamais' }
+    }),
+    expect: {
+      verdict: 'approfondir',
+      drapeauxInclus: ['electromenager_sans_autorisation', 'se_sert_sans_demander', 'reponse_trop_parfaite']
+    }
+  },
+  {
+    name: '12. Emplois courts et promesse de plusieurs années, jamais de congés',
+    answers: candidate('menage', {
+      q9: { dureeDernier: 'moins_trois', motifDernier: 'flou', dureeAvantDernier: 'moins_trois', reference: 'nom_seul' },
+      q10: { conges: 'jamais', coherence: 'incoherent' }
+    }),
+    expect: { verdict: 'essai', drapeauxInclus: ['engagement_irrealiste', 'incoherence_q9_q10'] }
+  },
+  {
+    name: '13. Épreuve pratique ratée : les compétences baissent',
+    answers: candidate('menage', {}, { g1: 'non_fait', g2: 'non_fait', g3: 'non_observe', g4: 'partiel', g5: 'non_fait' }),
+    expect: { verdict: 'essai', maxTotal: 94 }
+  },
+  {
+    name: '14. Entretien très faible sur tous les plans, sans aucun drapeau bloquant',
+    answers: candidate('cuisine', {
+      q1: { familles: ['f_vaisselle'] },
+      q2: { famille: 'f_vaisselle', option: 'approximative' },
+      q3: { mains: 'partiel', legumes: 'partiel', viande: 'partiel', restes: 'partiel', eau: 'partiel' },
+      q4: { option: 'ne_sait_pas' },
+      q5: { option: 'autre_employe' },
+      q6: { variante: 'objet', option: 'attend' },
+      q7: { option: 'hesite' },
+      q8: { option: 'rarement' },
+      q9: { dureeDernier: 'moins_trois', motifDernier: 'sans_prevenir', dureeAvantDernier: 'moins_trois', reference: 'nom_seul' },
+      q10: { duree: 'court', conges: 'vague', calendrier: 'refus', coherence: 'incoherent' }
+    }),
+    expect: { verdict: 'non_recommande', maxTotal: 49 }
+  }
+];
+// @@TESTS-END
+
+/* ------------------------------------------------------------------
+   Interface. Aucun accès au barème en dur : tout vient de CONFIG.
+   ------------------------------------------------------------------ */
+
+const CLE_HISTORIQUE = 'rem.historique.v1';
+const CLE_REGLAGES = 'rem.reglages.v1';
+
+const $ecran = document.getElementById('ecran');
+const $barre = document.getElementById('barre');
+
+function esc(valeur) {
+  return String(valeur === null || valeur === undefined ? '' : valeur)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+/* Stockage local : toujours sous try/catch, l'app reste utilisable sans lui. */
+function lireStockage(cle, defaut) {
+  try {
+    const brut = localStorage.getItem(cle);
+    return brut ? JSON.parse(brut) : defaut;
+  } catch (e) {
+    return defaut;
+  }
+}
+function ecrireStockage(cle, valeur) {
+  try {
+    localStorage.setItem(cle, JSON.stringify(valeur));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+function stockageDisponible() {
+  try {
+    localStorage.setItem('rem.test', '1');
+    localStorage.removeItem('rem.test');
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+const questionQ7 = CONFIG.questions.filter(function (q) { return q.id === 'q7'; })[0];
+const reglagesParDefaut = {
+  produit: questionQ7 ? questionQ7.produitParDefaut : 'Sablonet',
+  usage: questionQ7 ? questionQ7.usageParDefaut : ''
+};
+let reglages = Object.assign({}, reglagesParDefaut, lireStockage(CLE_REGLAGES, {}));
+
+const LANGUES = [
+  { id: 'fr', libelle: 'Français' },
+  { id: 'za', libelle: 'Zarma' },
+  { id: 'ha', libelle: 'Haoussa' }
+];
+
+function aujourdhui() {
+  const d = new Date();
+  const mois = String(d.getMonth() + 1).padStart(2, '0');
+  const jour = String(d.getDate()).padStart(2, '0');
+  return d.getFullYear() + '-' + mois + '-' + jour;
+}
+
+let etat = etatInitial();
+
+function etatInitial() {
+  return {
+    ecran: 'accueil',
+    identite: { prenom: '', date: aujourdhui(), langue: 'fr', poste: 'menage', note: '' },
+    tirage: { q2Famille: null, q2Tache: null, q4: null, q6: null },
+    reponses: {
+      q1: { familles: [] },
+      q2: { famille: null, tache: null, option: null },
+      q3: {}, q4: {}, q5: {}, q6: {}, q7: {}, q8: {},
+      q9: { premiereExperience: false },
+      q10: {}
+    },
+    pratique: {},
+    pratiqueFaite: false,
+    index: 0,
+    resultat: null,
+    enregistre: false
+  };
+}
+
+function hasard(liste) {
+  return liste[Math.floor(Math.random() * liste.length)];
+}
+
+function tirerVariantes() {
+  CONFIG.questions.forEach(function (q) {
+    if (q.type !== 'variantes') return;
+    const variante = hasard(q.variantes);
+    etat.tirage[q.id] = variante.id;
+    etat.reponses[q.id] = { variante: variante.id, option: null };
+  });
+}
+
+function tirerTacheQ2() {
+  const cochees = etat.reponses.q1.familles || [];
+  const q1 = CONFIG.questions.filter(function (q) { return q.id === 'q1'; })[0];
+  const familles = q1.familles.filter(function (f) { return cochees.indexOf(f.id) !== -1; });
+  if (!familles.length) {
+    etat.tirage.q2Famille = null;
+    etat.tirage.q2Tache = null;
+    etat.reponses.q2 = { famille: null, tache: null, option: 'non_posee' };
+    return;
+  }
+  const prioritaires = familles.filter(function (f) {
+    return (f.prioritaireQ2 || []).indexOf(etat.identite.poste) !== -1;
+  });
+  const famille = hasard(prioritaires.length ? prioritaires : familles);
+  const tache = hasard(famille.demonstrations);
+  etat.tirage.q2Famille = famille.id;
+  etat.tirage.q2Tache = tache;
+  const dejaRepondu = etat.reponses.q2 && etat.reponses.q2.option && etat.reponses.q2.option !== 'non_posee'
+    ? etat.reponses.q2.option : null;
+  etat.reponses.q2 = { famille: famille.id, tache: tache, option: dejaRepondu };
+}
+
+function texteQuestion(textes, remplacements) {
+  const copie = {};
+  LANGUES.forEach(function (l) {
+    let t = textes[l.id] || '';
+    Object.keys(remplacements || {}).forEach(function (cle) {
+      t = t.split(cle).join(remplacements[cle]);
+    });
+    copie[l.id] = t;
+  });
+  return copie;
+}
+
+function blocTextes(textes, remplacements) {
+  const t = texteQuestion(textes, remplacements);
+  const langue = etat.identite.langue;
+  const principale = LANGUES.filter(function (l) { return l.id === langue; })[0] || LANGUES[0];
+  let html = '<p class="enonce">' + esc(t[principale.id]) + '</p>';
+  if (principale.id !== 'fr') {
+    html += '<p class="avertissement"><b>Traduction à valider par un locuteur natif.</b> ' +
+            'Vérifie le sens avant de lire cette phrase à voix haute.</p>';
+  }
+  const autres = LANGUES.filter(function (l) { return l.id !== principale.id; });
+  html += '<details class="traductions sansImpression"><summary>Voir les autres langues</summary>';
+  autres.forEach(function (l) {
+    html += '<div class="traduction"><b>' + esc(l.libelle) + '</b>' + esc(t[l.id]);
+    if (l.id !== 'fr') html += '<span class="aValider">Traduction à valider par un locuteur natif.</span>';
+    html += '</div>';
+  });
+  html += '</details>';
+  return html;
+}
+
+function optionHtml(nom, option, valeurCochee, type) {
+  const coche = valeurCochee === option.id ? ' checked' : '';
+  return '<label class="option">' +
+    '<input type="' + type + '" name="' + esc(nom) + '" value="' + esc(option.id) + '"' + coche + '>' +
+    '<span class="libelle">' + esc(option.libelle) +
+    (option.detail ? '<span class="detail">' + esc(option.detail) + '</span>' : '') +
+    '</span></label>';
+}
+
+function rendre() {
+  if (etat.ecran === 'accueil') rendreAccueil();
+  else if (etat.ecran === 'entretien') rendreEntretien();
+  else if (etat.ecran === 'pratique') rendrePratique();
+  else if (etat.ecran === 'resultat') rendreResultat();
+  else if (etat.ecran === 'reglages') rendreReglages();
+  else if (etat.ecran === 'historique') rendreHistorique();
+  try { scrollTo(0, 0); } catch (e) { /* sans effet hors navigateur */ }
+}
+
+function aller(ecran) { etat.ecran = ecran; rendre(); }
+
+/* ---------- Écran d'accueil : renseignements d'entretien ---------- */
+
+function rendreAccueil() {
+  const id = etat.identite;
+  let html = '<h1>Nouvel entretien</h1>';
+
+  html += '<div class="avertissement"><b>Cet outil est une aide à la décision. Ce n’est pas un détecteur de mensonge.</b> ' +
+    'Il repère des incohérences et des points à vérifier. Rien ne remplace un appel à l’ancien employeur et un essai court et payé.</div>';
+
+  html += '<div class="carte">';
+  html += '<label for="prenom">Prénom de la candidate</label>' +
+    '<input type="text" id="prenom" value="' + esc(id.prenom) + '" placeholder="Prénom ou surnom" autocomplete="off">';
+  html += '<label for="date">Date de l’entretien</label><input type="date" id="date" value="' + esc(id.date) + '">';
+
+  html += '<label for="poste">Poste visé</label><select id="poste">';
+  CONFIG.postes.forEach(function (p) {
+    html += '<option value="' + esc(p.id) + '"' + (p.id === id.poste ? ' selected' : '') + '>' + esc(p.libelle) + '</option>';
+  });
+  html += '</select>';
+
+  html += '<label for="langue">Langue de l’entretien</label><select id="langue">';
+  LANGUES.forEach(function (l) {
+    html += '<option value="' + esc(l.id) + '"' + (l.id === id.langue ? ' selected' : '') + '>' + esc(l.libelle) + '</option>';
+  });
+  html += '</select>';
+  html += '<small>La langue sert seulement à choisir le texte lu à voix haute. Elle n’entre pas dans le score.</small>';
+
+  html += '<label for="note">Note libre (facultatif)</label>' +
+    '<textarea id="note" placeholder="Ce que tu veux retenir. Ces notes ne sont pas comptées dans le score.">' + esc(id.note) + '</textarea>';
+  html += '<small>Aucun numéro de pièce d’identité, aucune photo. Ce qui est écrit ici n’entre jamais dans le calcul.</small>';
+  html += '</div>';
+
+  html += '<div class="carte"><h2>À lire à la candidate avant de commencer</h2>';
+  html += blocTextes(CONFIG.preambule, {});
+  html += '</div>';
+
+  html += '<div class="rangee sansImpression">' +
+    '<button class="bouton secondaire" data-aller="historique">Historique</button>' +
+    '<button class="bouton secondaire" data-aller="reglages">Réglages</button>' +
+    '</div>';
+
+  $ecran.innerHTML = html;
+  $barre.innerHTML = '<div class="enveloppe"><button class="bouton" id="commencer">Commencer l’entretien</button></div>';
+
+  function majTexte(cle, id2) {
+    const champ = document.getElementById(id2);
+    if (champ) champ.addEventListener('input', function () { etat.identite[cle] = champ.value; });
+  }
+  majTexte('prenom', 'prenom');
+  majTexte('note', 'note');
+  const champDate = document.getElementById('date');
+  if (champDate) champDate.addEventListener('change', function () { etat.identite.date = champDate.value; });
+  const champPoste = document.getElementById('poste');
+  if (champPoste) champPoste.addEventListener('change', function () { etat.identite.poste = champPoste.value; });
+  const champLangue = document.getElementById('langue');
+  if (champLangue) champLangue.addEventListener('change', function () { etat.identite.langue = champLangue.value; rendre(); });
+
+  $ecran.querySelectorAll('[data-aller]').forEach(function (b) {
+    b.addEventListener('click', function () { aller(b.getAttribute('data-aller')); });
+  });
+  document.getElementById('commencer').addEventListener('click', function () {
+    tirerVariantes();
+    etat.index = 0;
+    aller('entretien');
+  });
+}
+
+/* ---------- Entretien pas à pas ---------- */
+
+function rendreEntretien() {
+  const question = CONFIG.questions[etat.index];
+  const total = CONFIG.questions.length;
+  const rep = etat.reponses[question.id] || {};
+  let html = '';
+
+  html += '<div class="progression"><i style="width:' + Math.round(((etat.index + 1) / total) * 100) + '%"></i></div>';
+  html += '<p class="etape">Question ' + (etat.index + 1) + ' sur ' + total + ' — ' + esc(question.titre) + '</p>';
+
+  if (question.type === 'familles') {
+    html += blocTextes(question.textes, {});
+    if (question.consigne) html += '<p class="consigne">' + esc(question.consigne) + '</p>';
+    html += '<div class="options">';
+    question.familles.forEach(function (f) {
+      const horsPoste = f.points.competences[etat.identite.poste] === null;
+      const coche = (rep.familles || []).indexOf(f.id) !== -1 ? ' checked' : '';
+      html += '<label class="option"><input type="checkbox" data-famille="' + esc(f.id) + '"' + coche + '>' +
+        '<span class="libelle">' + esc(f.libelle) +
+        '<span class="detail">' + esc(f.detail) + '</span>' +
+        (horsPoste ? '<span class="meta">Hors barème pour ce poste : coché ou non, cela ne change pas le score.</span>' : '') +
+        '</span></label>';
+    });
+    html += '</div>';
+  } else if (question.type === 'critere') {
+    const remplacements = {};
+    if (question.id === 'q2') remplacements['[TACHE]'] = etat.tirage.q2Tache || '…';
+    if (question.id === 'q7') remplacements['[PRODUIT]'] = reglages.produit;
+    html += blocTextes(question.textes, remplacements);
+    if (question.id === 'q2' && !etat.tirage.q2Tache) {
+      html += '<p class="avertissement">Aucune tâche n’a été cochée en Q1 : la question est retirée du calcul.</p>';
+    }
+    if (question.consigne) {
+      html += '<p class="consigne">' +
+        esc(question.consigne.split('[USAGE]').join(reglages.usage).split('[PRODUIT]').join(reglages.produit)) + '</p>';
+    }
+    html += '<div class="options">';
+    question.critere.options.forEach(function (o) {
+      if (o.id === 'non_posee' && etat.tirage.q2Tache) return;
+      html += optionHtml(question.id, o, rep.option, 'radio');
+    });
+    html += '</div>';
+  } else if (question.type === 'criteres') {
+    html += blocTextes(question.textes, {});
+    if (question.consigne) html += '<p class="consigne">' + esc(question.consigne) + '</p>';
+
+    if (question.neutralisation) {
+      const coche = rep[question.neutralisation.quand] === true ? ' checked' : '';
+      html += '<label class="option"><input type="checkbox" data-neutralisation="' + esc(question.id) + '"' + coche + '>' +
+        '<span class="libelle">Première expérience : elle n’a jamais travaillé' +
+        '<span class="detail">Aucun drapeau n’est levé et le sous-score Stabilité est neutralisé.</span></span></label>';
+    }
+
+    const masque = question.neutralisation && rep[question.neutralisation.quand] === true;
+    if (!masque) {
+      question.criteres.forEach(function (critere) {
+        html += '<div class="carte"><h3>' + esc(critere.titre) + '</h3>';
+        if (critere.textes) html += blocTextes(critere.textes, {});
+        html += '<div class="options">';
+        critere.options.forEach(function (o) {
+          html += optionHtml(question.id + '.' + critere.id, o, rep[critere.id], 'radio');
+        });
+        html += '</div></div>';
+      });
+    }
+  } else if (question.type === 'variantes') {
+    const variante = question.variantes.filter(function (v) { return v.id === rep.variante; })[0] || question.variantes[0];
+    html += '<p class="etape">Variante tirée au hasard : ' + esc(variante.libelle) + '</p>';
+    html += blocTextes(variante.textes, {});
+    if (question.consigne) html += '<p class="consigne">' + esc(question.consigne) + '</p>';
+    html += '<div class="options">';
+    variante.options.forEach(function (o) {
+      html += optionHtml(question.id, o, rep.option, 'radio');
+    });
+    html += '</div>';
+  }
+
+  html += '<div class="carte sansImpression"><label for="noteQ">Note libre sur cette question (facultatif)</label>' +
+    '<textarea id="noteQ" placeholder="Ce qu’elle a dit, avec ses mots.">' + esc(rep.note || '') + '</textarea>' +
+    '<small>Les notes libres ne sont jamais comptées dans le score.</small></div>';
+
+  $ecran.innerHTML = html;
+  $barre.innerHTML = '<div class="enveloppe"><div class="rangee">' +
+    '<button class="bouton secondaire" id="precedent">Précédent</button>' +
+    '<button class="bouton" id="suivant">' + (etat.index === total - 1 ? 'Épreuve pratique' : 'Suivant') + '</button>' +
+    '</div></div>';
+
+  $ecran.querySelectorAll('input[type=radio]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      const nom = input.getAttribute('name');
+      const morceaux = nom.split('.');
+      if (morceaux.length === 2) etat.reponses[morceaux[0]][morceaux[1]] = input.value;
+      else etat.reponses[nom].option = input.value;
+    });
+  });
+  $ecran.querySelectorAll('[data-famille]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      const id = input.getAttribute('data-famille');
+      const liste = etat.reponses.q1.familles || [];
+      const position = liste.indexOf(id);
+      if (input.checked && position === -1) liste.push(id);
+      if (!input.checked && position !== -1) liste.splice(position, 1);
+      etat.reponses.q1.familles = liste;
+    });
+  });
+  $ecran.querySelectorAll('[data-neutralisation]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      const q = input.getAttribute('data-neutralisation');
+      etat.reponses[q][CONFIG.questions.filter(function (x) { return x.id === q; })[0].neutralisation.quand] = input.checked;
+      rendre();
+    });
+  });
+  const noteQ = document.getElementById('noteQ');
+  if (noteQ) noteQ.addEventListener('input', function () { etat.reponses[question.id].note = noteQ.value; });
+
+  document.getElementById('precedent').addEventListener('click', function () {
+    if (etat.index === 0) { aller('accueil'); return; }
+    etat.index--;
+    rendre();
+  });
+  document.getElementById('suivant').addEventListener('click', function () {
+    if (question.id === 'q1') tirerTacheQ2();
+    if (etat.index === total - 1) { aller('pratique'); return; }
+    etat.index++;
+    rendre();
+  });
+}
+
+/* ---------- Épreuve pratique (facultative) ---------- */
+
+function rendrePratique() {
+  const poste = etat.identite.poste;
+  let html = '<h1>Épreuve pratique</h1>';
+  html += '<p>Facultative. Coche <b>« non observé »</b> pour un geste que tu n’as pas vu : il est retiré du calcul.</p>';
+  html += '<p class="consigne">Les gestes comptent pour le sous-score Compétences, avec un poids plus fort pour les gestes de cuisine quand le poste est « aide cuisinière ».</p>';
+
+  CONFIG.pratique.gestes.forEach(function (geste) {
+    const valeur = etat.pratique[geste.id] || 'non_observe';
+    html += '<div class="carte"><h3>' + esc(geste.libelle) +
+      ' <small>(poids ' + esc(geste.coefficients[poste]) + ')</small></h3><div class="options">';
+    ['reussi', 'partiel', 'non_fait', 'non_observe'].forEach(function (note) {
+      html += '<label class="option"><input type="radio" name="pratique.' + esc(geste.id) + '" value="' + esc(note) + '"' +
+        (valeur === note ? ' checked' : '') + '><span class="libelle">' + esc(CONFIG.pratique.libellesNotes[note]) + '</span></label>';
+    });
+    html += '</div></div>';
+  });
+
+  $ecran.innerHTML = html;
+  $barre.innerHTML = '<div class="enveloppe"><div class="rangee">' +
+    '<button class="bouton secondaire" id="retour">Précédent</button>' +
+    '<button class="bouton secondaire" id="passer">Passer</button>' +
+    '<button class="bouton" id="terminer">Voir le résultat</button>' +
+    '</div></div>';
+
+  $ecran.querySelectorAll('input[type=radio]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      etat.pratique[input.getAttribute('name').split('.')[1]] = input.value;
+      etat.pratiqueFaite = true;
+    });
+  });
+  document.getElementById('retour').addEventListener('click', function () {
+    etat.index = CONFIG.questions.length - 1;
+    aller('entretien');
+  });
+  document.getElementById('passer').addEventListener('click', function () {
+    etat.pratique = {};
+    etat.pratiqueFaite = false;
+    calculerEtAfficher();
+  });
+  document.getElementById('terminer').addEventListener('click', calculerEtAfficher);
+}
+
+/* ---------- Résultat ---------- */
+
+/* Seuls le poste, les options cochées et l'épreuve pratique sont transmis au barème.
+   Les renseignements de l'écran d'accueil (prénom, langue, note libre) ne sont jamais passés,
+   et les notes libres écrites question par question sont retirées avant l'appel : elles peuvent
+   contenir des éléments de vie privée, qui n'ont rien à faire dans le calcul. */
+function construireAnswers() {
+  const reponses = {};
+  Object.keys(etat.reponses).forEach(function (q) {
+    const source = etat.reponses[q] || {};
+    const copie = {};
+    Object.keys(source).forEach(function (cle) {
+      if (cle === 'note') return;
+      copie[cle] = JSON.parse(JSON.stringify(source[cle]));
+    });
+    reponses[q] = copie;
+  });
+  return {
+    poste: etat.identite.poste,
+    reponses: reponses,
+    pratique: etat.pratiqueFaite ? JSON.parse(JSON.stringify(etat.pratique)) : {}
+  };
+}
+
+function questionsSansReponse() {
+  const manquantes = [];
+  CONFIG.questions.forEach(function (q) {
+    const rep = etat.reponses[q.id] || {};
+    if (q.type === 'familles') return;
+    if (q.type === 'critere' || q.type === 'variantes') {
+      if (!rep.option) manquantes.push(q.numero + '. ' + q.titre);
+      return;
+    }
+    if (q.type === 'criteres') {
+      if (q.neutralisation && rep[q.neutralisation.quand] === true) return;
+      const trous = q.criteres.filter(function (c) { return !rep[c.id]; });
+      if (trous.length) manquantes.push(q.numero + '. ' + q.titre + ' (' + trous.length + ')');
+    }
+  });
+  return manquantes;
+}
+
+function calculerEtAfficher() {
+  etat.resultat = computeScore(construireAnswers(), CONFIG);
+  etat.enregistre = false;
+  aller('resultat');
+}
+
+function rendreResultat() {
+  const r = etat.resultat;
+  const id = etat.identite;
+  const verdict = CONFIG.verdicts[r.verdict];
+  const manquantes = questionsSansReponse();
+
+  let html = '<h1>Résultat</h1>';
+  html += '<p>' + esc(id.prenom || 'Candidate') + ' — ' + esc(id.date) + ' — ' +
+    esc((CONFIG.postes.filter(function (p) { return p.id === id.poste; })[0] || {}).libelle) + '</p>';
+
+  html += '<div class="score-global"><div class="chiffre">' + r.total + '</div><div>sur 100</div></div>';
+  html += '<div class="verdict ' + esc(r.verdict) + '">' + esc(verdict.libelle) + '<br><small>' + esc(verdict.detail) + '</small></div>';
+
+  html += '<div class="avertissement"><b>Cet outil est une aide à la décision. Ce n’est pas un détecteur de mensonge.</b> ' +
+    'Il signale des incohérences et des points à vérifier, pas des mensonges.</div>';
+
+  if (manquantes.length) {
+    html += '<p class="avertissement">Questions sans réponse cochée, retirées du calcul : ' + esc(manquantes.join(' · ')) + '</p>';
+  }
+
+  html += '<h2>Sous-scores</h2>';
+  CONFIG.sousScores.forEach(function (s) {
+    const v = r.sousScores[s.id];
+    html += '<div class="sous-score"><div class="ligne"><span>' + esc(s.libelle) + '</span><span>' + v + ' / 100</span></div>' +
+      '<div class="jauge"><i style="width:' + v + '%"></i></div></div>';
+  });
+  html += '<small>Pondération du poste : ' +
+    esc(CONFIG.sousScores.map(function (s) { return s.libelle + ' ' + CONFIG.ponderations[id.poste][s.id]; }).join(' · ')) + '</small>';
+
+  html += '<h2>Drapeaux</h2>';
+  if (!r.drapeaux.length) {
+    html += '<p>Aucun drapeau.</p>';
+  } else {
+    r.drapeaux.forEach(function (d) {
+      html += '<div class="drapeau ' + esc(d.niveau) + '"><span class="niveau">' +
+        (d.niveau === 'bloquant' ? 'Bloquant' : 'Léger') + '</span><br>' + esc(d.message) + '</div>';
+    });
+  }
+
+  html += '<h2>Points à vérifier</h2>';
+  if (!r.pointsAVerifier.length) {
+    html += '<p>Rien de particulier.</p>';
+  } else {
+    html += '<ul class="verifs">';
+    r.pointsAVerifier.forEach(function (p) { html += '<li>' + esc(p) + '</li>'; });
+    html += '</ul>';
+  }
+
+  if (etat.identite.note) {
+    html += '<h2>Note libre</h2><p>' + esc(etat.identite.note) + '</p>';
+  }
+
+  html += '<div class="carte sansImpression"><h2>Enregistrer et partager</h2>' +
+    '<div class="rangee">' +
+    '<button class="bouton secondaire" id="imprimer">Imprimer</button>' +
+    '<button class="bouton secondaire" id="json">Export JSON</button>' +
+    '<button class="bouton secondaire" id="csv">Export CSV</button>' +
+    '</div>' +
+    '<button class="bouton secondaire" id="enregistrer">' + (etat.enregistre ? 'Enregistré ✓' : 'Enregistrer dans l’historique (ce téléphone)') + '</button>' +
+    '<small>Les exports restent sur ce téléphone. Ne les envoie pas à des tiers sans l’accord de la candidate.</small></div>';
+
+  $ecran.innerHTML = html;
+  $barre.innerHTML = '<div class="enveloppe"><div class="rangee">' +
+    '<button class="bouton secondaire" id="retourPratique">Précédent</button>' +
+    '<button class="bouton" id="nouveau">Nouvel entretien</button>' +
+    '</div></div>';
+
+  document.getElementById('imprimer').addEventListener('click', function () { print(); });
+  document.getElementById('json').addEventListener('click', exporterJson);
+  document.getElementById('csv').addEventListener('click', exporterCsv);
+  document.getElementById('enregistrer').addEventListener('click', enregistrerHistorique);
+  document.getElementById('retourPratique').addEventListener('click', function () { aller('pratique'); });
+  document.getElementById('nouveau').addEventListener('click', function () {
+    if (!confirm('Commencer un nouvel entretien ? Les réponses en cours seront effacées.')) return;
+    etat = etatInitial();
+    aller('accueil');
+  });
+}
+
+/* ---------- Exports ---------- */
+
+function nomFichier(extension) {
+  const prenom = (etat.identite.prenom || 'candidate')
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'candidate';
+  return 'entretien-' + prenom + '-' + (etat.identite.date || aujourdhui()) + '.' + extension;
+}
+
+function telecharger(nom, contenu, type) {
+  try {
+    const blob = new Blob([contenu], { type: type + ';charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const lien = document.createElement('a');
+    lien.href = url;
+    lien.download = nom;
+    document.body.appendChild(lien);
+    lien.click();
+    document.body.removeChild(lien);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+  } catch (e) {
+    alert('Le téléchargement a échoué sur ce téléphone. Utilise « Imprimer » pour garder une trace.');
+  }
+}
+
+function enregistrementComplet() {
+  return {
+    version: CONFIG.version,
+    identite: etat.identite,
+    poste: etat.identite.poste,
+    tirage: etat.tirage,
+    produitFictif: reglages.produit,
+    reponses: etat.reponses,
+    pratique: etat.pratiqueFaite ? etat.pratique : null,
+    resultat: etat.resultat
+  };
+}
+
+function exporterJson() {
+  telecharger(nomFichier('json'), JSON.stringify(enregistrementComplet(), null, 2), 'application/json');
+}
+
+function celluleCsv(valeur) {
+  const texte = String(valeur === null || valeur === undefined ? '' : valeur);
+  return /[;"\n\r]/.test(texte) ? '"' + texte.replace(/"/g, '""') + '"' : texte;
+}
+
+function exporterCsv() {
+  const r = etat.resultat;
+  const lignes = [['champ', 'valeur']];
+  lignes.push(['prenom', etat.identite.prenom]);
+  lignes.push(['date', etat.identite.date]);
+  lignes.push(['poste', etat.identite.poste]);
+  lignes.push(['langue_entretien', etat.identite.langue]);
+  lignes.push(['total', r.total]);
+  lignes.push(['verdict', r.verdict]);
+  CONFIG.sousScores.forEach(function (s) { lignes.push(['sous_score_' + s.id, r.sousScores[s.id]]); });
+  lignes.push(['drapeaux', r.drapeaux.map(function (d) { return d.niveau + ':' + d.id; }).join(' | ')]);
+  lignes.push(['points_a_verifier', r.pointsAVerifier.join(' | ')]);
+  CONFIG.questions.forEach(function (q) {
+    const rep = etat.reponses[q.id] || {};
+    let valeur = '';
+    if (q.type === 'familles') valeur = (rep.familles || []).join(' | ');
+    else if (q.type === 'criteres') {
+      valeur = q.criteres.map(function (c) { return c.id + '=' + (rep[c.id] || ''); }).join(' | ');
+      if (q.neutralisation && rep[q.neutralisation.quand] === true) valeur = q.neutralisation.quand;
+    } else valeur = (rep.variante ? rep.variante + ':' : '') + (rep.option || '');
+    lignes.push([q.id, valeur]);
+    if (rep.note) lignes.push([q.id + '_note', rep.note]);
+  });
+  if (etat.pratiqueFaite) {
+    CONFIG.pratique.gestes.forEach(function (g) { lignes.push(['pratique_' + g.id, etat.pratique[g.id] || 'non_observe']); });
+  }
+  lignes.push(['note_libre', etat.identite.note]);
+  const csv = '﻿' + lignes.map(function (l) { return l.map(celluleCsv).join(';'); }).join('\r\n');
+  telecharger(nomFichier('csv'), csv, 'text/csv');
+}
+
+/* ---------- Historique local ---------- */
+
+function enregistrerHistorique() {
+  const liste = lireStockage(CLE_HISTORIQUE, []);
+  liste.unshift(Object.assign({ enregistreLe: new Date().toISOString() }, enregistrementComplet()));
+  if (ecrireStockage(CLE_HISTORIQUE, liste.slice(0, 50))) {
+    etat.enregistre = true;
+    rendre();
+  } else {
+    alert('Impossible d’enregistrer sur ce téléphone. Utilise l’export ou l’impression.');
+  }
+}
+
+function rendreHistorique() {
+  const liste = lireStockage(CLE_HISTORIQUE, []);
+  let html = '<h1>Historique</h1>';
+  if (!stockageDisponible()) {
+    html += '<p class="avertissement">Le stockage local n’est pas disponible sur ce navigateur. L’app reste utilisable, mais rien n’est gardé.</p>';
+  }
+  html += '<p>Les entretiens enregistrés restent sur ce téléphone. Personne d’autre n’y a accès.</p>';
+  if (!liste.length) {
+    html += '<p>Aucun entretien enregistré.</p>';
+  } else {
+    html += '<ul class="liste-historique">';
+    liste.forEach(function (item, position) {
+      html += '<li><b>' + esc(item.identite && item.identite.prenom ? item.identite.prenom : 'Candidate') + '</b> — ' +
+        esc(item.identite ? item.identite.date : '') + ' — ' + esc(item.poste) + '<br>' +
+        esc(item.resultat ? item.resultat.total + '/100 · ' + item.resultat.verdict : '') +
+        '<button class="bouton secondaire" data-ouvrir="' + position + '">Ouvrir</button></li>';
+    });
+    html += '</ul>';
+    html += '<button class="bouton danger" id="effacer">Effacer l’historique</button>';
+  }
+
+  $ecran.innerHTML = html;
+  $barre.innerHTML = '<div class="enveloppe"><button class="bouton secondaire" id="retour">Retour</button></div>';
+
+  $ecran.querySelectorAll('[data-ouvrir]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      const item = liste[Number(b.getAttribute('data-ouvrir'))];
+      if (!item) return;
+      etat = etatInitial();
+      etat.identite = Object.assign(etat.identite, item.identite || {});
+      etat.tirage = item.tirage || etat.tirage;
+      etat.reponses = item.reponses || etat.reponses;
+      etat.pratique = item.pratique || {};
+      etat.pratiqueFaite = !!item.pratique;
+      etat.resultat = item.resultat || computeScore(construireAnswers(), CONFIG);
+      etat.enregistre = true;
+      aller('resultat');
+    });
+  });
+  const effacer = document.getElementById('effacer');
+  if (effacer) effacer.addEventListener('click', function () {
+    if (!confirm('Effacer tout l’historique de ce téléphone ? C’est définitif.')) return;
+    ecrireStockage(CLE_HISTORIQUE, []);
+    rendre();
+  });
+  document.getElementById('retour').addEventListener('click', function () { aller('accueil'); });
+}
+
+/* ---------- Réglages ---------- */
+
+function rendreReglages() {
+  let html = '<h1>Réglages</h1>';
+  html += '<div class="carte"><h2>Produit fictif de la question 7</h2>';
+  html += '<p>Ce produit ne doit pas exister sur le marché de Niamey. Vérifie-le auprès de plusieurs vendeurs avant de l’utiliser, et change-le de temps en temps : ce dépôt est public.</p>';
+  html += '<label for="produit">Nom du produit</label><input type="text" id="produit" value="' + esc(reglages.produit) + '">';
+  html += '<label for="usage">Usage annoncé (pour la relance)</label><input type="text" id="usage" value="' + esc(reglages.usage) + '">';
+  html += '<button class="bouton" id="sauver">Enregistrer</button>';
+  html += '<button class="bouton secondaire" id="defaut">Revenir au nom par défaut</button></div>';
+
+  html += '<div class="carte"><h2>Seuils du verdict</h2><table><tr><th>Verdict</th><th>Score</th></tr>' +
+    '<tr><td>' + esc(CONFIG.verdicts.essai.libelle) + '</td><td>' + CONFIG.seuils.essai + ' et plus</td></tr>' +
+    '<tr><td>' + esc(CONFIG.verdicts.approfondir.libelle) + '</td><td>' + CONFIG.seuils.approfondir + ' à ' + (CONFIG.seuils.essai - 1) + '</td></tr>' +
+    '<tr><td>' + esc(CONFIG.verdicts.non_recommande.libelle) + '</td><td>moins de ' + CONFIG.seuils.approfondir + '</td></tr></table>';
+  html += '<p><b>Plafonnement :</b> 1 drapeau bloquant → au mieux « à approfondir ». ' +
+    CONFIG.plafonnement.bloquantsNonRecommande + ' drapeaux bloquants ou plus → « non recommandé ». ' +
+    CONFIG.plafonnement.legersApprofondir + ' drapeaux légers ou plus → au mieux « à approfondir ».</p>';
+  html += '<small>Ces seuils sont des valeurs de départ, à recalibrer après une quinzaine d’entretiens réels.</small></div>';
+
+  html += '<div class="carte"><h2>Pondérations par poste</h2><table><tr><th>Poste</th>' +
+    CONFIG.sousScores.map(function (s) { return '<th>' + esc(s.libelle) + '</th>'; }).join('') + '</tr>';
+  CONFIG.postes.forEach(function (p) {
+    html += '<tr><td>' + esc(p.libelle) + '</td>' +
+      CONFIG.sousScores.map(function (s) { return '<td>' + CONFIG.ponderations[p.id][s.id] + '</td>'; }).join('') + '</tr>';
+  });
+  html += '</table></div>';
+
+  html += '<div class="carte"><h2>Vérification du barème</h2>' +
+    '<p>Ouvre <code>index.html?selftest=1</code> pour lancer les tests du barème dans ce navigateur.</p>' +
+    '<p>Version du barème : ' + esc(CONFIG.version) + '</p></div>';
+
+  $ecran.innerHTML = html;
+  $barre.innerHTML = '<div class="enveloppe"><button class="bouton secondaire" id="retour">Retour</button></div>';
+
+  document.getElementById('sauver').addEventListener('click', function () {
+    reglages.produit = document.getElementById('produit').value.trim() || reglagesParDefaut.produit;
+    reglages.usage = document.getElementById('usage').value.trim();
+    if (!ecrireStockage(CLE_REGLAGES, reglages)) {
+      alert('Le réglage est appliqué pour cet entretien, mais il n’a pas pu être gardé sur ce téléphone.');
+    }
+    aller('accueil');
+  });
+  document.getElementById('defaut').addEventListener('click', function () {
+    reglages = Object.assign({}, reglagesParDefaut);
+    ecrireStockage(CLE_REGLAGES, reglages);
+    rendre();
+  });
+  document.getElementById('retour').addEventListener('click', function () { aller('accueil'); });
+}
+
+/* ---------- Mode ?selftest=1 : exécute TEST_CASES dans le navigateur ---------- */
+
+function executerTests() {
+  const SOUS_SCORES = CONFIG.sousScores.map(function (s) { return s.id; });
+  const FAUSSES_DONNEES = [
+    { situationFamiliale: 'mariée, mari au village', nationalite: 'béninoise', langueEntretien: 'zarma', religion: 'A', ethnie: 'X' },
+    { situationFamiliale: 'célibataire', nationalite: 'togolaise', langueEntretien: 'haoussa', religion: 'B', ethnie: 'Y' }
+  ];
+  const resume = function (r) {
+    return JSON.stringify({
+      total: r.total, sousScores: r.sousScores, verdict: r.verdict,
+      drapeaux: r.drapeaux.map(function (d) { return d.niveau + ':' + d.id; }).sort()
+    });
+  };
+  return TEST_CASES.map(function (tc) {
+    const erreurs = [];
+    let r = null;
+    try {
+      r = computeScore(JSON.parse(JSON.stringify(tc.answers)), CONFIG);
+    } catch (e) {
+      return { nom: tc.name, erreurs: ['exception : ' + e.message] };
+    }
+    if (!Number.isInteger(r.total) || r.total < 0 || r.total > 100) erreurs.push('total hors [0, 100]');
+    SOUS_SCORES.forEach(function (k) {
+      const v = r.sousScores[k];
+      if (typeof v !== 'number' || v < 0 || v > 100) erreurs.push('sousScores.' + k + ' invalide');
+    });
+    if (!Array.isArray(r.drapeaux)) erreurs.push('drapeaux doit être un tableau');
+    if (!Array.isArray(r.pointsAVerifier)) erreurs.push('pointsAVerifier doit être un tableau');
+
+    const attendu = tc.expect || {};
+    const ids = r.drapeaux.map(function (d) { return d.id; });
+    if (attendu.verdict && r.verdict !== attendu.verdict) erreurs.push('verdict « ' + r.verdict + ' » au lieu de « ' + attendu.verdict + ' »');
+    if (attendu.minTotal != null && r.total < attendu.minTotal) erreurs.push('total ' + r.total + ' < ' + attendu.minTotal);
+    if (attendu.maxTotal != null && r.total > attendu.maxTotal) erreurs.push('total ' + r.total + ' > ' + attendu.maxTotal);
+    (attendu.drapeauxInclus || []).forEach(function (id) { if (ids.indexOf(id) === -1) erreurs.push('drapeau manquant : ' + id); });
+    (attendu.drapeauxExclus || []).forEach(function (id) { if (ids.indexOf(id) !== -1) erreurs.push('drapeau inattendu : ' + id); });
+
+    let bloquants = 0, legers = 0;
+    r.drapeaux.forEach(function (d) { if (d.niveau === 'bloquant') bloquants++; else legers++; });
+    if (bloquants >= 2 && r.verdict !== 'non_recommande') erreurs.push('plafonnement non appliqué (2 bloquants)');
+    if ((bloquants === 1 || legers >= 3) && r.verdict === 'essai') erreurs.push('plafonnement non appliqué');
+
+    const reference = resume(r);
+    FAUSSES_DONNEES.forEach(function (fausses) {
+      const a = Object.assign(JSON.parse(JSON.stringify(tc.answers)), fausses);
+      if (resume(computeScore(a, CONFIG)) !== reference) erreurs.push('le résultat change avec des données personnelles (équité)');
+    });
+
+    return { nom: tc.name, erreurs: erreurs, resultat: r };
+  });
+}
+
+function rendreSelftest() {
+  const resultats = executerTests();
+  const echecs = resultats.filter(function (x) { return x.erreurs.length; });
+  let html = '<h1>Auto-test du barème</h1>';
+  html += '<p class="' + (echecs.length ? 'selftest-ko' : 'selftest-ok') + '">' +
+    (echecs.length ? '✗ ' + echecs.length + ' échec(s) sur ' + resultats.length + ' cas'
+                   : '✓ Tout est vert — ' + resultats.length + ' cas') + '</p>';
+  resultats.forEach(function (x) {
+    html += '<div class="carte"><b class="' + (x.erreurs.length ? 'selftest-ko' : 'selftest-ok') + '">' +
+      (x.erreurs.length ? '✗' : '✓') + ' ' + esc(x.nom) + '</b>';
+    if (x.resultat) {
+      html += '<br><small>' + esc(x.resultat.verdict) + ' — ' + x.resultat.total + '/100 — drapeaux : ' +
+        esc(x.resultat.drapeaux.map(function (d) { return d.niveau + ':' + d.id; }).join(', ') || 'aucun') + '</small>';
+    }
+    if (x.erreurs.length) html += '<pre>' + esc(x.erreurs.join('\n')) + '</pre>';
+    html += '</div>';
+  });
+  $ecran.innerHTML = html;
+  $barre.innerHTML = '<div class="enveloppe"><a class="bouton" href="index.html">Retour à l’app</a></div>';
+}
+
+/* ---------- Démarrage ---------- */
+
+function demarrer() {
+  let selftest = false;
+  try { selftest = /(?:^|[?&])selftest=1(?:&|$)/.test(location.search); } catch (e) { selftest = false; }
+  if (selftest) rendreSelftest();
+  else rendre();
+}
+
+demarrer();
+</script>
+</body>
+</html>

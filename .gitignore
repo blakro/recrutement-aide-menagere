@@ -1,0 +1,12 @@
+# Données de candidates : ne jamais committer (voir CLAUDE.md).
+entretien-*.json
+entretien-*.csv
+*.export.json
+*.export.csv
+exports/
+
+# Système et outillage
+.DS_Store
+Thumbs.db
+node_modules/
+*.log

@@ -4,8 +4,8 @@
 - [x] Questions rédigées et validées (`docs/QUESTIONS.md`)
 - [ ] Traductions zarma et haoussa relues par un locuteur natif
 - [ ] Nom du produit fictif vérifié au marché
-- [ ] `index.html` : barème + tests verts
-- [ ] Interface complète (fiche, entretien, épreuve pratique, résultat, export, historique, réglages)
+- [x] `index.html` : barème + tests verts
+- [x] Interface complète (fiche, entretien, épreuve pratique, résultat, export, historique, réglages)
 - [ ] Mise en ligne GitHub Pages
 - [ ] Premiers entretiens réels
 
