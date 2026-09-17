@@ -7,146 +7,245 @@
 <title>Entretien aide ménagère — Niamey</title>
 <style>
 :root{
-  --fond:#ffffff; --texte:#111111; --gris:#5a5a5a; --trait:#9a9a9a;
-  --bleu:#0b4f9e; --bleu-clair:#e7f0fb;
-  --vert:#14632c; --vert-clair:#e3f3e7;
-  --orange:#8a4b00; --orange-clair:#fdeedd;
-  --rouge:#9b0f14; --rouge-clair:#fce9e9;
+  --fond:#f5f6f8; --surface:#ffffff; --surface-douce:#f0f2f5;
+  --encre:#111827; --encre-douce:#4b5563;
+  --trait:#cbd2da; --trait-fort:#7c8797;
+  --primaire:#0a4a94; --primaire-sombre:#073a76; --primaire-pale:#e7f0fb;
+  --vert:#0f5c28; --vert-pale:#e5f3e9;
+  --orange:#8a4b00; --orange-pale:#fdf0df;
+  --rouge:#96111a; --rouge-pale:#fceaea;
+  --sable:#c9832b;
+  --rayon:14px; --rayon-petit:10px;
+  --bord:2px;
+  --ombre:0 1px 2px rgba(17,24,39,.05), 0 6px 16px rgba(17,24,39,.07);
+  --base:17px;
+}
+html[data-contraste="fort"]{
+  --fond:#ffffff; --surface:#ffffff; --surface-douce:#ffffff;
+  --encre:#000000; --encre-douce:#111827;
+  --trait:#000000; --trait-fort:#000000;
+  --primaire:#00316f; --primaire-pale:#dbe8fa;
+  --vert:#04471c; --orange:#6d3a00; --rouge:#7d0d14;
+  --bord:3px; --ombre:none; --base:20px;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
-  background:var(--fond); color:var(--texte);
-  font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-  font-size:18px; line-height:1.45;
-  -webkit-text-size-adjust:100%;
+  background:var(--fond); color:var(--encre);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:var(--base); line-height:1.5;
+  -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased;
 }
-.enveloppe{max-width:720px;margin:0 auto;padding:12px 14px 96px}
-h1{font-size:1.35rem;margin:.2em 0 .1em}
-h2{font-size:1.2rem;margin:1.1em 0 .4em}
-h3{font-size:1.02rem;margin:1em 0 .3em}
-p{margin:.5em 0}
-small{font-size:.82rem;color:var(--gris)}
-a{color:var(--bleu)}
+.enveloppe{max-width:760px;margin:0 auto;padding:14px 16px 120px}
+h1{font-size:1.45rem;line-height:1.2;margin:.1em 0 .5em;letter-spacing:-.01em}
+h2{font-size:1.15rem;margin:1.4em 0 .5em;letter-spacing:-.005em}
+h3{font-size:1rem;margin:0 0 .5em}
+p{margin:.55em 0}
+small,.petit{font-size:.84rem;color:var(--encre-douce);line-height:1.4}
+b,strong{font-weight:700}
 
-.bandeau{background:var(--bleu);color:#fff;padding:10px 14px}
-.bandeau .enveloppe{padding:0;max-width:720px}
-.bandeau b{font-size:1.05rem}
-.bandeau small{color:#dce8f7;display:block}
-
-.avertissement{
-  background:var(--orange-clair); border:2px solid var(--orange); color:#3a2000;
-  border-radius:10px; padding:10px 12px; margin:12px 0; font-size:.95rem;
+/* ---- Bandeau ---- */
+.bandeau{background:var(--primaire);color:#fff;border-bottom:4px solid var(--sable)}
+.bandeau .dedans{max-width:760px;margin:0 auto;padding:9px 16px;display:flex;gap:10px;align-items:center}
+.bandeau .titre{flex:1 1 auto;min-width:0}
+.bandeau .titre b{display:block;font-size:.95rem;line-height:1.2}
+.bandeau .titre span{display:block;font-size:.74rem;line-height:1.25;color:#cfe0f5}
+.soleil{
+  flex:0 0 auto;background:rgba(255,255,255,.12);color:#fff;border:2px solid rgba(255,255,255,.55);
+  border-radius:999px;padding:7px 11px;font-size:.78rem;font-weight:700;white-space:nowrap;
 }
-.avertissement b{color:var(--orange)}
+html[data-contraste="fort"] .soleil{background:#fff;color:var(--primaire);border-color:#fff}
 
-.carte{border:2px solid var(--trait);border-radius:12px;padding:12px;margin:12px 0;background:#fff}
-.carte.actif{border-color:var(--bleu)}
-
-label{display:block;font-weight:700;margin:.8em 0 .25em}
-input[type=text],input[type=date],input[type=tel],select,textarea{
-  width:100%; font:inherit; padding:12px; border:2px solid var(--trait);
-  border-radius:10px; background:#fff; color:var(--texte);
+/* ---- Blocs ---- */
+.carte{
+  background:var(--surface);border:1px solid var(--trait);border-radius:var(--rayon);
+  padding:14px;margin:12px 0;box-shadow:var(--ombre);
 }
-textarea{min-height:76px;resize:vertical}
-input:focus,select:focus,textarea:focus,button:focus{outline:3px solid var(--bleu);outline-offset:2px}
+html[data-contraste="fort"] .carte{border-width:2px}
+.carte.plate{box-shadow:none;background:var(--surface-douce)}
+.encadre{
+  border-left:6px solid var(--sable);background:var(--orange-pale);color:#3d2400;
+  border-radius:var(--rayon-petit);padding:12px 14px;margin:12px 0;font-size:.95rem;
+}
+.encadre b{color:var(--orange)}
+.info{border-left-color:var(--primaire);background:var(--primaire-pale);color:#0b2545}
+.info b{color:var(--primaire)}
+.consigne{background:var(--surface-douce);border:1px dashed var(--trait-fort);border-radius:var(--rayon-petit);padding:10px 12px;font-size:.9rem;margin:.6em 0}
+.enonce{font-size:1.28rem;font-weight:700;line-height:1.3;margin:.3em 0 .6em;letter-spacing:-.01em}
 
+/* ---- Formulaires ---- */
+label.champ{display:block;font-weight:700;margin:.9em 0 .3em;font-size:.95rem}
+input[type=text],input[type=date],select,textarea{
+  width:100%;font:inherit;padding:13px;border:var(--bord) solid var(--trait-fort);
+  border-radius:var(--rayon-petit);background:var(--surface);color:var(--encre);
+}
+textarea{min-height:80px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,label.option:focus-within{
+  outline:3px solid var(--primaire);outline-offset:2px
+}
+
+/* ---- Boutons ---- */
 button{font:inherit;cursor:pointer}
 .bouton{
-  display:block;width:100%;padding:16px;margin:10px 0;border-radius:12px;
-  border:2px solid var(--bleu); background:var(--bleu); color:#fff;
-  font-weight:700; font-size:1.05rem; text-align:center;
+  display:block;width:100%;padding:15px 16px;margin:10px 0;border-radius:var(--rayon-petit);
+  border:var(--bord) solid var(--primaire);background:var(--primaire);color:#fff;
+  font-weight:700;font-size:1rem;text-align:center;text-decoration:none;
 }
-.bouton.secondaire{background:#fff;color:var(--bleu)}
-.bouton.danger{background:#fff;color:var(--rouge);border-color:var(--rouge)}
-.bouton:disabled{opacity:.45;cursor:not-allowed}
+.bouton:active{transform:translateY(1px)}
+.bouton.secondaire{background:var(--surface);color:var(--primaire)}
+.bouton.danger{background:var(--surface);color:var(--rouge);border-color:var(--rouge)}
+.bouton.petit{padding:10px 12px;font-size:.9rem;margin:6px 0}
+.bouton:disabled{opacity:.4;cursor:not-allowed}
 .rangee{display:flex;gap:10px;flex-wrap:wrap}
-.rangee .bouton{flex:1 1 140px;width:auto}
+.rangee>*{flex:1 1 130px;width:auto;margin:6px 0}
+.grille2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 
-/* Options à cocher : gros boutons, fort contraste */
-.options{margin:.4em 0}
+/* ---- Options ---- */
+.options{margin:.5em 0}
 .option{
-  display:flex;gap:12px;align-items:flex-start;
-  border:2px solid var(--trait); border-radius:12px;
-  padding:14px; margin:8px 0; background:#fff; cursor:pointer;
+  display:flex;gap:12px;align-items:flex-start;position:relative;
+  border:var(--bord) solid var(--trait);border-radius:var(--rayon-petit);
+  padding:14px 14px 14px 12px;margin:9px 0;background:var(--surface);cursor:pointer;
 }
-.option:has(input:checked){border-color:var(--bleu);background:var(--bleu-clair)}
-.option input{width:26px;height:26px;margin:2px 0 0;flex:0 0 auto;accent-color:var(--bleu)}
-.option .libelle{font-weight:600}
-.option .meta{display:block;font-size:.8rem;color:var(--gris);font-weight:400}
-.option .detail{display:block;font-size:.88rem;color:var(--gris);font-weight:400;margin-top:2px}
+.option:has(input:checked){border-color:var(--primaire);background:var(--primaire-pale);box-shadow:inset 4px 0 0 var(--primaire)}
+.option input{position:absolute;opacity:0;width:1px;height:1px}
+.marque{
+  flex:0 0 auto;width:26px;height:26px;margin-top:1px;border:var(--bord) solid var(--trait-fort);
+  background:var(--surface);display:flex;align-items:center;justify-content:center;
+}
+.option input[type=radio]+.marque{border-radius:50%}
+.option input[type=checkbox]+.marque{border-radius:7px}
+.marque::after{content:"";width:12px;height:12px;border-radius:inherit;background:transparent}
+.option input:checked+.marque{border-color:var(--primaire)}
+.option input:checked+.marque::after{background:var(--primaire)}
+.option input[type=checkbox]:checked+.marque::after{
+  width:14px;height:8px;border-radius:0;background:transparent;
+  border-left:3px solid var(--primaire);border-bottom:3px solid var(--primaire);
+  transform:rotate(-45deg) translate(1px,-2px);
+}
+.option .texte{flex:1;min-width:0;font-weight:600;line-height:1.35}
+.option .sous{display:block;font-size:.86rem;color:var(--encre-douce);font-weight:400;margin-top:3px}
+.option .note{display:block;font-size:.8rem;color:var(--orange);font-weight:700;margin-top:4px}
 
-.progression{height:12px;background:#e3e3e3;border-radius:999px;overflow:hidden;margin:10px 0 4px}
-.progression i{display:block;height:100%;background:var(--bleu)}
-.etape{font-size:.85rem;color:var(--gris)}
+/* ---- Progression ---- */
+.pastilles{display:flex;gap:5px;margin:4px 0 10px}
+.pastille{
+  flex:1;height:10px;border-radius:999px;background:#dfe3e9;border:1px solid transparent;
+  padding:0;min-width:0;
+}
+.pastille.complet{background:var(--primaire)}
+.pastille.partiel{background:var(--sable)}
+.pastille.courant{border-color:var(--encre);box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--encre)}
+.fil{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:.86rem;color:var(--encre-douce);margin-bottom:2px}
+.fil b{color:var(--encre);font-size:.95rem}
 
-.traductions{margin:.5em 0}
-.traductions summary{cursor:pointer;font-weight:700;color:var(--bleu);padding:8px 0}
-.traduction{border-left:4px solid var(--trait);padding:2px 0 2px 10px;margin:8px 0}
-.traduction b{display:block;font-size:.85rem;color:var(--gris);text-transform:uppercase;letter-spacing:.03em}
-.traduction .aValider{display:block;font-size:.78rem;color:var(--orange);font-weight:700}
-
-.enonce{font-size:1.15rem;font-weight:700;margin:.4em 0}
-.consigne{background:#f4f4f4;border-radius:10px;padding:10px;font-size:.92rem;margin:.5em 0}
-
+/* ---- Barre basse ---- */
 .barre-bas{
-  position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:2px solid var(--trait);
-  padding:8px 14px calc(8px + env(safe-area-inset-bottom));
+  position:fixed;left:0;right:0;bottom:0;background:var(--surface);
+  border-top:var(--bord) solid var(--trait);box-shadow:0 -4px 16px rgba(17,24,39,.08);
 }
-.barre-bas .enveloppe{padding:0;margin:0 auto}
-.barre-bas .rangee{gap:8px}
-.barre-bas .bouton{margin:0;padding:14px}
+.barre-bas .dedans{max-width:760px;margin:0 auto;padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
+.barre-bas .rangee>*{margin:0;flex:1 1 84px}
+.barre-bas .bouton{margin:0;padding:15px 6px;font-size:.93rem}
 
-/* Résultat */
-.score-global{text-align:center;border:3px solid var(--bleu);border-radius:14px;padding:14px;margin:12px 0}
-.score-global .chiffre{font-size:3rem;font-weight:800;line-height:1}
-.verdict{border-radius:12px;padding:12px;margin:10px 0;border:3px solid;font-weight:700}
-.verdict.essai{background:var(--vert-clair);border-color:var(--vert);color:var(--vert)}
-.verdict.approfondir{background:var(--orange-clair);border-color:var(--orange);color:var(--orange)}
-.verdict.non_recommande{background:var(--rouge-clair);border-color:var(--rouge);color:var(--rouge)}
-.sous-score{margin:10px 0}
-.sous-score .ligne{display:flex;justify-content:space-between;font-weight:700}
-.jauge{height:14px;background:#e3e3e3;border-radius:999px;overflow:hidden;margin-top:4px}
-.jauge i{display:block;height:100%;background:var(--bleu)}
-.drapeau{border-radius:10px;padding:10px 12px;margin:8px 0;border:2px solid}
-.drapeau.bloquant{background:var(--rouge-clair);border-color:var(--rouge)}
-.drapeau.leger{background:var(--orange-clair);border-color:var(--orange)}
-.drapeau .niveau{display:inline-block;font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
-.drapeau.bloquant .niveau{color:var(--rouge)}
-.drapeau.leger .niveau{color:var(--orange)}
-ul.verifs{padding-left:1.1em;margin:.4em 0}
-ul.verifs li{margin:.35em 0}
+/* ---- Résultat ---- */
+.entete-resultat{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.anneau{flex:0 0 auto}
+.anneau .valeur{font-size:30px;font-weight:800;fill:var(--encre)}
+.anneau .sur{font-size:11px;fill:var(--encre-douce);font-weight:600}
+.resume-verdict{flex:1 1 200px;min-width:0}
+.verdict{border-radius:var(--rayon);padding:12px 14px;border:var(--bord) solid;font-weight:800;font-size:1.1rem}
+.verdict small{display:block;font-weight:500;font-size:.85rem;margin-top:4px}
+.verdict.essai{background:var(--vert-pale);border-color:var(--vert);color:var(--vert)}
+.verdict.approfondir{background:var(--orange-pale);border-color:var(--orange);color:var(--orange)}
+.verdict.non_recommande{background:var(--rouge-pale);border-color:var(--rouge);color:var(--rouge)}
 
-table{border-collapse:collapse;width:100%;font-size:.9rem;margin:.5em 0}
-th,td{border:1px solid var(--trait);padding:6px 8px;text-align:left;vertical-align:top}
-th{background:#f0f0f0}
+.sous-score{margin:12px 0}
+.sous-score .ligne{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:.95rem}
+.sous-score .ligne span{min-width:0}
+.sous-score .ligne em{font-style:normal;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sous-score .poids{display:block;font-size:.78rem;color:var(--encre-douce);font-weight:600;margin-top:3px}
+.jauge{height:12px;background:#dfe3e9;border-radius:999px;overflow:hidden;margin-top:5px;border:1px solid var(--trait)}
+.jauge i{display:block;height:100%;border-radius:999px}
+.jauge i.haut{background:var(--vert)}
+.jauge i.moyen{background:var(--sable)}
+.jauge i.bas{background:var(--rouge)}
 
-.liste-historique{list-style:none;padding:0;margin:0}
-.liste-historique li{border:2px solid var(--trait);border-radius:10px;padding:10px;margin:8px 0}
+.drapeau{border-radius:var(--rayon-petit);padding:12px 14px;margin:10px 0;border:var(--bord) solid;display:flex;gap:12px}
+.drapeau .icone{flex:0 0 auto;width:26px;height:26px}
+.drapeau.bloquant{background:var(--rouge-pale);border-color:var(--rouge)}
+.drapeau.leger{background:var(--orange-pale);border-color:var(--orange)}
+.etiquette{display:inline-block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:999px;border:1.5px solid}
+.drapeau.bloquant .etiquette{color:var(--rouge);border-color:var(--rouge)}
+.drapeau.leger .etiquette{color:var(--orange);border-color:var(--orange)}
+.drapeau .message{display:block;margin-top:5px;font-weight:600;line-height:1.35}
+
+ul.verifs{list-style:none;padding:0;margin:.4em 0}
+ul.verifs li{position:relative;padding:9px 0 9px 32px;border-bottom:1px solid var(--trait)}
+ul.verifs li:last-child{border-bottom:0}
+ul.verifs li::before{
+  content:"";position:absolute;left:2px;top:11px;width:17px;height:17px;
+  border:2px solid var(--trait-fort);border-radius:5px;
+}
+.detail-reponses summary{cursor:pointer;font-weight:700;color:var(--primaire);padding:10px 0}
+.detail-reponses dl{margin:0}
+.detail-reponses dt{font-weight:700;font-size:.9rem;margin-top:12px}
+.detail-reponses dd{margin:2px 0 0;color:var(--encre-douce);font-size:.92rem}
+
+table{border-collapse:collapse;width:100%;font-size:.88rem;margin:.6em 0}
+th,td{border:1px solid var(--trait);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--surface-douce);font-size:.82rem;text-transform:uppercase;letter-spacing:.03em}
+
+.liste{list-style:none;padding:0;margin:0}
+.liste li{border:var(--bord) solid var(--trait);border-radius:var(--rayon-petit);padding:12px;margin:10px 0;background:var(--surface)}
+.liste.sommaire li{border:0;padding:0;margin:9px 0;background:none}
+.liste.sommaire .bouton{display:flex;align-items:center;gap:10px;text-align:left;padding:13px 14px}
+.liste.sommaire .bouton b{flex:1;min-width:0;font-size:.98rem}
+.chip{display:inline-block;font-size:.75rem;font-weight:800;padding:3px 9px;border-radius:999px;border:1.5px solid;text-transform:uppercase;letter-spacing:.04em}
+.chip.essai{color:var(--vert);border-color:var(--vert);background:var(--vert-pale)}
+.chip.approfondir{color:var(--orange);border-color:var(--orange);background:var(--orange-pale)}
+.chip.non_recommande{color:var(--rouge);border-color:var(--rouge);background:var(--rouge-pale)}
+.chip.vide{color:var(--encre-douce);border-color:var(--trait-fort);background:var(--surface-douce)}
+.chip.complet{color:var(--primaire);border-color:var(--primaire);background:var(--primaire-pale)}
+.chip.partiel{color:var(--orange);border-color:var(--orange);background:var(--orange-pale)}
+
+.script{counter-reset:q}
+.script li{margin:14px 0;padding-bottom:10px;border-bottom:1px dashed var(--trait-fort)}
+.script li b{display:block;font-size:1.02rem}
+.ligne-notes{display:block;border-bottom:1px solid var(--trait);height:26px;margin-top:8px}
+
+pre{white-space:pre-wrap;word-break:break-word;background:var(--surface-douce);padding:10px;border-radius:8px;font-size:.8rem}
+.ok{color:var(--vert);font-weight:800}
+.ko{color:var(--rouge);font-weight:800}
 .cache{display:none}
-.selftest-ok{color:var(--vert);font-weight:700}
-.selftest-ko{color:var(--rouge);font-weight:700}
-pre{white-space:pre-wrap;word-break:break-word;background:#f4f4f4;padding:10px;border-radius:8px;font-size:.82rem}
 
-@media (min-width:600px){ body{font-size:19px} }
+@media (min-width:640px){ :root{--base:18px} .enveloppe{padding:20px 20px 120px} }
 
 @media print{
   .bandeau,.barre-bas,.sansImpression{display:none !important}
-  body{font-size:12pt}
+  body{font-size:11pt;background:#fff}
   .enveloppe{max-width:none;padding:0}
-  .carte,.verdict,.drapeau,.score-global{break-inside:avoid}
-  .avertissement{border-width:1px}
+  .carte,.verdict,.drapeau,.entete-resultat,.script li{break-inside:avoid;box-shadow:none}
+  .carte{border:1px solid #999}
+  .detail-reponses[open] summary{display:none}
+  .detail-reponses:not([open])>*:not(summary){display:block !important}
+  h2{margin-top:14pt}
   a[href]:after{content:""}
 }
+.drapeau.bloquant .icone{color:var(--rouge)}
+.drapeau.leger .icone{color:var(--orange)}
 </style>
 </head>
 <body>
-<div class="bandeau sansImpression">
-  <div class="enveloppe">
-    <b>Entretien aide ménagère / aide cuisinière</b>
-    <small>Aide à la décision. Ce n'est pas un détecteur de mensonge.</small>
+<header class="bandeau sansImpression">
+  <div class="dedans">
+    <div class="titre">
+      <b>Entretien aide ménagère</b>
+      <span>Aide à la décision, pas un détecteur de mensonge.</span>
+    </div>
+    <button class="soleil" id="soleil" type="button" aria-pressed="false">☀ Plein soleil</button>
   </div>
-</div>
+</header>
 <main class="enveloppe" id="ecran"></main>
 <div class="barre-bas sansImpression" id="barre"></div>
 <script>
@@ -271,21 +370,45 @@ const CONFIG = {
     ]
   },
 
-  preambule: {
-    fr: "Bonjour. Je vais te poser dix questions sur le travail. Je note tes réponses sur mon téléphone, pour m’aider à me souvenir et à comparer. Il n’y a pas de piège. Si tu ne sais pas, dis-le, ce n’est pas grave. Tu peux me poser des questions toi aussi.",
-    za: "Fofo. Ay ga hã ni se hãayan way goyo boŋ. Ay ga ni tuyaney hantum ay telefono ra, zama ay ma fongu k’i care nda care. Fafaga si no. Da ni si bay, ma ci, manti taali. Nin mo ga hin ka hã ay se.",
-    ha: "Sannu. Zan yi miki tambayoyi goma game da aiki. Ina rubuta amsoshinki a wayata, don in tuna kuma in kwatanta. Babu tarko. In ba ki sani ba, ki faɗa, ba laifi. Ke ma kina iya tambayata."
+  preambule: "Bonjour. Je vais te poser dix questions sur le travail. Je note tes réponses sur mon téléphone, pour m’aider à me souvenir et à comparer. Il n’y a pas de piège. Si tu ne sais pas, dis-le, ce n’est pas grave. Tu peux me poser des questions toi aussi.",
+
+  appelReference: {
+    intro: "Bonjour, je suis [MOI]. [PRENOM] se présente chez moi pour un travail de maison et m\u2019a donné votre nom. Vous avez deux minutes ?",
+    questions: [
+      "Combien de temps a-t-elle travaillé chez vous, de quand à quand ?",
+      "Quelles tâches faisait-elle exactement ?",
+      "Arrivait-elle à l\u2019heure ? Prévenait-elle quand elle ne pouvait pas venir ?",
+      "Avez-vous eu des soucis d\u2019argent ou d\u2019objets manquants ?",
+      "Comment réagissait-elle quand vous lui faisiez une remarque ?",
+      "Pourquoi est-elle partie ?",
+      "Est-ce que vous la reprendriez ?"
+    ],
+    cloture: "Merci beaucoup pour votre temps.",
+    conseils: [
+      "Appelle toi-même : ne te contente pas d\u2019un numéro transmis par la candidate sans vérifier qui décroche.",
+      "Pose les questions dans cet ordre et laisse la personne parler.",
+      "Une réponse gênée sur l\u2019argent ou sur « la reprendriez-vous ? » en dit plus qu\u2019un long discours."
+    ],
+    // Questions ajoutées automatiquement selon les drapeaux levés pendant l'entretien.
+    selonDrapeau: {
+      integrite: "Y a-t-il déjà eu un objet ou de l\u2019argent qui a disparu pendant qu\u2019elle travaillait chez vous ?",
+      se_sert_sans_demander: "Comment ça se passait pour les repas et pour ce qu\u2019elle prenait dans la maison ?",
+      surdeclaration: "Savait-elle vraiment faire ce qu\u2019elle annonçait, ou a-t-il fallu tout lui apprendre ?",
+      incoherence_q1_q2: "Est-ce qu\u2019elle savait cuisiner et tenir une maison seule, sans qu\u2019on lui dise quoi faire ?",
+      geste_dangereux: "Y a-t-il déjà eu un accident ou un début d\u2019incendie dans la cuisine ?",
+      electromenager_sans_autorisation: "Utilisait-elle vos appareils sans demander ?",
+      refus_reference: "Depuis quand la connaissez-vous et à quel titre ?",
+      engagement_irrealiste: "Prenait-elle des congés ? Prévenait-elle à l\u2019avance ?",
+      incoherence_q9_q10: "Est-elle partie brusquement, ou en prévenant ?",
+      reponse_trop_parfaite: "Racontez-moi une journée où ça s\u2019est mal passé avec elle."
+    }
   },
 
   questions: [
     {
       id: 'q1', numero: 1, titre: 'Compétences déclarées', type: 'familles',
       sousScores: ['competences'],
-      textes: {
-        fr: "Dis-moi ce que tu sais faire dans une maison. Je coche au fur et à mesure. Si tu ne sais pas faire une chose, dis-le, ce n’est pas grave.",
-        za: "Ma ci ay se haya kaŋ ni ga hin ka te fu ra. Ay ga hantum sanda ni ga ci. Da hay fo go kaŋ ni si hin, ma ci ay se, manti taali.",
-        ha: "Faɗa mini abin da kika iya yi a gida. Ina rubutawa yayin da kike faɗa. In akwai abin da ba ki iya ba, ki faɗa, ba laifi."
-      },
+      texte: "Dis-moi ce que tu sais faire dans une maison. Je coche au fur et à mesure. Si tu ne sais pas faire une chose, dis-le, ce n’est pas grave.",
       consigne: "Coche ce qu’elle dit savoir faire. Rien n’est obligatoire : Q2 vérifiera ce qui est réel.",
       familles: [
         {
@@ -325,12 +448,8 @@ const CONFIG = {
     {
       id: 'q2', numero: 2, titre: 'Démonstration orale', type: 'critere',
       sousScores: ['competences', 'coherence'],
-      textes: {
-        fr: "Explique-moi, étape par étape, comment tu fais [TACHE]. Prends ton temps. Commence par le début.",
-        za: "Ma ci ay se, ce fo-fo, mate kaŋ ni ga [TACHE] te d’a. Ma te suuru. Ma sintin za sintina gaa.",
-        ha: "Ki bayyana mini, mataki-mataki, yadda kike yin [TACHE]. Ki yi a hankali. Ki fara daga farko."
-      },
-      consigne: "La tâche est tirée au hasard parmi celles cochées en Q1. Ne pénalise pas le vocabulaire : une explication juste en zarma ou en haoussa vaut une explication en français.",
+      texte: "Explique-moi, étape par étape, comment tu fais [TACHE]. Prends ton temps. Commence par le début.",
+      consigne: "La tâche est tirée au hasard parmi celles cochées en Q1. Ne pénalise ni le vocabulaire ni la langue : une explication juste dans sa langue vaut une explication en français.",
       critere: {
         id: 'option',
         options: [
@@ -348,19 +467,11 @@ const CONFIG = {
     {
       id: 'q3', numero: 3, titre: 'Hygiène alimentaire', type: 'criteres',
       sousScores: ['hygieneSecurite'],
-      textes: {
-        fr: "Maintenant, parlons de la nourriture et de l’eau.",
-        za: "Sohõ iri ma salaŋ ŋwaari nda hari boŋ.",
-        ha: "Yanzu mu yi magana a kan abinci da ruwa."
-      },
+      texte: "Maintenant, parlons de la nourriture et de l’eau.",
       criteres: [
         {
           id: 'mains', titre: 'Lavage des mains',
-          textes: {
-            fr: "Avant de cuisiner, comment tu te laves les mains ?",
-            za: "Za ni mana ŋwaari te, mate kaŋ ni ga ni kambey nyun d’a?",
-            ha: "Kafin ki girka, yaya kike wanke hannunki?"
-          },
+          texte: "Avant de cuisiner, comment tu te laves les mains ?",
           aVerifier: "Montrer la règle de la maison sur le lavage des mains le premier jour.",
           options: [
             { id: 'complet', libelle: "À l’eau et au savon, avant de cuisiner et après les toilettes", points: { hygieneSecurite: 3 } },
@@ -370,11 +481,7 @@ const CONFIG = {
         },
         {
           id: 'legumes', titre: 'Légumes mangés crus',
-          textes: {
-            fr: "La salade et les tomates qu’on mange sans les cuire, comment tu les prépares ?",
-            za: "Salaati nda tomaati kaŋ i si hina, mate kaŋ ni g’i soola d’a?",
-            ha: "Salatin da tumatir da ake ci ba tare da dafa su ba, yaya kike shirya su?"
-          },
+          texte: "La salade et les tomates qu’on mange sans les cuire, comment tu les prépares ?",
           aVerifier: "Montrer la règle de la maison sur le lavage des légumes crus le premier jour.",
           options: [
             { id: 'complet', libelle: "Lavés à l’eau propre, trempés (eau javellisée pour aliments, vinaigre, permanganate) puis rincés", points: { hygieneSecurite: 3 } },
@@ -384,11 +491,7 @@ const CONFIG = {
         },
         {
           id: 'viande', titre: 'Viande crue et aliments cuits',
-          textes: {
-            fr: "Tu viens de découper de la viande crue. Maintenant tu dois couper des légumes déjà cuits. Que fais-tu avec le couteau et la planche ?",
-            za: "Ni na ham kaŋ si hina dumbu. Sohõ ni ga ŋwaari kaŋ i hina dumbu. Ifo no ni ga te nda zaama nda dumbuyan-bundo?",
-            ha: "Kin yanka nama danye. Yanzu za ki yanka kayan da aka riga aka dafa. Me za ki yi da wuƙa da katakon yanka?"
-          },
+          texte: "Tu viens de découper de la viande crue. Maintenant tu dois couper des légumes déjà cuits. Que fais-tu avec le couteau et la planche ?",
           aVerifier: "Montrer la règle de la maison sur la viande crue et les planches le premier jour.",
           options: [
             { id: 'complet', libelle: "Couteau et planche lavés à l’eau et au savon entre les deux, ou deux planches différentes", points: { hygieneSecurite: 3 } },
@@ -398,11 +501,7 @@ const CONFIG = {
         },
         {
           id: 'restes', titre: 'Restes',
-          textes: {
-            fr: "Il reste de la sauce du midi. Que fais-tu avec, jusqu’au soir ?",
-            za: "Zaari ŋwaari cindo go no. Ifo no ni ga te d’a kala wiciri-kambu?",
-            ha: "Miyar rana ta rage. Me za ki yi da ita har zuwa dare?"
-          },
+          texte: "Il reste de la sauce du midi. Que fais-tu avec, jusqu’au soir ?",
           aVerifier: "Montrer la règle de la maison sur la conservation des restes le premier jour.",
           options: [
             { id: 'complet', libelle: "Couverte et mise au frigo, puis bien rebouillie avant de servir", points: { hygieneSecurite: 3 } },
@@ -413,11 +512,7 @@ const CONFIG = {
         },
         {
           id: 'eau', titre: 'Eau de boisson',
-          textes: {
-            fr: "L’eau que la famille boit, d’où elle vient et comment tu la gardes ?",
-            za: "Hari kaŋ almayaaley ga haŋ, man gaa no a ga fun, mate kaŋ ni g’a gaay d’a?",
-            ha: "Ruwan sha na iyali, daga ina yake zuwa, kuma yaya kike ajiye shi?"
-          },
+          texte: "L’eau que la famille boit, d’où elle vient et comment tu la gardes ?",
           aVerifier: "Montrer la règle de la maison sur l’eau de boisson le premier jour.",
           options: [
             { id: 'complet', libelle: "Eau filtrée, bouillie ou en sachet, récipient couvert, louche ou gobelet propre", points: { hygieneSecurite: 3 } },
@@ -435,11 +530,7 @@ const CONFIG = {
       variantes: [
         {
           id: 'huile', libelle: 'Huile en feu',
-          textes: {
-            fr: "Tu fais frire. L’huile prend feu dans la marmite. Que fais-tu tout de suite ?",
-            za: "Ni go soyyan gaa. Danji na ji di kuso ra. Ifo no ni ga te sohõ?",
-            ha: "Kina soya. Man ya kama wuta a cikin tukunya. Me za ki yi nan take?"
-          },
+          texte: "Tu fais frire. L’huile prend feu dans la marmite. Que fais-tu tout de suite ?",
           aVerifier: "Reprendre ce geste avec elle avant qu’elle touche au gaz ou aux produits.",
           options: [
             { id: 'couvrir', libelle: "Je coupe le feu ou le gaz, et je couvre la marmite (couvercle, grand plat, linge mouillé essoré)", points: { hygieneSecurite: 15 } },
@@ -452,11 +543,7 @@ const CONFIG = {
         },
         {
           id: 'gaz', libelle: 'Odeur de gaz',
-          textes: {
-            fr: "Tu entres dans la cuisine le matin et ça sent le gaz. Que fais-tu ?",
-            za: "Ni furo ŋwaari-teeyan fuwo ra susubay, gaazu hã go no. Ifo no ni ga te?",
-            ha: "Kin shiga ɗakin girki da safe, kika ji ƙamshin gas. Me za ki yi?"
-          },
+          texte: "Tu entres dans la cuisine le matin et ça sent le gaz. Que fais-tu ?",
           aVerifier: "Reprendre ce geste avec elle avant qu’elle touche au gaz ou aux produits.",
           options: [
             { id: 'fermer', libelle: "Je ne touche à rien d’électrique, je ferme la bouteille, j’ouvre portes et fenêtres, je préviens", points: { hygieneSecurite: 15 } },
@@ -469,11 +556,7 @@ const CONFIG = {
         },
         {
           id: 'melange', libelle: 'Mélange de produits',
-          textes: {
-            fr: "Tu veux que les toilettes soient vraiment propres. Est-ce que tu mélanges l’eau de Javel avec un autre produit ? Lequel ?",
-            za: "Ni ga ba kaŋ kawyan fuwo ma hanan gumo. Ni ga javel margu nda dooro fo? Woofo dumi no?",
-            ha: "Kina son bayan gida ya yi tsabta sosai. Shin kina haɗa ruwan Javel da wani magani? Wanne?"
-          },
+          texte: "Tu veux que les toilettes soient vraiment propres. Est-ce que tu mélanges l’eau de Javel avec un autre produit ? Lequel ?",
           aVerifier: "Reprendre ce geste avec elle avant qu’elle touche au gaz ou aux produits.",
           options: [
             { id: 'jamais', libelle: "Non, jamais deux produits ensemble : la Javel seule, bien rincée, fenêtre ouverte", points: { hygieneSecurite: 15 } },
@@ -490,11 +573,7 @@ const CONFIG = {
     {
       id: 'q5', numero: 5, titre: 'Règles de la maison', type: 'critere',
       sousScores: ['integrite'],
-      textes: {
-        fr: "Il n’y a personne à la maison. Tu veux réchauffer ton repas. Le micro-ondes est là. Que fais-tu ?",
-        za: "Boro kulu si fuwo ra. Ni ga ba ni ŋwaaro ma dungu. Mikro-onda go noodin. Ifo no ni ga te?",
-        ha: "Babu kowa a gida. Kina son ki ɗuma abincinki. Mikrowef ɗin nan yana nan. Me za ki yi?"
-      },
+      texte: "Il n’y a personne à la maison. Tu veux réchauffer ton repas. Le micro-ondes est là. Que fais-tu ?",
       consigne: "La bonne réponse est « demander », pas « savoir s’en servir ». Si elle demande la règle de la maison d’elle-même, c’est un bon signe.",
       critere: {
         id: 'option',
@@ -517,11 +596,7 @@ const CONFIG = {
       variantes: [
         {
           id: 'argent', libelle: 'Argent trouvé',
-          textes: {
-            fr: "Tu fais le ménage dans la chambre. Tu trouves un billet de 10 000 francs par terre, sous le lit. Que fais-tu ?",
-            za: "Ni go fu ra hanandiyan gaa. Ni na nooru takarda zambar way gar ganda, daari cire. Ifo no ni ga te?",
-            ha: "Kina share ɗaki. Kika tarar da takardar kuɗi dubu goma a ƙasa, ƙarƙashin gado. Me za ki yi?"
-          },
+          texte: "Tu fais le ménage dans la chambre. Tu trouves un billet de 10 000 francs par terre, sous le lit. Que fais-tu ?",
           aVerifier: "Appeler les anciens employeurs et poser la question de la confiance.",
           options: [
             { id: 'pose', libelle: "Je le pose bien en vue et je le dis tout de suite", points: { integrite: 15 } },
@@ -532,11 +607,7 @@ const CONFIG = {
         },
         {
           id: 'objet', libelle: 'Objet cassé',
-          textes: {
-            fr: "En faisant le ménage, tu casses un verre. Personne ne t’a vue. Que fais-tu ?",
-            za: "Ni go hanandiyan gaa, ni na gaasu fo ceeri. Boro kulu mana di ni. Ifo no ni ga te?",
-            ha: "Kina share ɗaki, sai kika fasa gilashi. Ba wanda ya gan ki. Me za ki yi?"
-          },
+          texte: "En faisant le ménage, tu casses un verre. Personne ne t’a vue. Que fais-tu ?",
           aVerifier: "Appeler les anciens employeurs et poser la question de la confiance.",
           options: [
             { id: 'dit_tout_de_suite', libelle: "Je le dis tout de suite, même si j’ai peur", points: { integrite: 15 } },
@@ -547,11 +618,7 @@ const CONFIG = {
         },
         {
           id: 'nourriture', libelle: 'Nourriture de la maison',
-          textes: {
-            fr: "Il y a de la nourriture dans la maison. Personne ne t’a dit de te servir. Tu as faim. Que fais-tu ?",
-            za: "Ŋwaari go fuwo ra. Boro kulu mana ci ni se ni ma ŋwa. Haray go ni gaa. Ifo no ni ga te?",
-            ha: "Akwai abinci a gida. Ba wanda ya ce ki ci. Kina jin yunwa. Me za ki yi?"
-          },
+          texte: "Il y a de la nourriture dans la maison. Personne ne t’a dit de te servir. Tu as faim. Que fais-tu ?",
           aVerifier: "Dire dès le premier jour ce qui est permis pour les repas.",
           options: [
             { id: 'demande', libelle: "Je demande avant de me servir", points: { integrite: 15 } },
@@ -568,11 +635,7 @@ const CONFIG = {
       sousScores: ['coherence'],
       produitParDefaut: 'Sablonet',
       usageParDefaut: 'récurer les marmites et les sanitaires',
-      textes: {
-        fr: "Est-ce que tu connais le produit [PRODUIT] ? Tu l’as déjà utilisé ?",
-        za: "Ni ga [PRODUIT] bay? Ni na goy nd’a ce fo?",
-        ha: "Kin san maganin [PRODUIT]? Kin taɓa amfani da shi?"
-      },
+      texte: "Est-ce que tu connais le produit [PRODUIT] ? Tu l’as déjà utilisé ?",
       consigne: "Ce produit n’existe pas. Relance une seule fois (« tu es sûre ? c’est celui pour [USAGE] »), puis passe à la suite sans commenter, quelle que soit la réponse. Le nom se change dans Réglages.",
       critere: {
         id: 'option',
@@ -589,11 +652,7 @@ const CONFIG = {
     {
       id: 'q8', numero: 8, titre: 'Désirabilité sociale', type: 'critere',
       sousScores: ['coherence'],
-      textes: {
-        fr: "Personne n’est parfait. Est-ce qu’il t’est déjà arrivé, même une seule fois, d’arriver en retard ou de te fâcher au travail ? Raconte-moi.",
-        za: "Boro kulu si no kaŋ si taali te. Ni na gay ce fo, wala ni bina tun goyo do? Ma dumandi ay se.",
-        ha: "Babu wanda ba ya kuskure. Shin ya taɓa faruwa, ko sau ɗaya, kika makara ko kika yi fushi a wurin aiki? Ki ba ni labari."
-      },
+      texte: "Personne n’est parfait. Est-ce qu’il t’est déjà arrivé, même une seule fois, d’arriver en retard ou de te fâcher au travail ? Raconte-moi.",
       consigne: "Relance une fois (« même quand tu étais fatiguée ou malade ? ») avant de cocher « jamais ». Une réponse trop parfaite n’est pas une faute : c’est un signal à creuser.",
       critere: {
         id: 'option',
@@ -610,11 +669,7 @@ const CONFIG = {
     {
       id: 'q9', numero: 9, titre: 'Parcours', type: 'criteres',
       sousScores: ['stabilite'],
-      textes: {
-        fr: "Parle-moi de tes deux derniers travails. Pour chacun : combien de temps tu es restée, pourquoi tu es partie, et le nom et le numéro d’une personne qui peut parler de ton travail.",
-        za: "Ma ci ay se ni goy hinka kaŋ ga ban gaa. Afo kulu se : han marge no ni te, ifo se no ni fun, nda boro fo maa nda telefon kaŋ ga hin ka salaŋ ni goyo boŋ.",
-        ha: "Ki gaya mini game da ayyukanki biyu na ƙarshe. Ga kowanne: tsawon lokacin da kika yi, dalilin barin aikin, da sunan mutum da lambar wayarsa wanda zai iya magana a kan aikinki."
-      },
+      texte: "Parle-moi de tes deux derniers travails. Pour chacun : combien de temps tu es restée, pourquoi tu es partie, et le nom et le numéro d’une personne qui peut parler de ton travail.",
       consigne: "Première expérience : coche la case ci-dessous. Aucun drapeau n’est levé et le sous-score Stabilité est neutralisé.",
       // ✱ QUESTIONS.md, décision 4 : première expérience -> part Q9 neutralisée à la valeur médiane.
       neutralisation: { quand: 'premiereExperience', sousScore: 'stabilite', obtenus: 10, max: 20 },
@@ -663,11 +718,7 @@ const CONFIG = {
     {
       id: 'q10', numero: 10, titre: 'Projet et congés', type: 'criteres',
       sousScores: ['stabilite', 'coherence'],
-      textes: {
-        fr: "Si on travaille ensemble, combien de temps tu penses rester ? Combien de fois dans l’année tu veux des jours de congé, et combien de jours à chaque fois ? Est-ce qu’on écrit ces dates ensemble maintenant ?",
-        za: "Da iri goy care banda, alwaati marge no ni ga miila ni ga goro? Sorro marge no jiiro ra no ni ga ba fulanzamay jirbiyaŋ, jirbi marge sorro fo kulu? Iri ma zaarey din hantum care banda sohõ?",
-        ha: "In muka yi aiki tare, tsawon wane lokaci kike tunanin za ki zauna? Sau nawa a shekara kike son hutu, kuma kwana nawa a kowane lokaci? Mu rubuta waɗannan kwanakin tare yanzu?"
-      },
+      texte: "Si on travaille ensemble, combien de temps tu penses rester ? Combien de fois dans l’année tu veux des jours de congé, et combien de jours à chaque fois ? Est-ce qu’on écrit ces dates ensemble maintenant ?",
       consigne: "Question posée à toutes les candidates, dans les mêmes termes. Elle porte sur l’organisation du travail : ne demande pas si elle est mariée ni où vivent ses proches, cela n’entre pas dans le score.",
       criteres: [
         {
@@ -1037,11 +1088,15 @@ const TEST_CASES = [
 // @@TESTS-END
 
 /* ------------------------------------------------------------------
-   Interface. Aucun accès au barème en dur : tout vient de CONFIG.
+   Interface. Tout le contenu vient de CONFIG : rien n'est écrit en dur ici.
    ------------------------------------------------------------------ */
 
-const CLE_HISTORIQUE = 'rem.historique.v1';
-const CLE_REGLAGES = 'rem.reglages.v1';
+const CLES = {
+  historique: 'rem.historique.v1',
+  reglages: 'rem.reglages.v1',
+  brouillon: 'rem.brouillon.v1',
+  affichage: 'rem.affichage.v1'
+};
 
 const $ecran = document.getElementById('ecran');
 const $barre = document.getElementById('barre');
@@ -1062,50 +1117,49 @@ function lireStockage(cle, defaut) {
   }
 }
 function ecrireStockage(cle, valeur) {
-  try {
-    localStorage.setItem(cle, JSON.stringify(valeur));
-    return true;
-  } catch (e) {
-    return false;
-  }
+  try { localStorage.setItem(cle, JSON.stringify(valeur)); return true; }
+  catch (e) { return false; }
 }
 function stockageDisponible() {
-  try {
-    localStorage.setItem('rem.test', '1');
-    localStorage.removeItem('rem.test');
-    return true;
-  } catch (e) {
-    return false;
+  try { localStorage.setItem('rem.test', '1'); localStorage.removeItem('rem.test'); return true; }
+  catch (e) { return false; }
+}
+
+/* ---------- Affichage : mode plein soleil ---------- */
+
+let affichage = Object.assign({ contraste: 'normal' }, lireStockage(CLES.affichage, {}));
+
+function appliquerAffichage() {
+  document.documentElement.setAttribute('data-contraste', affichage.contraste);
+  const bouton = document.getElementById('soleil');
+  if (bouton) {
+    const actif = affichage.contraste === 'fort';
+    bouton.textContent = actif ? '☀ Plein soleil activé' : '☀ Plein soleil';
+    bouton.setAttribute('aria-pressed', actif ? 'true' : 'false');
   }
 }
+
+/* ---------- Réglages ---------- */
 
 const questionQ7 = CONFIG.questions.filter(function (q) { return q.id === 'q7'; })[0];
 const reglagesParDefaut = {
-  produit: questionQ7 ? questionQ7.produitParDefaut : 'Sablonet',
+  produit: questionQ7 ? questionQ7.produitParDefaut : '',
   usage: questionQ7 ? questionQ7.usageParDefaut : ''
 };
-let reglages = Object.assign({}, reglagesParDefaut, lireStockage(CLE_REGLAGES, {}));
+let reglages = Object.assign({}, reglagesParDefaut, lireStockage(CLES.reglages, {}));
 
-const LANGUES = [
-  { id: 'fr', libelle: 'Français' },
-  { id: 'za', libelle: 'Zarma' },
-  { id: 'ha', libelle: 'Haoussa' }
-];
+/* ---------- État de l'entretien ---------- */
 
 function aujourdhui() {
   const d = new Date();
-  const mois = String(d.getMonth() + 1).padStart(2, '0');
-  const jour = String(d.getDate()).padStart(2, '0');
-  return d.getFullYear() + '-' + mois + '-' + jour;
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
 }
-
-let etat = etatInitial();
 
 function etatInitial() {
   return {
     ecran: 'accueil',
-    identite: { prenom: '', date: aujourdhui(), langue: 'fr', poste: 'menage', note: '' },
-    tirage: { q2Famille: null, q2Tache: null, q4: null, q6: null },
+    identite: { prenom: '', date: aujourdhui(), poste: 'menage', note: '' },
+    tirage: { q2Famille: null, q2Tache: null },
     reponses: {
       q1: { familles: [] },
       q2: { famille: null, tache: null, option: null },
@@ -1121,16 +1175,17 @@ function etatInitial() {
   };
 }
 
-function hasard(liste) {
-  return liste[Math.floor(Math.random() * liste.length)];
-}
+let etat = etatInitial();
 
-function tirerVariantes() {
+function hasard(liste) { return liste[Math.floor(Math.random() * liste.length)]; }
+
+function tirerVariantes(seulement) {
   CONFIG.questions.forEach(function (q) {
     if (q.type !== 'variantes') return;
-    const variante = hasard(q.variantes);
-    etat.tirage[q.id] = variante.id;
-    etat.reponses[q.id] = { variante: variante.id, option: null };
+    if (seulement && q.id !== seulement) return;
+    const autres = q.variantes.filter(function (v) { return v.id !== (etat.reponses[q.id] || {}).variante; });
+    const variante = hasard(autres.length ? autres : q.variantes);
+    etat.reponses[q.id] = { variante: variante.id, option: null, note: (etat.reponses[q.id] || {}).note };
   });
 }
 
@@ -1141,9 +1196,10 @@ function tirerTacheQ2() {
   if (!familles.length) {
     etat.tirage.q2Famille = null;
     etat.tirage.q2Tache = null;
-    etat.reponses.q2 = { famille: null, tache: null, option: 'non_posee' };
+    etat.reponses.q2 = { famille: null, tache: null, option: 'non_posee', note: etat.reponses.q2.note };
     return;
   }
+  if (etat.tirage.q2Famille && cochees.indexOf(etat.tirage.q2Famille) !== -1) return;
   const prioritaires = familles.filter(function (f) {
     return (f.prioritaireQ2 || []).indexOf(etat.identite.poste) !== -1;
   });
@@ -1151,132 +1207,233 @@ function tirerTacheQ2() {
   const tache = hasard(famille.demonstrations);
   etat.tirage.q2Famille = famille.id;
   etat.tirage.q2Tache = tache;
-  const dejaRepondu = etat.reponses.q2 && etat.reponses.q2.option && etat.reponses.q2.option !== 'non_posee'
-    ? etat.reponses.q2.option : null;
-  etat.reponses.q2 = { famille: famille.id, tache: tache, option: dejaRepondu };
+  etat.reponses.q2 = { famille: famille.id, tache: tache, option: null, note: etat.reponses.q2.note };
 }
 
-function texteQuestion(textes, remplacements) {
-  const copie = {};
-  LANGUES.forEach(function (l) {
-    let t = textes[l.id] || '';
-    Object.keys(remplacements || {}).forEach(function (cle) {
-      t = t.split(cle).join(remplacements[cle]);
-    });
-    copie[l.id] = t;
+/* ---------- Brouillon : reprise d'un entretien interrompu ---------- */
+
+let minuteurSauvegarde = null;
+
+function entretienCommence() {
+  if (etat.ecran === 'entretien' || etat.ecran === 'pratique' || etat.ecran === 'resultat') return true;
+  return CONFIG.questions.some(function (q) { return etatQuestion(q) !== 'vide'; });
+}
+
+function sauverBrouillon() {
+  if (!entretienCommence() || etat.ecran === 'resultat') return;
+  ecrireStockage(CLES.brouillon, {
+    enregistreLe: new Date().toISOString(),
+    identite: etat.identite, tirage: etat.tirage, reponses: etat.reponses,
+    pratique: etat.pratique, pratiqueFaite: etat.pratiqueFaite, index: etat.index
   });
-  return copie;
 }
+function planifierSauvegarde() {
+  clearTimeout(minuteurSauvegarde);
+  minuteurSauvegarde = setTimeout(sauverBrouillon, 350);
+}
+function effacerBrouillon() { ecrireStockage(CLES.brouillon, null); }
 
-function blocTextes(textes, remplacements) {
-  const t = texteQuestion(textes, remplacements);
-  const langue = etat.identite.langue;
-  const principale = LANGUES.filter(function (l) { return l.id === langue; })[0] || LANGUES[0];
-  let html = '<p class="enonce">' + esc(t[principale.id]) + '</p>';
-  if (principale.id !== 'fr') {
-    html += '<p class="avertissement"><b>Traduction à valider par un locuteur natif.</b> ' +
-            'Vérifie le sens avant de lire cette phrase à voix haute.</p>';
+/* ---------- État de chaque question ---------- */
+
+function etatQuestion(question) {
+  const rep = etat.reponses[question.id] || {};
+  if (question.type === 'familles') return (rep.familles || []).length ? 'complet' : 'vide';
+  if (question.type === 'critere' || question.type === 'variantes') return rep.option ? 'complet' : 'vide';
+  if (question.type === 'criteres') {
+    if (question.neutralisation && rep[question.neutralisation.quand] === true) return 'complet';
+    const faits = question.criteres.filter(function (c) { return rep[c.id]; }).length;
+    if (!faits) return 'vide';
+    return faits === question.criteres.length ? 'complet' : 'partiel';
   }
-  const autres = LANGUES.filter(function (l) { return l.id !== principale.id; });
-  html += '<details class="traductions sansImpression"><summary>Voir les autres langues</summary>';
-  autres.forEach(function (l) {
-    html += '<div class="traduction"><b>' + esc(l.libelle) + '</b>' + esc(t[l.id]);
-    if (l.id !== 'fr') html += '<span class="aValider">Traduction à valider par un locuteur natif.</span>';
-    html += '</div>';
-  });
-  html += '</details>';
-  return html;
+  return 'vide';
 }
 
-function optionHtml(nom, option, valeurCochee, type) {
-  const coche = valeurCochee === option.id ? ' checked' : '';
+function varianteDe(question, rep) {
+  return question.variantes.filter(function (v) { return v.id === (rep || {}).variante; })[0] || null;
+}
+function libelleOption(options, id) {
+  const o = (options || []).filter(function (x) { return x.id === id; })[0];
+  return o ? o.libelle : null;
+}
+
+/* ---------- Fragments communs ---------- */
+
+function optionHtml(nom, option, valeurCochee, type, extra) {
   return '<label class="option">' +
-    '<input type="' + type + '" name="' + esc(nom) + '" value="' + esc(option.id) + '"' + coche + '>' +
-    '<span class="libelle">' + esc(option.libelle) +
-    (option.detail ? '<span class="detail">' + esc(option.detail) + '</span>' : '') +
+    '<input type="' + type + '" name="' + esc(nom) + '" value="' + esc(option.id) + '"' +
+      (valeurCochee === option.id ? ' checked' : '') + '>' +
+    '<span class="marque" aria-hidden="true"></span>' +
+    '<span class="texte">' + esc(option.libelle) +
+      (option.detail ? '<span class="sous">' + esc(option.detail) + '</span>' : '') +
+      (extra ? '<span class="note">' + esc(extra) + '</span>' : '') +
     '</span></label>';
 }
 
-function rendre() {
-  if (etat.ecran === 'accueil') rendreAccueil();
-  else if (etat.ecran === 'entretien') rendreEntretien();
-  else if (etat.ecran === 'pratique') rendrePratique();
-  else if (etat.ecran === 'resultat') rendreResultat();
-  else if (etat.ecran === 'reglages') rendreReglages();
-  else if (etat.ecran === 'historique') rendreHistorique();
-  try { scrollTo(0, 0); } catch (e) { /* sans effet hors navigateur */ }
+function champNote(valeur) {
+  return '<div class="carte plate sansImpression"><label class="champ" for="noteQ">Note libre (facultatif)</label>' +
+    '<textarea id="noteQ" placeholder="Ce qu’elle a dit, avec ses mots.">' + esc(valeur || '') + '</textarea>' +
+    '<small>Les notes libres ne sont jamais comptées dans le score et ne sont pas transmises au calcul.</small></div>';
 }
 
+function anneauScore(total) {
+  const rayon = 42;
+  const tour = 2 * Math.PI * rayon;
+  const valeur = Math.max(0, Math.min(100, total));
+  const couleur = valeur >= CONFIG.seuils.essai ? 'var(--vert)'
+    : valeur >= CONFIG.seuils.approfondir ? 'var(--sable)' : 'var(--rouge)';
+  return '<svg class="anneau" width="124" height="124" viewBox="0 0 100 100" role="img" aria-label="Score ' + valeur + ' sur 100">' +
+    '<circle cx="50" cy="50" r="' + rayon + '" fill="none" stroke="#dfe3e9" stroke-width="11"/>' +
+    '<circle cx="50" cy="50" r="' + rayon + '" fill="none" stroke="' + couleur + '" stroke-width="11" stroke-linecap="round"' +
+      ' stroke-dasharray="' + (tour * valeur / 100).toFixed(1) + ' ' + tour.toFixed(1) + '" transform="rotate(-90 50 50)"/>' +
+    '<text class="valeur" x="50" y="48" text-anchor="middle" dominant-baseline="middle">' + valeur + '</text>' +
+    '<text class="sur" x="50" y="68" text-anchor="middle">sur 100</text></svg>';
+}
+
+const ICONES = {
+  bloquant: '<svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1.7 21h20.6L12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18" r="1.2" fill="currentColor"/></svg>',
+  leger: '<svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.1" fill="currentColor"/></svg>'
+};
+
+function libellePoste(id) {
+  const p = CONFIG.postes.filter(function (x) { return x.id === id; })[0];
+  return p ? p.libelle : id;
+}
+
+/* ---------- Routage ---------- */
+
+const ECRANS = {
+  accueil: rendreAccueil, sommaire: rendreSommaire, entretien: rendreEntretien,
+  pratique: rendrePratique, resultat: rendreResultat, appel: rendreAppel,
+  historique: rendreHistorique, reglages: rendreReglages
+};
+
+function rendre() {
+  (ECRANS[etat.ecran] || rendreAccueil)();
+  appliquerAffichage();
+  planifierSauvegarde();
+  try { scrollTo(0, 0); } catch (e) { /* sans effet hors navigateur */ }
+}
 function aller(ecran) { etat.ecran = ecran; rendre(); }
 
-/* ---------- Écran d'accueil : renseignements d'entretien ---------- */
+function brancher(selecteur, evenement, action) {
+  $ecran.querySelectorAll(selecteur).forEach(function (n) { n.addEventListener(evenement, action); });
+  $barre.querySelectorAll(selecteur).forEach(function (n) { n.addEventListener(evenement, action); });
+}
+function surClic(id, action) {
+  const n = document.getElementById(id);
+  if (n) n.addEventListener('click', action);
+}
+
+/* ---------- Accueil ---------- */
 
 function rendreAccueil() {
   const id = etat.identite;
-  let html = '<h1>Nouvel entretien</h1>';
+  const brouillon = lireStockage(CLES.brouillon, null);
+  let html = '';
 
-  html += '<div class="avertissement"><b>Cet outil est une aide à la décision. Ce n’est pas un détecteur de mensonge.</b> ' +
+  if (brouillon && brouillon.identite) {
+    const fait = CONFIG.questions.length;
+    html += '<div class="carte"><h2 style="margin-top:0">Entretien en cours</h2>' +
+      '<p><b>' + esc(brouillon.identite.prenom || 'Candidate') + '</b> — ' + esc(brouillon.identite.date) +
+      ' — question ' + Math.min((brouillon.index || 0) + 1, fait) + ' sur ' + fait + '</p>' +
+      '<button class="bouton" id="reprendre">Reprendre cet entretien</button>' +
+      '<button class="bouton secondaire petit" id="jeter">Supprimer ce brouillon</button></div>';
+  }
+
+  html += '<h1>Nouvel entretien</h1>';
+  html += '<div class="encadre"><b>Cet outil est une aide à la décision. Ce n’est pas un détecteur de mensonge.</b> ' +
     'Il repère des incohérences et des points à vérifier. Rien ne remplace un appel à l’ancien employeur et un essai court et payé.</div>';
 
   html += '<div class="carte">';
-  html += '<label for="prenom">Prénom de la candidate</label>' +
+  html += '<label class="champ" for="prenom">Prénom de la candidate</label>' +
     '<input type="text" id="prenom" value="' + esc(id.prenom) + '" placeholder="Prénom ou surnom" autocomplete="off">';
-  html += '<label for="date">Date de l’entretien</label><input type="date" id="date" value="' + esc(id.date) + '">';
-
-  html += '<label for="poste">Poste visé</label><select id="poste">';
+  html += '<label class="champ" for="date">Date de l’entretien</label><input type="date" id="date" value="' + esc(id.date) + '">';
+  html += '<label class="champ" for="poste">Poste visé</label><select id="poste">';
   CONFIG.postes.forEach(function (p) {
     html += '<option value="' + esc(p.id) + '"' + (p.id === id.poste ? ' selected' : '') + '>' + esc(p.libelle) + '</option>';
   });
   html += '</select>';
-
-  html += '<label for="langue">Langue de l’entretien</label><select id="langue">';
-  LANGUES.forEach(function (l) {
-    html += '<option value="' + esc(l.id) + '"' + (l.id === id.langue ? ' selected' : '') + '>' + esc(l.libelle) + '</option>';
-  });
-  html += '</select>';
-  html += '<small>La langue sert seulement à choisir le texte lu à voix haute. Elle n’entre pas dans le score.</small>';
-
-  html += '<label for="note">Note libre (facultatif)</label>' +
-    '<textarea id="note" placeholder="Ce que tu veux retenir. Ces notes ne sont pas comptées dans le score.">' + esc(id.note) + '</textarea>';
-  html += '<small>Aucun numéro de pièce d’identité, aucune photo. Ce qui est écrit ici n’entre jamais dans le calcul.</small>';
+  html += '<label class="champ" for="note">Note libre (facultatif)</label>' +
+    '<textarea id="note" placeholder="Ce que tu veux retenir.">' + esc(id.note) + '</textarea>' +
+    '<small>Aucun numéro de pièce d’identité, aucune photo. Rien de ce qui est écrit ici n’entre dans le calcul.</small>';
   html += '</div>';
 
-  html += '<div class="carte"><h2>À lire à la candidate avant de commencer</h2>';
-  html += blocTextes(CONFIG.preambule, {});
-  html += '</div>';
+  html += '<div class="carte"><h2 style="margin-top:0">À lire à la candidate avant de commencer</h2>' +
+    '<p class="enonce">' + esc(CONFIG.preambule) + '</p></div>';
 
   html += '<div class="rangee sansImpression">' +
     '<button class="bouton secondaire" data-aller="historique">Historique</button>' +
-    '<button class="bouton secondaire" data-aller="reglages">Réglages</button>' +
-    '</div>';
+    '<button class="bouton secondaire" data-aller="reglages">Réglages</button></div>';
 
   $ecran.innerHTML = html;
-  $barre.innerHTML = '<div class="enveloppe"><button class="bouton" id="commencer">Commencer l’entretien</button></div>';
+  $barre.innerHTML = '<div class="dedans"><button class="bouton" id="commencer">Commencer l’entretien</button></div>';
 
-  function majTexte(cle, id2) {
-    const champ = document.getElementById(id2);
-    if (champ) champ.addEventListener('input', function () { etat.identite[cle] = champ.value; });
-  }
-  majTexte('prenom', 'prenom');
-  majTexte('note', 'note');
-  const champDate = document.getElementById('date');
-  if (champDate) champDate.addEventListener('change', function () { etat.identite.date = champDate.value; });
-  const champPoste = document.getElementById('poste');
-  if (champPoste) champPoste.addEventListener('change', function () { etat.identite.poste = champPoste.value; });
-  const champLangue = document.getElementById('langue');
-  if (champLangue) champLangue.addEventListener('change', function () { etat.identite.langue = champLangue.value; rendre(); });
-
-  $ecran.querySelectorAll('[data-aller]').forEach(function (b) {
-    b.addEventListener('click', function () { aller(b.getAttribute('data-aller')); });
+  ['prenom', 'note'].forEach(function (cle) {
+    const champ = document.getElementById(cle);
+    if (champ) champ.addEventListener('input', function () { etat.identite[cle] = champ.value; planifierSauvegarde(); });
   });
-  document.getElementById('commencer').addEventListener('click', function () {
+  ['date', 'poste'].forEach(function (cle) {
+    const champ = document.getElementById(cle);
+    if (champ) champ.addEventListener('change', function () { etat.identite[cle] = champ.value; planifierSauvegarde(); });
+  });
+  brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
+
+  surClic('reprendre', function () {
+    etat = Object.assign(etatInitial(), {
+      identite: Object.assign(etatInitial().identite, brouillon.identite),
+      tirage: brouillon.tirage || etatInitial().tirage,
+      reponses: Object.assign(etatInitial().reponses, brouillon.reponses),
+      pratique: brouillon.pratique || {},
+      pratiqueFaite: !!brouillon.pratiqueFaite,
+      index: brouillon.index || 0
+    });
+    aller('entretien');
+  });
+  surClic('jeter', function () {
+    if (!confirm('Supprimer le brouillon de cet entretien ?')) return;
+    effacerBrouillon();
+    rendre();
+  });
+  surClic('commencer', function () {
+    const reprise = brouillon && confirm('Un entretien est déjà en cours. Commencer un nouvel entretien effacera le brouillon. Continuer ?');
+    if (brouillon && !reprise) return;
+    effacerBrouillon();
+    const identite = etat.identite;
+    etat = etatInitial();
+    etat.identite = identite;
     tirerVariantes();
-    etat.index = 0;
     aller('entretien');
   });
 }
 
-/* ---------- Entretien pas à pas ---------- */
+/* ---------- Sommaire ---------- */
+
+function rendreSommaire() {
+  let html = '<h1>Sommaire</h1><p>Touche une question pour y aller directement.</p><ul class="liste sommaire">';
+  CONFIG.questions.forEach(function (q, position) {
+    const statut = etatQuestion(q);
+    const mots = { complet: 'Répondu', partiel: 'À compléter', vide: 'À faire' };
+    html += '<li><button class="bouton secondaire" data-question="' + position + '">' +
+      '<b>' + q.numero + '. ' + esc(q.titre) + '</b>' +
+      '<span class="chip ' + statut + '">' + mots[statut] + '</span></button></li>';
+  });
+  html += '</ul>';
+  html += '<button class="bouton secondaire" data-aller="pratique">Épreuve pratique</button>';
+
+  $ecran.innerHTML = html;
+  $barre.innerHTML = '<div class="dedans"><div class="rangee">' +
+    '<button class="bouton secondaire" data-aller="entretien">Retour</button>' +
+    '<button class="bouton" id="voirResultat">Voir le résultat</button></div></div>';
+
+  brancher('[data-question]', 'click', function (e) {
+    etat.index = Number(e.currentTarget.getAttribute('data-question'));
+    aller('entretien');
+  });
+  brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
+  surClic('voirResultat', calculerEtAfficher);
+}
+
+/* ---------- Entretien ---------- */
 
 function rendreEntretien() {
   const question = CONFIG.questions[etat.index];
@@ -1284,30 +1441,35 @@ function rendreEntretien() {
   const rep = etat.reponses[question.id] || {};
   let html = '';
 
-  html += '<div class="progression"><i style="width:' + Math.round(((etat.index + 1) / total) * 100) + '%"></i></div>';
-  html += '<p class="etape">Question ' + (etat.index + 1) + ' sur ' + total + ' — ' + esc(question.titre) + '</p>';
+  html += '<div class="pastilles sansImpression">';
+  CONFIG.questions.forEach(function (q, position) {
+    html += '<button class="pastille ' + etatQuestion(q) + (position === etat.index ? ' courant' : '') +
+      '" data-question="' + position + '" title="' + esc(q.numero + '. ' + q.titre) + '" aria-label="' + esc(q.numero + '. ' + q.titre) + '"></button>';
+  });
+  html += '</div>';
+  html += '<div class="fil"><span>Question ' + (etat.index + 1) + ' sur ' + total + '</span><b>' + esc(question.titre) + '</b></div>';
 
   if (question.type === 'familles') {
-    html += blocTextes(question.textes, {});
+    html += '<p class="enonce">' + esc(question.texte) + '</p>';
     if (question.consigne) html += '<p class="consigne">' + esc(question.consigne) + '</p>';
     html += '<div class="options">';
     question.familles.forEach(function (f) {
       const horsPoste = f.points.competences[etat.identite.poste] === null;
-      const coche = (rep.familles || []).indexOf(f.id) !== -1 ? ' checked' : '';
-      html += '<label class="option"><input type="checkbox" data-famille="' + esc(f.id) + '"' + coche + '>' +
-        '<span class="libelle">' + esc(f.libelle) +
-        '<span class="detail">' + esc(f.detail) + '</span>' +
-        (horsPoste ? '<span class="meta">Hors barème pour ce poste : coché ou non, cela ne change pas le score.</span>' : '') +
+      html += '<label class="option"><input type="checkbox" data-famille="' + esc(f.id) + '"' +
+        ((rep.familles || []).indexOf(f.id) !== -1 ? ' checked' : '') + '>' +
+        '<span class="marque" aria-hidden="true"></span><span class="texte">' + esc(f.libelle) +
+        '<span class="sous">' + esc(f.detail) + '</span>' +
+        (horsPoste ? '<span class="note">Hors barème pour ce poste : cocher ou non ne change pas le score.</span>' : '') +
         '</span></label>';
     });
     html += '</div>';
   } else if (question.type === 'critere') {
-    const remplacements = {};
-    if (question.id === 'q2') remplacements['[TACHE]'] = etat.tirage.q2Tache || '…';
-    if (question.id === 'q7') remplacements['[PRODUIT]'] = reglages.produit;
-    html += blocTextes(question.textes, remplacements);
+    let texte = question.texte;
+    if (question.id === 'q2') texte = texte.split('[TACHE]').join(etat.tirage.q2Tache || '…');
+    if (question.id === 'q7') texte = texte.split('[PRODUIT]').join(reglages.produit);
+    html += '<p class="enonce">' + esc(texte) + '</p>';
     if (question.id === 'q2' && !etat.tirage.q2Tache) {
-      html += '<p class="avertissement">Aucune tâche n’a été cochée en Q1 : la question est retirée du calcul.</p>';
+      html += '<p class="encadre">Aucune tâche n’a été cochée en Q1 : la question est retirée du calcul.</p>';
     }
     if (question.consigne) {
       html += '<p class="consigne">' +
@@ -1320,21 +1482,18 @@ function rendreEntretien() {
     });
     html += '</div>';
   } else if (question.type === 'criteres') {
-    html += blocTextes(question.textes, {});
+    html += '<p class="enonce">' + esc(question.texte) + '</p>';
     if (question.consigne) html += '<p class="consigne">' + esc(question.consigne) + '</p>';
-
     if (question.neutralisation) {
-      const coche = rep[question.neutralisation.quand] === true ? ' checked' : '';
-      html += '<label class="option"><input type="checkbox" data-neutralisation="' + esc(question.id) + '"' + coche + '>' +
-        '<span class="libelle">Première expérience : elle n’a jamais travaillé' +
-        '<span class="detail">Aucun drapeau n’est levé et le sous-score Stabilité est neutralisé.</span></span></label>';
+      html += '<label class="option"><input type="checkbox" data-neutralisation="' + esc(question.id) + '"' +
+        (rep[question.neutralisation.quand] === true ? ' checked' : '') + '>' +
+        '<span class="marque" aria-hidden="true"></span><span class="texte">Première expérience : elle n’a jamais travaillé' +
+        '<span class="sous">Aucun drapeau n’est levé et le sous-score Stabilité est neutralisé.</span></span></label>';
     }
-
-    const masque = question.neutralisation && rep[question.neutralisation.quand] === true;
-    if (!masque) {
+    if (!(question.neutralisation && rep[question.neutralisation.quand] === true)) {
       question.criteres.forEach(function (critere) {
         html += '<div class="carte"><h3>' + esc(critere.titre) + '</h3>';
-        if (critere.textes) html += blocTextes(critere.textes, {});
+        if (critere.texte) html += '<p class="enonce" style="font-size:1.08rem">' + esc(critere.texte) + '</p>';
         html += '<div class="options">';
         critere.options.forEach(function (o) {
           html += optionHtml(question.id + '.' + critere.id, o, rep[critere.id], 'radio');
@@ -1343,61 +1502,70 @@ function rendreEntretien() {
       });
     }
   } else if (question.type === 'variantes') {
-    const variante = question.variantes.filter(function (v) { return v.id === rep.variante; })[0] || question.variantes[0];
-    html += '<p class="etape">Variante tirée au hasard : ' + esc(variante.libelle) + '</p>';
-    html += blocTextes(variante.textes, {});
+    const variante = varianteDe(question, rep) || question.variantes[0];
+    html += '<div class="fil"><span>Scénario tiré au hasard</span><b>' + esc(variante.libelle) + '</b></div>';
+    html += '<p class="enonce">' + esc(variante.texte) + '</p>';
     if (question.consigne) html += '<p class="consigne">' + esc(question.consigne) + '</p>';
     html += '<div class="options">';
-    variante.options.forEach(function (o) {
-      html += optionHtml(question.id, o, rep.option, 'radio');
-    });
+    variante.options.forEach(function (o) { html += optionHtml(question.id, o, rep.option, 'radio'); });
     html += '</div>';
+    html += '<button class="bouton secondaire petit sansImpression" data-retirage="' + esc(question.id) + '">Tirer un autre scénario</button>';
   }
 
-  html += '<div class="carte sansImpression"><label for="noteQ">Note libre sur cette question (facultatif)</label>' +
-    '<textarea id="noteQ" placeholder="Ce qu’elle a dit, avec ses mots.">' + esc(rep.note || '') + '</textarea>' +
-    '<small>Les notes libres ne sont jamais comptées dans le score.</small></div>';
+  html += champNote(rep.note);
 
   $ecran.innerHTML = html;
-  $barre.innerHTML = '<div class="enveloppe"><div class="rangee">' +
+  $barre.innerHTML = '<div class="dedans"><div class="rangee">' +
     '<button class="bouton secondaire" id="precedent">Précédent</button>' +
-    '<button class="bouton" id="suivant">' + (etat.index === total - 1 ? 'Épreuve pratique' : 'Suivant') + '</button>' +
+    '<button class="bouton secondaire" data-aller="sommaire">Sommaire</button>' +
+    '<button class="bouton" id="suivant">' + (etat.index === total - 1 ? 'Terminer' : 'Suivant') + '</button>' +
     '</div></div>';
 
-  $ecran.querySelectorAll('input[type=radio]').forEach(function (input) {
-    input.addEventListener('change', function () {
-      const nom = input.getAttribute('name');
-      const morceaux = nom.split('.');
-      if (morceaux.length === 2) etat.reponses[morceaux[0]][morceaux[1]] = input.value;
-      else etat.reponses[nom].option = input.value;
-    });
+  brancher('input[type=radio]', 'change', function (e) {
+    const morceaux = e.currentTarget.getAttribute('name').split('.');
+    if (morceaux.length === 2) etat.reponses[morceaux[0]][morceaux[1]] = e.currentTarget.value;
+    else etat.reponses[morceaux[0]].option = e.currentTarget.value;
+    majPastilles();
+    planifierSauvegarde();
   });
-  $ecran.querySelectorAll('[data-famille]').forEach(function (input) {
-    input.addEventListener('change', function () {
-      const id = input.getAttribute('data-famille');
-      const liste = etat.reponses.q1.familles || [];
-      const position = liste.indexOf(id);
-      if (input.checked && position === -1) liste.push(id);
-      if (!input.checked && position !== -1) liste.splice(position, 1);
-      etat.reponses.q1.familles = liste;
-    });
+  brancher('[data-famille]', 'change', function (e) {
+    const cible = e.currentTarget.getAttribute('data-famille');
+    const liste = etat.reponses.q1.familles || [];
+    const position = liste.indexOf(cible);
+    if (e.currentTarget.checked && position === -1) liste.push(cible);
+    if (!e.currentTarget.checked && position !== -1) liste.splice(position, 1);
+    etat.reponses.q1.familles = liste;
+    majPastilles();
+    planifierSauvegarde();
   });
-  $ecran.querySelectorAll('[data-neutralisation]').forEach(function (input) {
-    input.addEventListener('change', function () {
-      const q = input.getAttribute('data-neutralisation');
-      etat.reponses[q][CONFIG.questions.filter(function (x) { return x.id === q; })[0].neutralisation.quand] = input.checked;
-      rendre();
-    });
+  brancher('[data-neutralisation]', 'change', function (e) {
+    const q = e.currentTarget.getAttribute('data-neutralisation');
+    const def = CONFIG.questions.filter(function (x) { return x.id === q; })[0];
+    etat.reponses[q][def.neutralisation.quand] = e.currentTarget.checked;
+    rendre();
   });
-  const noteQ = document.getElementById('noteQ');
-  if (noteQ) noteQ.addEventListener('input', function () { etat.reponses[question.id].note = noteQ.value; });
+  brancher('[data-retirage]', 'click', function (e) {
+    tirerVariantes(e.currentTarget.getAttribute('data-retirage'));
+    rendre();
+  });
+  brancher('[data-question]', 'click', function (e) {
+    etat.index = Number(e.currentTarget.getAttribute('data-question'));
+    rendre();
+  });
+  brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
 
-  document.getElementById('precedent').addEventListener('click', function () {
+  const noteQ = document.getElementById('noteQ');
+  if (noteQ) noteQ.addEventListener('input', function () {
+    etat.reponses[question.id].note = noteQ.value;
+    planifierSauvegarde();
+  });
+
+  surClic('precedent', function () {
     if (etat.index === 0) { aller('accueil'); return; }
     etat.index--;
     rendre();
   });
-  document.getElementById('suivant').addEventListener('click', function () {
+  surClic('suivant', function () {
     if (question.id === 'q1') tirerTacheQ2();
     if (etat.index === total - 1) { aller('pratique'); return; }
     etat.index++;
@@ -1405,56 +1573,53 @@ function rendreEntretien() {
   });
 }
 
-/* ---------- Épreuve pratique (facultative) ---------- */
+function majPastilles() {
+  $ecran.querySelectorAll('[data-question]').forEach(function (n) {
+    const q = CONFIG.questions[Number(n.getAttribute('data-question'))];
+    n.className = 'pastille ' + etatQuestion(q) + (CONFIG.questions[etat.index] === q ? ' courant' : '');
+  });
+}
+
+/* ---------- Épreuve pratique ---------- */
 
 function rendrePratique() {
   const poste = etat.identite.poste;
   let html = '<h1>Épreuve pratique</h1>';
-  html += '<p>Facultative. Coche <b>« non observé »</b> pour un geste que tu n’as pas vu : il est retiré du calcul.</p>';
-  html += '<p class="consigne">Les gestes comptent pour le sous-score Compétences, avec un poids plus fort pour les gestes de cuisine quand le poste est « aide cuisinière ».</p>';
+  html += '<p>Facultative. Laisse <b>« non observé »</b> pour un geste que tu n’as pas vu : il est retiré du calcul.</p>';
+  html += '<p class="consigne">Les gestes comptent pour le sous-score Compétences. Les gestes de cuisine pèsent plus lourd quand le poste est « aide cuisinière ».</p>';
 
   CONFIG.pratique.gestes.forEach(function (geste) {
     const valeur = etat.pratique[geste.id] || 'non_observe';
     html += '<div class="carte"><h3>' + esc(geste.libelle) +
-      ' <small>(poids ' + esc(geste.coefficients[poste]) + ')</small></h3><div class="options">';
+      ' <small>poids ' + esc(geste.coefficients[poste]) + '</small></h3><div class="options grille2">';
     ['reussi', 'partiel', 'non_fait', 'non_observe'].forEach(function (note) {
-      html += '<label class="option"><input type="radio" name="pratique.' + esc(geste.id) + '" value="' + esc(note) + '"' +
-        (valeur === note ? ' checked' : '') + '><span class="libelle">' + esc(CONFIG.pratique.libellesNotes[note]) + '</span></label>';
+      html += optionHtml('pratique.' + geste.id, { id: note, libelle: CONFIG.pratique.libellesNotes[note] }, valeur, 'radio');
     });
     html += '</div></div>';
   });
 
   $ecran.innerHTML = html;
-  $barre.innerHTML = '<div class="enveloppe"><div class="rangee">' +
+  $barre.innerHTML = '<div class="dedans"><div class="rangee">' +
     '<button class="bouton secondaire" id="retour">Précédent</button>' +
     '<button class="bouton secondaire" id="passer">Passer</button>' +
-    '<button class="bouton" id="terminer">Voir le résultat</button>' +
-    '</div></div>';
+    '<button class="bouton" id="terminer">Voir le résultat</button></div></div>';
 
-  $ecran.querySelectorAll('input[type=radio]').forEach(function (input) {
-    input.addEventListener('change', function () {
-      etat.pratique[input.getAttribute('name').split('.')[1]] = input.value;
-      etat.pratiqueFaite = true;
-    });
+  brancher('input[type=radio]', 'change', function (e) {
+    etat.pratique[e.currentTarget.getAttribute('name').split('.')[1]] = e.currentTarget.value;
+    etat.pratiqueFaite = true;
+    planifierSauvegarde();
   });
-  document.getElementById('retour').addEventListener('click', function () {
-    etat.index = CONFIG.questions.length - 1;
-    aller('entretien');
-  });
-  document.getElementById('passer').addEventListener('click', function () {
-    etat.pratique = {};
-    etat.pratiqueFaite = false;
-    calculerEtAfficher();
-  });
-  document.getElementById('terminer').addEventListener('click', calculerEtAfficher);
+  surClic('retour', function () { etat.index = CONFIG.questions.length - 1; aller('entretien'); });
+  surClic('passer', function () { etat.pratique = {}; etat.pratiqueFaite = false; calculerEtAfficher(); });
+  surClic('terminer', calculerEtAfficher);
 }
 
 /* ---------- Résultat ---------- */
 
 /* Seuls le poste, les options cochées et l'épreuve pratique sont transmis au barème.
-   Les renseignements de l'écran d'accueil (prénom, langue, note libre) ne sont jamais passés,
-   et les notes libres écrites question par question sont retirées avant l'appel : elles peuvent
-   contenir des éléments de vie privée, qui n'ont rien à faire dans le calcul. */
+   Les renseignements de l'écran d'accueil (prénom, note libre) ne sont jamais passés,
+   et les notes libres écrites question par question sont retirées avant l'appel :
+   elles peuvent contenir des éléments de vie privée, qui n'ont rien à faire dans le calcul. */
 function construireAnswers() {
   const reponses = {};
   Object.keys(etat.reponses).forEach(function (q) {
@@ -1474,27 +1639,42 @@ function construireAnswers() {
 }
 
 function questionsSansReponse() {
-  const manquantes = [];
-  CONFIG.questions.forEach(function (q) {
-    const rep = etat.reponses[q.id] || {};
-    if (q.type === 'familles') return;
-    if (q.type === 'critere' || q.type === 'variantes') {
-      if (!rep.option) manquantes.push(q.numero + '. ' + q.titre);
-      return;
-    }
-    if (q.type === 'criteres') {
-      if (q.neutralisation && rep[q.neutralisation.quand] === true) return;
-      const trous = q.criteres.filter(function (c) { return !rep[c.id]; });
-      if (trous.length) manquantes.push(q.numero + '. ' + q.titre + ' (' + trous.length + ')');
-    }
-  });
-  return manquantes;
+  return CONFIG.questions.filter(function (q) { return etatQuestion(q) !== 'complet'; })
+    .map(function (q) { return q.numero + '. ' + q.titre; });
 }
 
 function calculerEtAfficher() {
   etat.resultat = computeScore(construireAnswers(), CONFIG);
   etat.enregistre = false;
+  effacerBrouillon();
   aller('resultat');
+}
+
+function detailReponses() {
+  let html = '<dl>';
+  CONFIG.questions.forEach(function (q) {
+    const rep = etat.reponses[q.id] || {};
+    html += '<dt>' + q.numero + '. ' + esc(q.titre) + '</dt><dd>';
+    if (q.type === 'familles') {
+      const noms = q.familles.filter(function (f) { return (rep.familles || []).indexOf(f.id) !== -1; })
+        .map(function (f) { return f.libelle; });
+      html += noms.length ? esc(noms.join(' · ')) : 'Rien de coché';
+    } else if (q.type === 'criteres') {
+      if (q.neutralisation && rep[q.neutralisation.quand] === true) html += 'Première expérience';
+      else html += q.criteres.map(function (c) {
+        return esc(c.titre) + ' : ' + esc(libelleOption(c.options, rep[c.id]) || '—');
+      }).join('<br>');
+    } else {
+      const variante = q.type === 'variantes' ? varianteDe(q, rep) : null;
+      const options = variante ? variante.options : q.critere.options;
+      if (variante) html += '<b>' + esc(variante.libelle) + '</b> — ';
+      if (q.id === 'q2' && etat.tirage.q2Tache) html += '<b>' + esc(etat.tirage.q2Tache) + '</b> — ';
+      html += esc(libelleOption(options, rep.option) || 'Pas de réponse cochée');
+    }
+    if (rep.note) html += '<br><small>Note : ' + esc(rep.note) + '</small>';
+    html += '</dd>';
+  });
+  return html + '</dl>';
 }
 
 function rendreResultat() {
@@ -1504,76 +1684,114 @@ function rendreResultat() {
   const manquantes = questionsSansReponse();
 
   let html = '<h1>Résultat</h1>';
-  html += '<p>' + esc(id.prenom || 'Candidate') + ' — ' + esc(id.date) + ' — ' +
-    esc((CONFIG.postes.filter(function (p) { return p.id === id.poste; })[0] || {}).libelle) + '</p>';
+  html += '<p class="petit">' + esc(id.prenom || 'Candidate') + ' — ' + esc(id.date) + ' — ' + esc(libellePoste(id.poste)) + '</p>';
 
-  html += '<div class="score-global"><div class="chiffre">' + r.total + '</div><div>sur 100</div></div>';
-  html += '<div class="verdict ' + esc(r.verdict) + '">' + esc(verdict.libelle) + '<br><small>' + esc(verdict.detail) + '</small></div>';
+  html += '<div class="carte"><div class="entete-resultat">' + anneauScore(r.total) +
+    '<div class="resume-verdict"><div class="verdict ' + esc(r.verdict) + '">' + esc(verdict.libelle) +
+    '<small>' + esc(verdict.detail) + '</small></div></div></div></div>';
 
-  html += '<div class="avertissement"><b>Cet outil est une aide à la décision. Ce n’est pas un détecteur de mensonge.</b> ' +
+  html += '<div class="encadre"><b>Cet outil est une aide à la décision. Ce n’est pas un détecteur de mensonge.</b> ' +
     'Il signale des incohérences et des points à vérifier, pas des mensonges.</div>';
 
   if (manquantes.length) {
-    html += '<p class="avertissement">Questions sans réponse cochée, retirées du calcul : ' + esc(manquantes.join(' · ')) + '</p>';
+    html += '<p class="encadre info"><b>Questions sans réponse complète, retirées du calcul :</b> ' + esc(manquantes.join(' · ')) + '</p>';
   }
 
-  html += '<h2>Sous-scores</h2>';
+  html += '<h2>Sous-scores</h2><div class="carte">';
   CONFIG.sousScores.forEach(function (s) {
     const v = r.sousScores[s.id];
-    html += '<div class="sous-score"><div class="ligne"><span>' + esc(s.libelle) + '</span><span>' + v + ' / 100</span></div>' +
-      '<div class="jauge"><i style="width:' + v + '%"></i></div></div>';
+    const niveau = v >= CONFIG.seuils.essai ? 'haut' : v >= CONFIG.seuils.approfondir ? 'moyen' : 'bas';
+    html += '<div class="sous-score"><div class="ligne"><span>' + esc(s.libelle) + '</span><em>' + v + ' / 100</em></div>' +
+      '<div class="jauge"><i class="' + niveau + '" style="width:' + v + '%"></i></div>' +
+      '<span class="poids">poids ' + CONFIG.ponderations[id.poste][s.id] + ' sur 100 dans le total</span></div>';
   });
-  html += '<small>Pondération du poste : ' +
-    esc(CONFIG.sousScores.map(function (s) { return s.libelle + ' ' + CONFIG.ponderations[id.poste][s.id]; }).join(' · ')) + '</small>';
+  html += '</div>';
 
   html += '<h2>Drapeaux</h2>';
-  if (!r.drapeaux.length) {
-    html += '<p>Aucun drapeau.</p>';
-  } else {
-    r.drapeaux.forEach(function (d) {
-      html += '<div class="drapeau ' + esc(d.niveau) + '"><span class="niveau">' +
-        (d.niveau === 'bloquant' ? 'Bloquant' : 'Léger') + '</span><br>' + esc(d.message) + '</div>';
-    });
-  }
+  if (!r.drapeaux.length) html += '<p>Aucun drapeau.</p>';
+  else r.drapeaux.forEach(function (d) {
+    html += '<div class="drapeau ' + esc(d.niveau) + '">' + ICONES[d.niveau] +
+      '<div><span class="etiquette">' + (d.niveau === 'bloquant' ? 'Bloquant' : 'Léger') + '</span>' +
+      '<span class="message">' + esc(d.message) + '</span></div></div>';
+  });
 
   html += '<h2>Points à vérifier</h2>';
-  if (!r.pointsAVerifier.length) {
-    html += '<p>Rien de particulier.</p>';
-  } else {
-    html += '<ul class="verifs">';
+  if (!r.pointsAVerifier.length) html += '<p>Rien de particulier.</p>';
+  else {
+    html += '<div class="carte"><ul class="verifs">';
     r.pointsAVerifier.forEach(function (p) { html += '<li>' + esc(p) + '</li>'; });
-    html += '</ul>';
+    html += '</ul></div>';
   }
 
-  if (etat.identite.note) {
-    html += '<h2>Note libre</h2><p>' + esc(etat.identite.note) + '</p>';
-  }
+  if (id.note) html += '<h2>Note libre</h2><p>' + esc(id.note) + '</p>';
 
-  html += '<div class="carte sansImpression"><h2>Enregistrer et partager</h2>' +
-    '<div class="rangee">' +
+  html += '<h2>Détail des réponses</h2><details class="detail-reponses carte">' +
+    '<summary>Voir les 10 réponses cochées</summary>' + detailReponses() + '</details>';
+
+  html += '<div class="carte sansImpression"><h3>Garder une trace</h3><div class="rangee">' +
     '<button class="bouton secondaire" id="imprimer">Imprimer</button>' +
     '<button class="bouton secondaire" id="json">Export JSON</button>' +
-    '<button class="bouton secondaire" id="csv">Export CSV</button>' +
-    '</div>' +
-    '<button class="bouton secondaire" id="enregistrer">' + (etat.enregistre ? 'Enregistré ✓' : 'Enregistrer dans l’historique (ce téléphone)') + '</button>' +
+    '<button class="bouton secondaire" id="csv">Export CSV</button></div>' +
+    '<button class="bouton secondaire" id="enregistrer">' +
+      (etat.enregistre ? 'Enregistré ✓' : 'Enregistrer dans l’historique (ce téléphone)') + '</button>' +
     '<small>Les exports restent sur ce téléphone. Ne les envoie pas à des tiers sans l’accord de la candidate.</small></div>';
 
   $ecran.innerHTML = html;
-  $barre.innerHTML = '<div class="enveloppe"><div class="rangee">' +
-    '<button class="bouton secondaire" id="retourPratique">Précédent</button>' +
-    '<button class="bouton" id="nouveau">Nouvel entretien</button>' +
-    '</div></div>';
+  $barre.innerHTML = '<div class="dedans"><div class="rangee">' +
+    '<button class="bouton secondaire" data-aller="sommaire">Revoir</button>' +
+    '<button class="bouton" data-aller="appel">Appeler la référence</button>' +
+    '</div><button class="bouton secondaire petit" id="nouveau">Nouvel entretien</button></div>';
 
-  document.getElementById('imprimer').addEventListener('click', function () { print(); });
-  document.getElementById('json').addEventListener('click', exporterJson);
-  document.getElementById('csv').addEventListener('click', exporterCsv);
-  document.getElementById('enregistrer').addEventListener('click', enregistrerHistorique);
-  document.getElementById('retourPratique').addEventListener('click', function () { aller('pratique'); });
-  document.getElementById('nouveau').addEventListener('click', function () {
+  surClic('imprimer', function () { print(); });
+  surClic('json', exporterJson);
+  surClic('csv', exporterCsv);
+  surClic('enregistrer', enregistrerHistorique);
+  brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
+  surClic('nouveau', function () {
     if (!confirm('Commencer un nouvel entretien ? Les réponses en cours seront effacées.')) return;
+    effacerBrouillon();
     etat = etatInitial();
     aller('accueil');
   });
+}
+
+/* ---------- Appel de la référence ---------- */
+
+function rendreAppel() {
+  const a = CONFIG.appelReference;
+  const r = etat.resultat;
+  const supplementaires = [];
+  if (r) r.drapeaux.forEach(function (d) {
+    const question = a.selonDrapeau[d.id];
+    if (question && supplementaires.indexOf(question) === -1) supplementaires.push(question);
+  });
+
+  let html = '<h1>Appeler l’ancienne employeuse</h1>';
+  html += '<p class="petit">' + esc(etat.identite.prenom || 'Candidate') + ' — ' + esc(etat.identite.date) + '</p>';
+  html += '<div class="encadre"><b>À lire au téléphone.</b> Note les réponses dans les blancs, puis compare-les à ce qu’elle a dit pendant l’entretien.</div>';
+  html += '<div class="carte"><h3>Pour commencer</h3><p class="enonce">' +
+    esc(a.intro.split('[PRENOM]').join(etat.identite.prenom || 'La candidate').split('[MOI]').join('[ton nom]')) + '</p></div>';
+
+  html += '<h2>Les questions</h2><ol class="liste script">';
+  a.questions.forEach(function (q) {
+    html += '<li><b>' + esc(q) + '</b><span class="ligne-notes"></span></li>';
+  });
+  if (supplementaires.length) {
+    supplementaires.forEach(function (q) {
+      html += '<li><b>' + esc(q) + '</b><span class="petit">Question ajoutée à cause d’un drapeau de l’entretien.</span><span class="ligne-notes"></span></li>';
+    });
+  }
+  html += '</ol>';
+  html += '<div class="carte"><h3>Pour finir</h3><p class="enonce">' + esc(a.cloture) + '</p></div>';
+  html += '<div class="carte plate"><h3>Conseils</h3><ul>' +
+    a.conseils.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></div>';
+
+  $ecran.innerHTML = html;
+  $barre.innerHTML = '<div class="dedans"><div class="rangee">' +
+    '<button class="bouton secondaire" data-aller="resultat">Retour</button>' +
+    '<button class="bouton" id="imprimerAppel">Imprimer</button></div></div>';
+  brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
+  surClic('imprimerAppel', function () { print(); });
 }
 
 /* ---------- Exports ---------- */
@@ -1629,7 +1847,6 @@ function exporterCsv() {
   lignes.push(['prenom', etat.identite.prenom]);
   lignes.push(['date', etat.identite.date]);
   lignes.push(['poste', etat.identite.poste]);
-  lignes.push(['langue_entretien', etat.identite.langue]);
   lignes.push(['total', r.total]);
   lignes.push(['verdict', r.verdict]);
   CONFIG.sousScores.forEach(function (s) { lignes.push(['sous_score_' + s.id, r.sousScores[s.id]]); });
@@ -1650,16 +1867,15 @@ function exporterCsv() {
     CONFIG.pratique.gestes.forEach(function (g) { lignes.push(['pratique_' + g.id, etat.pratique[g.id] || 'non_observe']); });
   }
   lignes.push(['note_libre', etat.identite.note]);
-  const csv = '﻿' + lignes.map(function (l) { return l.map(celluleCsv).join(';'); }).join('\r\n');
-  telecharger(nomFichier('csv'), csv, 'text/csv');
+  telecharger(nomFichier('csv'), '﻿' + lignes.map(function (l) { return l.map(celluleCsv).join(';'); }).join('\r\n'), 'text/csv');
 }
 
-/* ---------- Historique local ---------- */
+/* ---------- Historique ---------- */
 
 function enregistrerHistorique() {
-  const liste = lireStockage(CLE_HISTORIQUE, []);
+  const liste = lireStockage(CLES.historique, []);
   liste.unshift(Object.assign({ enregistreLe: new Date().toISOString() }, enregistrementComplet()));
-  if (ecrireStockage(CLE_HISTORIQUE, liste.slice(0, 50))) {
+  if (ecrireStockage(CLES.historique, liste.slice(0, 50))) {
     etat.enregistre = true;
     rendre();
   } else {
@@ -1668,74 +1884,77 @@ function enregistrerHistorique() {
 }
 
 function rendreHistorique() {
-  const liste = lireStockage(CLE_HISTORIQUE, []);
+  const liste = lireStockage(CLES.historique, []);
   let html = '<h1>Historique</h1>';
   if (!stockageDisponible()) {
-    html += '<p class="avertissement">Le stockage local n’est pas disponible sur ce navigateur. L’app reste utilisable, mais rien n’est gardé.</p>';
+    html += '<p class="encadre">Le stockage local n’est pas disponible sur ce navigateur. L’app reste utilisable, mais rien n’est gardé.</p>';
   }
   html += '<p>Les entretiens enregistrés restent sur ce téléphone. Personne d’autre n’y a accès.</p>';
-  if (!liste.length) {
-    html += '<p>Aucun entretien enregistré.</p>';
-  } else {
-    html += '<ul class="liste-historique">';
+  if (!liste.length) html += '<p>Aucun entretien enregistré.</p>';
+  else {
+    html += '<ul class="liste">';
     liste.forEach(function (item, position) {
-      html += '<li><b>' + esc(item.identite && item.identite.prenom ? item.identite.prenom : 'Candidate') + '</b> — ' +
-        esc(item.identite ? item.identite.date : '') + ' — ' + esc(item.poste) + '<br>' +
-        esc(item.resultat ? item.resultat.total + '/100 · ' + item.resultat.verdict : '') +
-        '<button class="bouton secondaire" data-ouvrir="' + position + '">Ouvrir</button></li>';
+      const res = item.resultat || {};
+      html += '<li><div class="fil"><b>' + esc((item.identite || {}).prenom || 'Candidate') + '</b>' +
+        '<span class="chip ' + esc(res.verdict || 'vide') + '">' + esc(res.total != null ? res.total + '/100' : '—') + '</span></div>' +
+        '<p class="petit">' + esc((item.identite || {}).date || '') + ' — ' + esc(libellePoste(item.poste)) +
+        ' — ' + ((res.drapeaux || []).length) + ' drapeau(x)</p>' +
+        '<button class="bouton secondaire petit" data-ouvrir="' + position + '">Ouvrir</button></li>';
     });
-    html += '</ul>';
-    html += '<button class="bouton danger" id="effacer">Effacer l’historique</button>';
+    html += '</ul><button class="bouton danger" id="effacer">Effacer l’historique</button>';
   }
 
   $ecran.innerHTML = html;
-  $barre.innerHTML = '<div class="enveloppe"><button class="bouton secondaire" id="retour">Retour</button></div>';
+  $barre.innerHTML = '<div class="dedans"><button class="bouton secondaire" data-aller="accueil">Retour</button></div>';
 
-  $ecran.querySelectorAll('[data-ouvrir]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      const item = liste[Number(b.getAttribute('data-ouvrir'))];
-      if (!item) return;
-      etat = etatInitial();
-      etat.identite = Object.assign(etat.identite, item.identite || {});
-      etat.tirage = item.tirage || etat.tirage;
-      etat.reponses = item.reponses || etat.reponses;
-      etat.pratique = item.pratique || {};
-      etat.pratiqueFaite = !!item.pratique;
-      etat.resultat = item.resultat || computeScore(construireAnswers(), CONFIG);
-      etat.enregistre = true;
-      aller('resultat');
-    });
+  brancher('[data-ouvrir]', 'click', function (e) {
+    const item = liste[Number(e.currentTarget.getAttribute('data-ouvrir'))];
+    if (!item) return;
+    etat = etatInitial();
+    etat.identite = Object.assign(etat.identite, item.identite || {});
+    etat.tirage = item.tirage || etat.tirage;
+    etat.reponses = Object.assign(etat.reponses, item.reponses || {});
+    etat.pratique = item.pratique || {};
+    etat.pratiqueFaite = !!item.pratique;
+    etat.resultat = item.resultat || computeScore(construireAnswers(), CONFIG);
+    etat.enregistre = true;
+    aller('resultat');
   });
-  const effacer = document.getElementById('effacer');
-  if (effacer) effacer.addEventListener('click', function () {
+  brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
+  surClic('effacer', function () {
     if (!confirm('Effacer tout l’historique de ce téléphone ? C’est définitif.')) return;
-    ecrireStockage(CLE_HISTORIQUE, []);
+    ecrireStockage(CLES.historique, []);
     rendre();
   });
-  document.getElementById('retour').addEventListener('click', function () { aller('accueil'); });
 }
 
 /* ---------- Réglages ---------- */
 
 function rendreReglages() {
   let html = '<h1>Réglages</h1>';
-  html += '<div class="carte"><h2>Produit fictif de la question 7</h2>';
-  html += '<p>Ce produit ne doit pas exister sur le marché de Niamey. Vérifie-le auprès de plusieurs vendeurs avant de l’utiliser, et change-le de temps en temps : ce dépôt est public.</p>';
-  html += '<label for="produit">Nom du produit</label><input type="text" id="produit" value="' + esc(reglages.produit) + '">';
-  html += '<label for="usage">Usage annoncé (pour la relance)</label><input type="text" id="usage" value="' + esc(reglages.usage) + '">';
-  html += '<button class="bouton" id="sauver">Enregistrer</button>';
-  html += '<button class="bouton secondaire" id="defaut">Revenir au nom par défaut</button></div>';
 
-  html += '<div class="carte"><h2>Seuils du verdict</h2><table><tr><th>Verdict</th><th>Score</th></tr>' +
+  html += '<div class="carte"><h3>Affichage</h3>' +
+    '<p class="petit">Le mode plein soleil agrandit le texte et renforce les contrastes, pour lire dehors.</p>' +
+    '<button class="bouton secondaire" id="bascule">' +
+      (affichage.contraste === 'fort' ? 'Revenir à l’affichage normal' : 'Activer le mode plein soleil') + '</button></div>';
+
+  html += '<div class="carte"><h3>Produit fictif de la question 7</h3>' +
+    '<p class="petit">Ce produit ne doit pas exister sur le marché de Niamey. Vérifie-le auprès de plusieurs vendeurs, et change-le de temps en temps : le dépôt est public.</p>' +
+    '<label class="champ" for="produit">Nom du produit</label><input type="text" id="produit" value="' + esc(reglages.produit) + '">' +
+    '<label class="champ" for="usage">Usage annoncé (pour la relance)</label><input type="text" id="usage" value="' + esc(reglages.usage) + '">' +
+    '<button class="bouton" id="sauver">Enregistrer</button>' +
+    '<button class="bouton secondaire petit" id="defaut">Revenir au nom par défaut</button></div>';
+
+  html += '<div class="carte"><h3>Seuils du verdict</h3><table><tr><th>Verdict</th><th>Score</th></tr>' +
     '<tr><td>' + esc(CONFIG.verdicts.essai.libelle) + '</td><td>' + CONFIG.seuils.essai + ' et plus</td></tr>' +
     '<tr><td>' + esc(CONFIG.verdicts.approfondir.libelle) + '</td><td>' + CONFIG.seuils.approfondir + ' à ' + (CONFIG.seuils.essai - 1) + '</td></tr>' +
-    '<tr><td>' + esc(CONFIG.verdicts.non_recommande.libelle) + '</td><td>moins de ' + CONFIG.seuils.approfondir + '</td></tr></table>';
-  html += '<p><b>Plafonnement :</b> 1 drapeau bloquant → au mieux « à approfondir ». ' +
-    CONFIG.plafonnement.bloquantsNonRecommande + ' drapeaux bloquants ou plus → « non recommandé ». ' +
-    CONFIG.plafonnement.legersApprofondir + ' drapeaux légers ou plus → au mieux « à approfondir ».</p>';
-  html += '<small>Ces seuils sont des valeurs de départ, à recalibrer après une quinzaine d’entretiens réels.</small></div>';
+    '<tr><td>' + esc(CONFIG.verdicts.non_recommande.libelle) + '</td><td>moins de ' + CONFIG.seuils.approfondir + '</td></tr></table>' +
+    '<p class="petit"><b>Plafonnement :</b> 1 drapeau bloquant → au mieux « à approfondir ». ' +
+    CONFIG.plafonnement.bloquantsNonRecommande + ' bloquants ou plus → « non recommandé ». ' +
+    CONFIG.plafonnement.legersApprofondir + ' drapeaux légers ou plus → au mieux « à approfondir ».</p>' +
+    '<p class="petit">Valeurs de départ, à recalibrer après une quinzaine d’entretiens réels.</p></div>';
 
-  html += '<div class="carte"><h2>Pondérations par poste</h2><table><tr><th>Poste</th>' +
+  html += '<div class="carte"><h3>Pondérations par poste</h3><table><tr><th>Poste</th>' +
     CONFIG.sousScores.map(function (s) { return '<th>' + esc(s.libelle) + '</th>'; }).join('') + '</tr>';
   CONFIG.postes.forEach(function (p) {
     html += '<tr><td>' + esc(p.libelle) + '</td>' +
@@ -1743,30 +1962,35 @@ function rendreReglages() {
   });
   html += '</table></div>';
 
-  html += '<div class="carte"><h2>Vérification du barème</h2>' +
-    '<p>Ouvre <code>index.html?selftest=1</code> pour lancer les tests du barème dans ce navigateur.</p>' +
-    '<p>Version du barème : ' + esc(CONFIG.version) + '</p></div>';
+  html += '<div class="carte plate"><h3>Vérification du barème</h3>' +
+    '<p class="petit">Ouvre <code>index.html?selftest=1</code> pour lancer les tests du barème dans ce navigateur.</p>' +
+    '<p class="petit">Version du barème : ' + esc(CONFIG.version) + '</p></div>';
 
   $ecran.innerHTML = html;
-  $barre.innerHTML = '<div class="enveloppe"><button class="bouton secondaire" id="retour">Retour</button></div>';
+  $barre.innerHTML = '<div class="dedans"><button class="bouton secondaire" data-aller="accueil">Retour</button></div>';
 
-  document.getElementById('sauver').addEventListener('click', function () {
+  surClic('bascule', function () {
+    affichage.contraste = affichage.contraste === 'fort' ? 'normal' : 'fort';
+    ecrireStockage(CLES.affichage, affichage);
+    rendre();
+  });
+  surClic('sauver', function () {
     reglages.produit = document.getElementById('produit').value.trim() || reglagesParDefaut.produit;
     reglages.usage = document.getElementById('usage').value.trim();
-    if (!ecrireStockage(CLE_REGLAGES, reglages)) {
+    if (!ecrireStockage(CLES.reglages, reglages)) {
       alert('Le réglage est appliqué pour cet entretien, mais il n’a pas pu être gardé sur ce téléphone.');
     }
     aller('accueil');
   });
-  document.getElementById('defaut').addEventListener('click', function () {
+  surClic('defaut', function () {
     reglages = Object.assign({}, reglagesParDefaut);
-    ecrireStockage(CLE_REGLAGES, reglages);
+    ecrireStockage(CLES.reglages, reglages);
     rendre();
   });
-  document.getElementById('retour').addEventListener('click', function () { aller('accueil'); });
+  brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
 }
 
-/* ---------- Mode ?selftest=1 : exécute TEST_CASES dans le navigateur ---------- */
+/* ---------- Mode ?selftest=1 ---------- */
 
 function executerTests() {
   const SOUS_SCORES = CONFIG.sousScores.map(function (s) { return s.id; });
@@ -1783,11 +2007,9 @@ function executerTests() {
   return TEST_CASES.map(function (tc) {
     const erreurs = [];
     let r = null;
-    try {
-      r = computeScore(JSON.parse(JSON.stringify(tc.answers)), CONFIG);
-    } catch (e) {
-      return { nom: tc.name, erreurs: ['exception : ' + e.message] };
-    }
+    try { r = computeScore(JSON.parse(JSON.stringify(tc.answers)), CONFIG); }
+    catch (e) { return { nom: tc.name, erreurs: ['exception : ' + e.message] }; }
+
     if (!Number.isInteger(r.total) || r.total < 0 || r.total > 100) erreurs.push('total hors [0, 100]');
     SOUS_SCORES.forEach(function (k) {
       const v = r.sousScores[k];
@@ -1823,33 +2045,45 @@ function rendreSelftest() {
   const resultats = executerTests();
   const echecs = resultats.filter(function (x) { return x.erreurs.length; });
   let html = '<h1>Auto-test du barème</h1>';
-  html += '<p class="' + (echecs.length ? 'selftest-ko' : 'selftest-ok') + '">' +
+  html += '<p class="' + (echecs.length ? 'ko' : 'ok') + '">' +
     (echecs.length ? '✗ ' + echecs.length + ' échec(s) sur ' + resultats.length + ' cas'
                    : '✓ Tout est vert — ' + resultats.length + ' cas') + '</p>';
   resultats.forEach(function (x) {
-    html += '<div class="carte"><b class="' + (x.erreurs.length ? 'selftest-ko' : 'selftest-ok') + '">' +
+    html += '<div class="carte"><b class="' + (x.erreurs.length ? 'ko' : 'ok') + '">' +
       (x.erreurs.length ? '✗' : '✓') + ' ' + esc(x.nom) + '</b>';
     if (x.resultat) {
-      html += '<br><small>' + esc(x.resultat.verdict) + ' — ' + x.resultat.total + '/100 — drapeaux : ' +
-        esc(x.resultat.drapeaux.map(function (d) { return d.niveau + ':' + d.id; }).join(', ') || 'aucun') + '</small>';
+      html += '<p class="petit">' + esc(x.resultat.verdict) + ' — ' + x.resultat.total + '/100 — drapeaux : ' +
+        esc(x.resultat.drapeaux.map(function (d) { return d.niveau + ':' + d.id; }).join(', ') || 'aucun') + '</p>';
     }
     if (x.erreurs.length) html += '<pre>' + esc(x.erreurs.join('\n')) + '</pre>';
     html += '</div>';
   });
   $ecran.innerHTML = html;
-  $barre.innerHTML = '<div class="enveloppe"><a class="bouton" href="index.html">Retour à l’app</a></div>';
+  $barre.innerHTML = '<div class="dedans"><a class="bouton" href="index.html">Retour à l’app</a></div>';
 }
 
 /* ---------- Démarrage ---------- */
 
-function demarrer() {
+(function demarrer() {
+  appliquerAffichage();
+  const soleil = document.getElementById('soleil');
+  if (soleil) soleil.addEventListener('click', function () {
+    affichage.contraste = affichage.contraste === 'fort' ? 'normal' : 'fort';
+    ecrireStockage(CLES.affichage, affichage);
+    appliquerAffichage();
+  });
+
+  try {
+    addEventListener('beforeprint', function () {
+      document.querySelectorAll('details').forEach(function (d) { d.open = true; });
+    });
+  } catch (e) { /* sans effet hors navigateur */ }
+
   let selftest = false;
   try { selftest = /(?:^|[?&])selftest=1(?:&|$)/.test(location.search); } catch (e) { selftest = false; }
-  if (selftest) rendreSelftest();
-  else rendre();
-}
-
-demarrer();
+  if (selftest) { rendreSelftest(); appliquerAffichage(); return; }
+  rendre();
+})();
 </script>
 </body>
 </html>

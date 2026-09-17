@@ -2,7 +2,6 @@
 
 ## v1 (en cours)
 - [x] Questions rédigées et validées (`docs/QUESTIONS.md`)
-- [ ] Traductions zarma et haoussa relues par un locuteur natif
 - [ ] Nom du produit fictif vérifié au marché
 - [x] `index.html` : barème + tests verts
 - [x] Interface complète (fiche, entretien, épreuve pratique, résultat, export, historique, réglages)
@@ -10,6 +9,8 @@
 - [ ] Premiers entretiens réels
 
 ## v2 (idées)
+- **Traductions zarma et haoussa** : reprises depuis les brouillons de `docs/QUESTIONS.md`, réécrites et relues
+  par des locuteurs natifs avant toute remise dans l'app. Mises de côté en v1 : l'app est en français seul.
 - **Suivi de la période d'essai** : fiche J1 / J3 / J7 reliée à l'entretien, pour confronter le score à la réalité.
 - **Calibrage** des seuils et pondérations après une quinzaine d'entretiens (voir `docs/PROMPTS.md`, étape 5).
 - **Accord écrit imprimable** : tâches, horaires, calendrier de congés, règles sur l'électroménager.

@@ -7,7 +7,7 @@ ou du Togo, parfois de milieu rural. L'entretien actuel se limite à des questio
 Après l'embauche, les familles découvrent souvent des compétences surévaluées, des lacunes d'hygiène, des gestes
 dangereux en cuisine, des départs brusques (souvent justifiés par un « proche malade ») ou des manquements à l'honnêteté.
 
-**Utilisateur de l'app : l'employeur.** Il pose les questions à l'oral (français, zarma ou haoussa) et coche les réponses.
+**Utilisateur de l'app : l'employeur.** Il pose les questions à l'oral en français et coche les réponses.
 La candidate ne manipule pas l'app, ce qui évite le biais lié au niveau de lecture.
 
 ## 2. Périmètre
@@ -94,7 +94,8 @@ Durée d'engagement souhaitée, fréquence de congés souhaitée pour voir la fa
 - Emplois précédents tous courts (< 3 mois) + promesse de rester plusieurs années → drapeau léger `incoherence_q9_q10`.
 
 ### Format commun à toutes les questions
-- Texte en français, versions zarma et haoussa marquées « traduction à valider par un locuteur natif ».
+- Texte en français uniquement en v1. La candidate peut répondre dans sa langue : le barème note le contenu,
+  jamais le vocabulaire ni la langue. Traductions renvoyées en v2 (voir `docs/ROADMAP.md`).
 - Options prédéfinies à cocher et un champ de note libre.
 - Chaque option porte des points et, le cas échéant, un drapeau (`leger` ou `bloquant`).
 
@@ -148,7 +149,7 @@ Ces seuils sont des valeurs de départ. Ils seront calibrés après une quinzain
 
 ## 7. Fonctionnalités
 
-- **Fiche candidate** : prénom, date, langue d'entretien, poste visé, note libre (dont situation familiale facultative).
+- **Fiche candidate** : prénom, date, poste visé, note libre (dont situation familiale facultative).
 - **Rappel à l'écran** avant de commencer : informer la candidate que ses réponses sont notées.
 - **Entretien pas à pas** : une question par écran, barre de progression, gros boutons, retour arrière possible.
 - **Épreuve pratique** facultative (section 4).
@@ -157,6 +158,12 @@ Ces seuils sont des valeurs de départ. Ils seront calibrés après une quinzain
 - **Historique local** facultatif (localStorage, `try/catch`), avec un bouton « Effacer l'historique ».
 - **Réglages** : nom du produit fictif (Q7), affichage des seuils.
 - **Hors ligne** : aucune ressource externe.
+- **Reprise d'un entretien interrompu** : brouillon enregistré au fil de l'eau, proposé au retour sur l'accueil.
+- **Sommaire** : état de chaque question (répondu / à compléter / à faire) et accès direct à n'importe laquelle.
+- **Nouveau tirage** possible du scénario de Q4 ou Q6, quand la variante a déjà servi avec une autre candidate.
+- **Appel de la référence** : script imprimable à lire au téléphone, complété selon les drapeaux levés.
+- **Détail des réponses** sur l'écran de résultat, replié à l'écran et déplié à l'impression.
+- **Mode plein soleil** : texte agrandi et contrastes renforcés, mémorisé localement.
 
 ## 8. Contrat technique
 

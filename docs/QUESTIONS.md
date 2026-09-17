@@ -4,9 +4,13 @@
 > ci-dessous sont ceux à implémenter dans `CONFIG` à l'étape 2. En cas d'écart avec `docs/SPEC.md`,
 > c'est ce document qui fait foi (`CLAUDE.md`).
 >
-> **Deux vérifications restent ouvertes** et ne bloquent pas le code :
-> (1) le zarma et le haoussa sont des brouillons, à faire relire par des locuteurs natifs ;
-> (2) le nom du produit fictif de Q7 est à vérifier au marché, puis à saisir dans Réglages.
+> **Décision du 17/09/2026 : l'app est en français uniquement.** Les brouillons zarma et haoussa restent
+> ci-dessous pour mémoire, mais **ils ne sont plus utilisés par l'app** : ils n'avaient pas été relus par des
+> locuteurs natifs, et un texte approximatif lu à voix haute fait plus de dégâts qu'un texte absent.
+> Leur reprise éventuelle est renvoyée en v2 (`docs/ROADMAP.md`).
+>
+> **Une vérification reste ouverte** et ne bloque pas le code : le nom du produit fictif de Q7 est à vérifier
+> au marché, puis à saisir dans Réglages.
 
 ---
 
@@ -21,11 +25,15 @@
 - L'employeur lit la question à voix haute et coche. La candidate ne touche pas au téléphone.
 - Chaque question a aussi un champ de note libre (non noté).
 
-### Avertissement sur les traductions
+### Avertissement sur les traductions — non utilisées par l'app
 
-Les versions **zarma** et **haoussa** ci-dessous sont des **brouillons de travail, non validés**.
-Elles doivent être relues, corrigées ou entièrement réécrites par des locutrices et locuteurs natifs de Niamey
-avant toute utilisation en entretien.
+Les versions **zarma** et **haoussa** ci-dessous sont des **brouillons de travail, non validés**, et
+**l'app ne les affiche pas** : elle est en français uniquement depuis le 17/09/2026. Elles sont conservées ici
+pour qui voudrait les reprendre. Avant toute utilisation en entretien, elles doivent être relues, corrigées
+ou entièrement réécrites par des locutrices et locuteurs natifs de Niamey.
+
+La candidate, elle, répond dans la langue qu'elle veut : le barème note ce qu'elle dit, jamais son vocabulaire
+ni sa langue (voir la consigne de Q2).
 
 Deux précisions honnêtes sur la qualité de ces brouillons :
 
@@ -630,7 +638,7 @@ Ces seuils et ces points sont des valeurs de départ, à recalibrer après une q
 
 ## Reste à faire, hors barème
 
-- Faire relire **tout** le zarma et **tout** le haoussa par des locuteurs natifs — en particulier le zarma,
-  dont le brouillon est faible. La mention « à valider par un locuteur natif » reste affichée dans l'app
-  tant que cette relecture n'a pas eu lieu, et les traductions ne sont jamais présentées comme validées.
+- Les traductions sont **hors périmètre de la v1** : l'app est en français seul. Si elles reviennent un jour,
+  faire relire **tout** le zarma et **tout** le haoussa par des locuteurs natifs — en particulier le zarma,
+  dont le brouillon est faible — et ne jamais les présenter comme validées.
 - Vérifier au marché que le nom retenu pour Q7 n'existe pas, puis le saisir dans Réglages.

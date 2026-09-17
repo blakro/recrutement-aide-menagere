@@ -3,7 +3,7 @@
 ## Le projet
 
 App web d'aide à l'entretien d'embauche d'**aides ménagères** et d'**aides cuisinières** à Niamey (Niger).
-L'employeur pose 10 questions à l'oral (français, zarma ou haoussa), coche les réponses de la candidate
+L'employeur pose 10 questions à l'oral **en français**, coche les réponses de la candidate
 et obtient un score, des sous-scores, des drapeaux et une liste de points à vérifier.
 
 - Spécification complète : `docs/SPEC.md`
@@ -22,7 +22,9 @@ et obtient un score, des sous-scores, des drapeaux et une liste de points à vé
 - Aucun numéro de pièce d'identité, aucune photo.
 - Tout accès à `localStorage` est protégé par `try/catch` ; l'app reste utilisable si le stockage est vide ou indisponible.
 - L'outil est une **aide à la décision, pas un détecteur de mensonge**. Ne jamais écrire le contraire (UI, README, commentaires).
-- Traductions zarma et haoussa : toujours marquées « à valider par un locuteur natif ». Ne jamais les présenter comme validées.
+- **L'app v1 est en français uniquement** (décidé le 17/09/2026). Si des traductions zarma ou haoussa sont
+  réintroduites un jour, elles doivent toujours être marquées « à valider par un locuteur natif » et ne jamais
+  être présentées comme validées.
 - Ne jamais committer de données de candidates (exports JSON/CSV). Voir `.gitignore`.
 
 ## Architecture de `index.html` (contrat vérifié par le test)

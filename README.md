@@ -2,7 +2,7 @@
 
 Outil d'aide à l'entretien d'embauche des **aides ménagères** et **aides cuisinières**, pensé pour les familles de Niamey (Niger).
 
-L'employeur pose 10 questions à l'oral (français, zarma ou haoussa), coche les réponses et obtient :
+L'employeur pose 10 questions à l'oral en français, coche les réponses et obtient :
 
 - un score sur 100 et 5 sous-scores : compétences, hygiène & sécurité, intégrité, cohérence, stabilité ;
 - des drapeaux sur les réponses à risque (geste dangereux en cuisine, surdéclaration, incohérences…) ;
@@ -22,6 +22,8 @@ L'employeur pose 10 questions à l'oral (français, zarma ou haoussa), coche les
 - **Scénarios concrets** (huile en feu, odeur de gaz, argent trouvé…), tirés au hasard pour que les candidates ne puissent pas se passer les réponses.
 - **Détection de surdéclaration** et de réponses « trop parfaites ».
 - **Épreuve pratique** facultative de 5 gestes observés.
+- **Script d'appel** imprimable pour interroger l'ancienne employeuse au téléphone.
+- **Reprise** d'un entretien interrompu, **sommaire** des questions, **mode plein soleil** pour lire dehors.
 
 Le détail des règles est dans [`docs/SPEC.md`](docs/SPEC.md).
 
@@ -36,9 +38,14 @@ Un test automatique le vérifie à chaque modification.
 - Aucune pièce d'identité ni photo n'est enregistrée.
 - Informer la candidate que ses réponses sont notées.
 
-## Traductions
+## Langue
 
-Les versions zarma et haoussa sont **à valider par des locuteurs natifs**. Les corrections sont bienvenues (issue ou pull request).
+L'app est **en français uniquement**. La candidate répond dans la langue qu'elle veut : le barème note ce qu'elle
+dit, jamais son vocabulaire ni sa langue.
+
+Des versions zarma et haoussa ont été rédigées puis mises de côté : elles n'avaient pas été relues par des
+locuteurs natifs, et un texte approximatif lu à voix haute fait plus de dégâts qu'un texte absent. Les brouillons
+restent dans [`docs/QUESTIONS.md`](docs/QUESTIONS.md) pour qui voudrait les reprendre (voir la feuille de route).
 
 ## Développement
 
