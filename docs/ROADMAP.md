@@ -1,7 +1,7 @@
 # Feuille de route
 
 ## v1 (en cours)
-- [ ] Questions rédigées et validées (`docs/QUESTIONS.md`)
+- [x] Questions rédigées et validées (`docs/QUESTIONS.md`)
 - [ ] Traductions zarma et haoussa relues par un locuteur natif
 - [ ] Nom du produit fictif vérifié au marché
 - [ ] `index.html` : barème + tests verts

@@ -1,10 +1,12 @@
-# Questions de l'entretien — version à valider
+# Questions de l'entretien
 
-> **Statut : brouillon.** Rien n'est codé tant que ce document n'est pas validé.
-> À valider avant l'étape 2 : (1) le zarma et le haoussa par des locuteurs natifs, (2) le nom du produit
-> fictif de Q7 au marché, (3) les points marqués ✱ ci-dessous.
+> **Statut : barème validé le 17/09/2026.** Les questions, les options, les points et les drapeaux
+> ci-dessous sont ceux à implémenter dans `CONFIG` à l'étape 2. En cas d'écart avec `docs/SPEC.md`,
+> c'est ce document qui fait foi (`CLAUDE.md`).
 >
-> En cas d'écart avec `docs/SPEC.md`, c'est ce document qui fait foi une fois validé (`CLAUDE.md`).
+> **Deux vérifications restent ouvertes** et ne bloquent pas le code :
+> (1) le zarma et le haoussa sont des brouillons, à faire relire par des locuteurs natifs ;
+> (2) le nom du produit fictif de Q7 est à vérifier au marché, puis à saisir dans Réglages.
 
 ---
 
@@ -15,7 +17,7 @@
 - **Points maximums applicables** : une option « non posée » ou « non observée » est retirée du maximum,
   elle ne pénalise pas la candidate.
 - **Drapeaux** : `id` + niveau `leger` ou `bloquant`. Les identifiants sont ceux de la SPEC, sans invention.
-- **✱ = proposition hors SPEC**, à valider ou à refuser. Toutes les ✱ sont reprises en fin de document.
+- **✱ = règle décidée ici et absente de `docs/SPEC.md`** (validée le 17/09/2026). Toutes les ✱ sont reprises en fin de document.
 - L'employeur lit la question à voix haute et coche. La candidate ne touche pas au téléphone.
 - Chaque question a aussi un champ de note libre (non noté).
 
@@ -596,36 +598,39 @@ Points **bruts** de l'entretien. Chaque sous-score est ensuite ramené sur 100, 
 
 ---
 
-## Points à valider avant de coder
+## Décisions validées (règles hors SPEC)
 
-Tout ce qui est marqué ✱ est une proposition de ma part, pas une règle de la SPEC. Ton avis est nécessaire
-sur ces points, surtout les cinq premiers :
+Validé le 17/09/2026. Ces douze points ne figurent pas dans `docs/SPEC.md` : ils sont décidés ici et
+marqués ✱ dans le corps du document. Les tableaux ci-dessus font foi pour les valeurs exactes.
 
-1. **Nouveau drapeau `hygiene_risquee` (leger) en Q3.** La SPEC ne prévoit aucun drapeau sur Q3, seulement des
-   points. Est-ce qu'une pratique d'hygiène à risque (même planche pour la viande crue et les aliments cuits,
-   restes laissés dehors) mérite un drapeau léger, ou seulement zéro point ? Trois réponses à zéro suffiraient
-   alors à plafonner le verdict à `approfondir`, ce qui est peut-être trop sévère.
-2. **Drapeau `integrite` au niveau `leger`** pour les réponses intermédiaires de Q6 A et B
-   (« je le rends si on me le demande », « j'attends qu'on s'en aperçoive »). J'ai réutilisé l'identifiant
-   existant plutôt que d'en créer un nouveau. À garder, ou à ramener à zéro point sans drapeau ?
-3. **Sévérité inégale des variantes de Q6.** Les variantes A (argent) et B (objet cassé) peuvent donner un
-   drapeau **bloquant**, la variante C (nourriture) seulement un drapeau **léger**. Le tirage au sort décide
-   donc en partie de la sévérité. Faut-il aligner les trois variantes, ou accepter cet écart ?
-4. **Première expérience.** La SPEC dit « sous-score Stabilité neutre (valeur médiane) ». J'ai neutralisé
-   la part Q9 à 10/20 en laissant Q10 compter normalement. L'autre lecture possible : forcer tout le
-   sous-score Stabilité à 50. Laquelle veux-tu ?
-5. **Mélange entretien / épreuve pratique : 70 % / 30 %.** Valeur inventée. À confirmer ou à changer.
-6. Q4 variante A : le drapeau bloquant sur « je déplace la marmite en feu » (pas dans la SPEC).
-7. Q4 variante C : 5 points pour « Javel + savon ou poudre à laver » (déconseillé mais non bloquant).
-8. Q5 : deux options distinctes pour l'usage sans autorisation, selon qu'elle le dit ou non ensuite.
-9. Q9.2 : « partie sans prévenir » à 0 point, sans drapeau. Faut-il un drapeau léger ?
-10. Q9.4 : l'option « ancienne employeuse injoignable, autre témoin proposé » à 4 points, sans
-    `refus_reference`.
-11. Q2 : tirage prioritaire d'une tâche de cuisine pour les postes `cuisine` et `polyvalent`.
-12. Préambule à lire avant de commencer (non noté) : à garder dans ce document ou à déplacer ?
+1. **Drapeau `hygiene_risquee` (leger) en Q3** : retenu. Il se déclenche sur chaque option d'hygiène à
+   zéro point. Conséquence à garder en tête au calibrage : trois réponses à zéro en Q3 suffisent à elles
+   seules à plafonner le verdict à `approfondir` (règle des 3 drapeaux légers, SPEC § 5).
+2. **Drapeau `integrite` au niveau `leger`** : retenu pour les réponses intermédiaires de Q6 A et Q6 B
+   (« je le rends si on me le demande », « j'attends qu'on s'en aperçoive »). Même identifiant que le
+   drapeau bloquant, niveau différent.
+3. **Sévérité inégale des variantes de Q6** : acceptée. Les variantes A (argent) et B (objet cassé)
+   peuvent donner un drapeau bloquant, la variante C (nourriture) seulement un drapeau léger.
+4. **Première expérience** : la part Q9 du sous-score Stabilité est neutralisée à la valeur médiane
+   (10 points sur 20) et Q10 compte normalement. Aucun drapeau, jamais `refus_reference`.
+5. **Épreuve pratique** : `Compétences = 70 % entretien (Q1 + Q2) + 30 % épreuve pratique`, chacun ramené
+   sur 100, dès qu'au moins un geste est observé. Sans épreuve pratique, Compétences = entretien seul.
+6. **Q4 variante A** : « je prends la marmite en feu pour la sortir » → 0 point et `geste_dangereux` bloquant.
+7. **Q4 variante C** : « Javel + savon ou poudre à laver » → 5 points, sans drapeau.
+8. **Q5** : deux options distinctes pour l'usage sans autorisation (2 points si elle le dit ensuite,
+   0 sinon), le drapeau `electromenager_sans_autorisation` dans les deux cas.
+9. **Q9.2** : « partie sans prévenir » → 0 point, sans drapeau.
+10. **Q9.4** : « ancienne employeuse injoignable, autre témoin proposé » → 4 points, sans `refus_reference`.
+11. **Q2** : pour les postes `cuisine` et `polyvalent`, tirer en priorité une tâche de la famille D si
+    elle est cochée en Q1.
+12. **Préambule** : conservé dans ce document, non noté.
 
-Deux vérifications qui ne dépendent pas de moi, rappelées ici pour mémoire :
+Ces seuils et ces points sont des valeurs de départ, à recalibrer après une quinzaine d'entretiens réels
+(SPEC § 5 et `docs/ROADMAP.md`).
 
-- faire relire **tout** le zarma et **tout** le haoussa par des locuteurs natifs — en particulier le zarma,
-  dont le brouillon est faible ;
-- vérifier au marché que le nom retenu pour Q7 n'existe pas, puis le saisir dans Réglages.
+## Reste à faire, hors barème
+
+- Faire relire **tout** le zarma et **tout** le haoussa par des locuteurs natifs — en particulier le zarma,
+  dont le brouillon est faible. La mention « à valider par un locuteur natif » reste affichée dans l'app
+  tant que cette relecture n'a pas eu lieu, et les traductions ne sont jamais présentées comme validées.
+- Vérifier au marché que le nom retenu pour Q7 n'existe pas, puis le saisir dans Réglages.
