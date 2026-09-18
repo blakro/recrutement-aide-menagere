@@ -84,10 +84,19 @@ Question sur un produit d'entretien ou un ustensile **qui n'existe pas**.
 Un « jamais » absolu → drapeau léger `reponse_trop_parfaite`.
 
 ### Q9 — Disponibilité
-« À quelle heure tu peux être ici le matin, jusqu'à quelle heure tu peux rester, et comment tu viendras ? »
-Quatre points : les heures possibles, le trajet, ce qu'elle fait le jour où elle ne peut pas venir,
-et son accord pour un essai payé de quelques jours.
-- Ne pas prévenir quand elle ne peut pas venir → drapeau léger `absence_sans_prevenir`.
+Deux variantes, selon que la candidate **loge dans la maison** ou **rentre chez elle chaque soir**.
+Le logement se choisit sur la fiche avant l'entretien, comme le poste : ce n'est jamais une question posée
+à la candidate, ni sa situation familiale — c'est une condition du poste proposé.
+- **Rentre chaque soir** : « À quelle heure tu peux être ici le matin, jusqu'à quelle heure tu peux rester,
+  et comment tu viendras ? » Quatre points : les heures possibles, le trajet, ce qu'elle fait le jour où
+  elle ne peut pas venir, et son accord pour un essai payé de quelques jours.
+- **Loge dans la maison** : « Parlons de l'organisation, pour que chacun sache à quoi s'attendre. »
+  Trois points : le jour de repos hebdomadaire, ce qu'elle fait si elle est malade ou a un empêchement,
+  et son accord pour un essai payé de quelques jours.
+- Ne pas prévenir en cas d'empêchement ou d'absence, dans les deux variantes → drapeau léger
+  `absence_sans_prevenir`.
+- Dire qu'elle n'a pas besoin de jour de repos, variante « loge dans la maison » → drapeau léger
+  `disponibilite_trop_parfaite` (même logique que le « jamais » absolu de Q8).
 - **Aucune question sur les employeurs précédents, et aucune demande de citer quelqu'un.** Les joindre est
   rarement possible à Niamey, et une candidate ne doit pas être notée sur des personnes qu'on n'appellera pas.
 - Ni le quartier d'habitation ni les personnes avec qui elle vit n'entrent dans le score : seule compte
@@ -187,6 +196,7 @@ les champs `fiche`, `situationFamiliale`, `nationalite`, `ethnie`, `religion`, `
 ```js
 {
   poste: 'menage' | 'cuisine' | 'polyvalent',
+  logement: 'reside' | 'externe',   // loge dans la maison, ou rentre chez elle chaque soir : voir Q9
   reponses: { q1: ..., q2: ..., /* … */ q10: ... },   // forme détaillée libre, documentée en tête du bloc SCORING
   pratique: { /* idGeste: 'reussi' | 'partiel' | 'non_fait' | 'non_observe' */ }   // facultatif
 }

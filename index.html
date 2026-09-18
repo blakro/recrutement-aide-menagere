@@ -283,6 +283,7 @@ pre{white-space:pre-wrap;word-break:break-word;background:var(--surface-douce);p
    Entrée lue par computeScore, et rien d'autre :
    {
      poste: 'menage' | 'cuisine' | 'polyvalent',
+     logement: 'reside' | 'externe',   // loge dans la maison, ou rentre chez elle chaque soir
      reponses: {
        q1:  { familles: ['f_menage', 'f_lessive', ...] },
        q2:  { famille: 'f_cuisine' | null, tache: 'texte libre' | null, option: 'precise' | ... },
@@ -292,7 +293,7 @@ pre{white-space:pre-wrap;word-break:break-word;background:var(--surface-douce);p
        q6:  { variante: 'argent' | 'objet' | 'nourriture', option: '...' },
        q7:  { option: '...' },
        q8:  { option: '...' },
-       q9:  { horaires: '...', trajet: '...', absence: '...', essai: '...' },
+       q9:  { ... },   // forme différente selon logement : voir CONFIG.questions[8].branches
        q10: { duree: '...', conges: '...', calendrier: '...', coherence: '...' }
      },
      pratique: { g1: 'reussi' | 'partiel' | 'non_fait' | 'non_observe', ... }   // facultatif
@@ -308,6 +309,13 @@ const CONFIG = {
     { id: 'menage', libelle: 'Aide ménagère' },
     { id: 'cuisine', libelle: 'Aide cuisinière' },
     { id: 'polyvalent', libelle: 'Polyvalente (les deux)' }
+  ],
+
+  // Loge dans la maison, ou rentre chez elle chaque soir : deux réalités très différentes,
+  // fréquentes l'une comme l'autre à Niamey. Détermine quelle branche de Q9 (Disponibilité) s'applique.
+  logements: [
+    { id: 'reside', libelle: 'Loge dans la maison' },
+    { id: 'externe', libelle: 'Rentre chez elle chaque soir' }
   ],
 
   sousScores: [
@@ -367,13 +375,16 @@ const CONFIG = {
       leger: "Ses réponses sont trop parfaites pour être vraies. Lui demander des exemples concrets, sans en conclure qu’elle ment."
     },
     absence_sans_prevenir: {
-      leger: "Elle ne prévient pas quand elle ne peut pas venir. Convenir dès le départ d’un moyen simple de prévenir, et d’une heure limite le matin."
+      leger: "Elle ne prévient pas en cas d’empêchement ou d’absence. Convenir dès le départ d’un moyen simple de prévenir, quelle que soit la situation."
+    },
+    disponibilite_trop_parfaite: {
+      leger: "Elle dit ne pas avoir besoin de repos. Une réponse trop généreuse s’use vite : fixer quand même un jour de repos fixe chaque semaine."
     },
     engagement_irrealiste: {
       leger: "Elle promet de ne jamais prendre de congés, ce qui finit rarement bien. Fixer avec elle un calendrier écrit dès le départ."
     },
     engagement_incoherent: {
-      leger: "Ce qu’elle promet sur la durée ne tient pas avec les heures qu’elle peut faire. En reparler avec elle et fixer un calendrier écrit."
+      leger: "Ce qu’elle promet sur la durée ne tient pas avec ce qu’elle a dit sur sa disponibilité au jour le jour. En reparler avec elle et fixer un calendrier écrit."
     },
     hygiene_risquee: {
       leger: "Elle a décrit une pratique d’hygiène à risque. Lui montrer la façon de faire de la maison dès le premier jour."
@@ -686,49 +697,92 @@ const CONFIG = {
       sujet: "Ce qu’il faut pour qu’elle soit là chaque jour",
       couleur: 'orange', icone: 'chemin',
       sousScores: ['stabilite'],
-      texte: "Parlons de l’organisation. À quelle heure tu peux être ici le matin, jusqu’à quelle heure tu peux rester, et comment tu viendras ?",
+      texte: "Parlons de l’organisation, pour que chacun sache à quoi s’attendre.",
       consigne: "Cette question porte sur l’organisation du travail à venir. Ne lui demande ni où elle habite exactement, ni avec qui elle vit, ni chez qui elle a travaillé : rien de tout cela n’entre dans le score.",
-      criteres: [
-        {
-          id: 'horaires', titre: 'Les heures qu’elle peut faire',
-          options: [
-            { id: 'precis', libelle: 'Elle annonce des heures précises, qui couvrent le besoin de la maison', points: { stabilite: 5 } },
-            { id: 'ajustable', libelle: 'À peu près, mais elle accepte de fixer les heures maintenant', points: { stabilite: 3 } },
-            { id: 'flou', libelle: 'Elle ne sait pas, ou ses heures changent d’un jour à l’autre', points: { stabilite: 1 },
-              aVerifier: "Fixer avec elle des heures précises, jour par jour, et les écrire avant le premier jour." }
-          ]
-        },
-        {
-          id: 'trajet', titre: 'Le trajet jusqu’à la maison',
-          options: [
-            { id: 'sur', libelle: 'Elle sait comment elle vient et combien de temps ça lui prend', points: { stabilite: 5 } },
-            { id: 'long', libelle: 'Le trajet est long ou coûteux, mais elle a déjà une solution', points: { stabilite: 3 } },
-            { id: 'incertain', libelle: 'Elle ne sait pas encore comment elle viendra le matin', points: { stabilite: 1 },
-              aVerifier: "Regarder ensemble comment elle vient le matin, et si l’heure d’arrivée tient vraiment." }
-          ]
-        },
-        {
-          id: 'absence', titre: 'Le jour où elle ne peut pas venir',
-          options: [
-            { id: 'previent_veille', libelle: 'Elle prévient la veille ou tôt le matin, et propose de rattraper', points: { stabilite: 6 } },
-            { id: 'previent_jour', libelle: 'Elle prévient le matin même, par appel ou par message', points: { stabilite: 4 } },
-            { id: 'envoie_quelquun', libelle: 'Elle envoie quelqu’un d’autre travailler à sa place', points: { stabilite: 1 },
-              aVerifier: "Lui dire clairement que personne d’autre n’entre travailler dans la maison à sa place." },
-            { id: 'ne_previent_pas', libelle: 'Elle ne vient pas, et explique une fois revenue', points: { stabilite: 0 },
-              drapeau: { id: 'absence_sans_prevenir', niveau: 'leger' } }
-          ]
-        },
-        {
-          id: 'essai', titre: 'Un essai payé de quelques jours',
-          aVerifierToujours: "Fixer avec elle les dates de l’essai payé, et ce qui sera regardé pendant ces jours-là.",
-          options: [
-            { id: 'accepte', libelle: 'D’accord tout de suite pour un essai payé de quelques jours', points: { stabilite: 4 } },
-            { id: 'discute', libelle: 'D’accord sur le principe, mais veut d’abord parler du salaire', points: { stabilite: 3 } },
-            { id: 'refuse', libelle: 'Refuse l’essai', points: { stabilite: 0 },
-              aVerifier: "Lui demander ce qui la gêne dans l’essai avant d’aller plus loin." }
-          ]
-        }
-      ]
+      // Loge sur place ou rentre chaque soir : deux situations courantes à Niamey, avec des questions
+      // différentes. `brancheSur` lit CONFIG.logements, tel que renseigné pour ce poste (comme `poste`),
+      // jamais la situation familiale de la candidate. `criteresDe()` choisit la bonne branche, y compris dans computeScore.
+      brancheSur: 'logement',
+      brancheParDefaut: 'reside',
+      branches: {
+        reside: [
+          {
+            id: 'repos', titre: 'Le jour de repos',
+            texte: "Est-on d’accord sur un jour de repos fixe chaque semaine ?",
+            options: [
+              { id: 'fixe', libelle: 'Oui, elle trouve ça normal et propose même un jour', points: { stabilite: 8 } },
+              { id: 'a_discuter', libelle: 'Elle est ouverte, mais veut en reparler une fois arrivée', points: { stabilite: 5 } },
+              { id: 'pas_besoin', libelle: 'Elle dit qu’elle n’a pas besoin de jour de repos', points: { stabilite: 1 },
+                drapeau: { id: 'disponibilite_trop_parfaite', niveau: 'leger' } }
+            ]
+          },
+          {
+            id: 'absence', titre: 'Si elle est malade ou a un empêchement',
+            texte: "Si elle est malade, ou si elle a un empêchement, que fait-elle ?",
+            options: [
+              { id: 'previent_propose', libelle: 'Elle en parle avec toi et propose une solution (se faire remplacer un moment, rattraper)', points: { stabilite: 8 } },
+              { id: 'previent_seulement', libelle: 'Elle prévient, mais sans proposer de solution', points: { stabilite: 5 },
+                aVerifier: "Convenir avec elle de ce qu’on fait ensemble les jours où elle ne peut pas travailler." },
+              { id: 'part_sans_prevenir', libelle: 'Elle s’absente ou repart sans prévenir personne', points: { stabilite: 0 },
+                drapeau: { id: 'absence_sans_prevenir', niveau: 'leger' } }
+            ]
+          },
+          {
+            id: 'essai', titre: 'Un essai payé de quelques jours',
+            aVerifierToujours: "Fixer avec elle les dates de l’essai payé, et ce qui sera regardé pendant ces jours-là.",
+            options: [
+              { id: 'accepte', libelle: 'D’accord tout de suite pour un essai payé de quelques jours', points: { stabilite: 4 } },
+              { id: 'discute', libelle: 'D’accord sur le principe, mais veut d’abord parler du salaire', points: { stabilite: 3 } },
+              { id: 'refuse', libelle: 'Refuse l’essai', points: { stabilite: 0 },
+                aVerifier: "Lui demander ce qui la gêne dans l’essai avant d’aller plus loin." }
+            ]
+          }
+        ],
+        externe: [
+          {
+            id: 'horaires', titre: 'Les heures qu’elle peut faire',
+            texte: "À quelle heure tu peux être ici le matin, et jusqu’à quelle heure tu peux rester ?",
+            options: [
+              { id: 'precis', libelle: 'Elle annonce des heures précises, qui couvrent le besoin de la maison', points: { stabilite: 5 } },
+              { id: 'ajustable', libelle: 'À peu près, mais elle accepte de fixer les heures maintenant', points: { stabilite: 3 } },
+              { id: 'flou', libelle: 'Elle ne sait pas, ou ses heures changent d’un jour à l’autre', points: { stabilite: 1 },
+                aVerifier: "Fixer avec elle des heures précises, jour par jour, et les écrire avant le premier jour." }
+            ]
+          },
+          {
+            id: 'trajet', titre: 'Le trajet jusqu’à la maison',
+            texte: "Comment tu viendras, et ça prend combien de temps ?",
+            options: [
+              { id: 'sur', libelle: 'Elle sait comment elle vient et combien de temps ça lui prend', points: { stabilite: 5 } },
+              { id: 'long', libelle: 'Le trajet est long ou coûteux, mais elle a déjà une solution', points: { stabilite: 3 } },
+              { id: 'incertain', libelle: 'Elle ne sait pas encore comment elle viendra le matin', points: { stabilite: 1 },
+                aVerifier: "Regarder ensemble comment elle vient le matin, et si l’heure d’arrivée tient vraiment." }
+            ]
+          },
+          {
+            id: 'absence', titre: 'Le jour où elle ne peut pas venir',
+            texte: "Si un matin tu ne peux pas venir, que fais-tu ?",
+            options: [
+              { id: 'previent_veille', libelle: 'Elle prévient la veille ou tôt le matin, et propose de rattraper', points: { stabilite: 6 } },
+              { id: 'previent_jour', libelle: 'Elle prévient le matin même, par appel ou par message', points: { stabilite: 4 } },
+              { id: 'envoie_quelquun', libelle: 'Elle envoie quelqu’un d’autre travailler à sa place', points: { stabilite: 1 },
+                aVerifier: "Lui dire clairement que personne d’autre n’entre travailler dans la maison à sa place." },
+              { id: 'ne_previent_pas', libelle: 'Elle ne vient pas, et explique une fois revenue', points: { stabilite: 0 },
+                drapeau: { id: 'absence_sans_prevenir', niveau: 'leger' } }
+            ]
+          },
+          {
+            id: 'essai', titre: 'Un essai payé de quelques jours',
+            aVerifierToujours: "Fixer avec elle les dates de l’essai payé, et ce qui sera regardé pendant ces jours-là.",
+            options: [
+              { id: 'accepte', libelle: 'D’accord tout de suite pour un essai payé de quelques jours', points: { stabilite: 4 } },
+              { id: 'discute', libelle: 'D’accord sur le principe, mais veut d’abord parler du salaire', points: { stabilite: 3 } },
+              { id: 'refuse', libelle: 'Refuse l’essai', points: { stabilite: 0 },
+                aVerifier: "Lui demander ce qui la gêne dans l’essai avant d’aller plus loin." }
+            ]
+          }
+        ]
+      }
     },
 
     {
@@ -767,14 +821,24 @@ const CONFIG = {
         {
           id: 'coherence', titre: 'Cohérence entre ce qu’elle annonce et ce qu’elle peut faire',
           options: [
-            { id: 'coherent', libelle: 'La durée et les congés qu’elle annonce tiennent debout avec ses heures et son trajet', points: { coherence: 5 } },
-            { id: 'incoherent', libelle: 'Elle promet de rester des années, mais n’arrive pas à dire quand elle peut être là', points: { coherence: 0 }, drapeau: { id: 'engagement_incoherent', niveau: 'leger' } }
+            { id: 'coherent', libelle: 'La durée et les congés qu’elle annonce tiennent debout avec ce qu’elle a dit sur sa disponibilité', points: { coherence: 5 } },
+            { id: 'incoherent', libelle: 'Elle promet de rester des années, mais n’arrive pas à dire comment elle sera disponible au jour le jour', points: { coherence: 0 }, drapeau: { id: 'engagement_incoherent', niveau: 'leger' } }
           ]
         }
       ]
     }
   ]
 };
+
+/* Certaines questions posent des critères différents selon une donnée du poste (ex. Q9 selon que la
+   candidate loge sur place ou rentre chaque soir — jamais selon la situation familiale). `source` est
+   soit les réponses transmises au calcul (poste, logement…), soit `etat.identite` côté interface :
+   dans les deux cas, un simple objet portant les mêmes noms de champs. */
+function criteresDe(question, source) {
+  if (!question.branches) return question.criteres || [];
+  const cle = (source && source[question.brancheSur]) || question.brancheParDefaut;
+  return question.branches[cle] || question.branches[question.brancheParDefaut] || [];
+}
 
 /* Calcul du score. Fonction pure : mêmes entrées, même sortie.
    Sortie : { total, sousScores, drapeaux, verdict, pointsAVerifier } — voir docs/SPEC.md § 8. */
@@ -879,7 +943,7 @@ function computeScore(answers, config) {
     }
 
     if (question.type === 'criteres') {
-      (question.criteres || []).forEach(function (critere) {
+      criteresDe(question, entree).forEach(function (critere) {
         appliquerCritere(critere, rep[critere.id], critere.titre);
       });
       return;
@@ -973,13 +1037,15 @@ function reponsesSolides() {
   };
 }
 
-function candidate(poste, modifications, pratique) {
+function candidate(poste, modifications, pratique, logement) {
   const reponses = reponsesSolides();
   const mods = modifications || {};
   Object.keys(mods).forEach(function (q) {
     reponses[q] = Object.assign({}, reponses[q], mods[q]);
   });
-  const answers = { poste: poste, reponses: reponses };
+  // reponsesSolides() décrit une candidate qui rentre chez elle chaque soir ; les cas qui veulent
+  // la variante « loge sur place » passent logement: 'reside' en 4e argument.
+  const answers = { poste: poste, logement: logement || 'externe', reponses: reponses };
   if (pratique) answers.pratique = pratique;
   return answers;
 }
@@ -1091,6 +1157,16 @@ const TEST_CASES = [
       q10: { duree: 'court', conges: 'vague', calendrier: 'refus', coherence: 'incoherent' }
     }),
     expect: { verdict: 'non_recommande', maxTotal: 49 }
+  },
+  {
+    name: '15. Loge sur place : part sans prévenir, sinon solide',
+    answers: candidate('menage', { q9: { repos: 'fixe', absence: 'part_sans_prevenir', essai: 'accepte' } }, null, 'reside'),
+    expect: { verdict: 'essai', drapeauxInclus: ['absence_sans_prevenir'] }
+  },
+  {
+    name: '16. Loge sur place : dit ne pas avoir besoin de repos',
+    answers: candidate('menage', { q9: { repos: 'pas_besoin', absence: 'previent_propose', essai: 'accepte' } }, null, 'reside'),
+    expect: { verdict: 'essai', drapeauxInclus: ['disponibilite_trop_parfaite'] }
   }
 ];
 // @@TESTS-END
@@ -1166,7 +1242,7 @@ function aujourdhui() {
 function etatInitial() {
   return {
     ecran: 'accueil',
-    identite: { prenom: '', date: aujourdhui(), poste: 'menage', note: '' },
+    identite: { prenom: '', date: aujourdhui(), poste: 'menage', logement: 'reside', note: '' },
     tirage: { q2Famille: null, q2Tache: null },
     reponses: {
       q1: { familles: [] },
@@ -1248,9 +1324,10 @@ function etatQuestion(question) {
   if (question.type === 'familles') return (rep.familles || []).length ? 'complet' : 'vide';
   if (question.type === 'critere' || question.type === 'variantes') return rep.option ? 'complet' : 'vide';
   if (question.type === 'criteres') {
-    const faits = question.criteres.filter(function (c) { return rep[c.id]; }).length;
+    const criteres = criteresDe(question, etat.identite);
+    const faits = criteres.filter(function (c) { return rep[c.id]; }).length;
     if (!faits) return 'vide';
-    return faits === question.criteres.length ? 'complet' : 'partiel';
+    return faits === criteres.length ? 'complet' : 'partiel';
   }
   return 'vide';
 }
@@ -1418,6 +1495,12 @@ function rendreAccueil() {
     html += '<option value="' + esc(p.id) + '"' + (p.id === id.poste ? ' selected' : '') + '>' + esc(p.libelle) + '</option>';
   });
   html += '</select>';
+  html += '<label class="champ" for="logement">Logement</label><select id="logement">';
+  CONFIG.logements.forEach(function (l) {
+    html += '<option value="' + esc(l.id) + '"' + (l.id === id.logement ? ' selected' : '') + '>' + esc(l.libelle) + '</option>';
+  });
+  html += '</select>';
+  html += '<small>Change les questions posées sur la disponibilité (question 9).</small>';
   html += '<label class="champ" for="note">Note libre (facultatif)</label>' +
     '<textarea id="note" placeholder="Ce que tu veux retenir.">' + esc(id.note) + '</textarea>' +
     '<small>Aucun numéro de pièce d’identité, aucune photo. Rien de ce qui est écrit ici n’entre dans le calcul.</small>';
@@ -1437,7 +1520,7 @@ function rendreAccueil() {
     const champ = document.getElementById(cle);
     if (champ) champ.addEventListener('input', function () { etat.identite[cle] = champ.value; planifierSauvegarde(); });
   });
-  ['date', 'poste'].forEach(function (cle) {
+  ['date', 'poste', 'logement'].forEach(function (cle) {
     const champ = document.getElementById(cle);
     if (champ) champ.addEventListener('change', function () { etat.identite[cle] = champ.value; planifierSauvegarde(); });
   });
@@ -1555,7 +1638,7 @@ function rendreEntretien() {
     html += '<p class="enonce">' + esc(question.texte) + '</p>';
     if (question.consigne) html += '<p class="consigne">' + esc(question.consigne) + '</p>';
     {
-      question.criteres.forEach(function (critere) {
+      criteresDe(question, etat.identite).forEach(function (critere) {
         html += '<div class="carte"><h3>' + esc(critere.titre) + '</h3>';
         if (critere.texte) html += '<p class="enonce" style="font-size:1.08rem">' + esc(critere.texte) + '</p>';
         html += '<div class="options">';
@@ -1692,6 +1775,7 @@ function construireAnswers() {
   });
   return {
     poste: etat.identite.poste,
+    logement: etat.identite.logement,
     reponses: reponses,
     pratique: etat.pratiqueFaite ? JSON.parse(JSON.stringify(etat.pratique)) : {}
   };
@@ -1720,7 +1804,7 @@ function detailReponses() {
         .map(function (f) { return f.libelle; });
       html += noms.length ? 'Elle dit savoir faire : ' + esc(noms.join(', ')) + '.' : 'Elle n\u2019a rien coché.';
     } else if (q.type === 'criteres') {
-      html += q.criteres.map(function (c) {
+      html += criteresDe(q, etat.identite).map(function (c) {
         return esc(c.titre) + ' : ' + esc(libelleOption(c.options, rep[c.id]) || 'pas de réponse cochée');
       }).join('<br>');
     } else {
@@ -1873,6 +1957,7 @@ function exporterCsv() {
   lignes.push(['prenom', etat.identite.prenom]);
   lignes.push(['date', etat.identite.date]);
   lignes.push(['poste', etat.identite.poste]);
+  lignes.push(['logement', etat.identite.logement]);
   lignes.push(['total', r.total]);
   lignes.push(['verdict', r.verdict]);
   CONFIG.sousScores.forEach(function (s) { lignes.push(['sous_score_' + s.id, r.sousScores[s.id]]); });
@@ -1883,7 +1968,7 @@ function exporterCsv() {
     let valeur = '';
     if (q.type === 'familles') valeur = (rep.familles || []).join(' | ');
     else if (q.type === 'criteres') {
-      valeur = q.criteres.map(function (c) { return c.id + '=' + (rep[c.id] || ''); }).join(' | ');
+      valeur = criteresDe(q, etat.identite).map(function (c) { return c.id + '=' + (rep[c.id] || ''); }).join(' | ');
     } else valeur = (rep.variante ? rep.variante + ':' : '') + (rep.option || '');
     lignes.push([q.id, valeur]);
     if (rep.note) lignes.push([q.id + '_note', rep.note]);

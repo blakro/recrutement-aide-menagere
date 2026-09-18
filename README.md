@@ -51,6 +51,10 @@ Une fois la page chargée, tout fonctionne sans réseau. Les réponses restent s
 | 9 | Disponibilité | Ce qu'il faut pour qu'elle soit là chaque jour | Stabilité |
 | 10 | Projet et congés | Le temps qu'elle compte rester et ses congés | Stabilité · Cohérence |
 
+> La question 9 a deux versions : beaucoup d'aides ménagères venues d'autres pays logent dans la maison
+> plutôt que de rentrer chaque soir. Le logement se choisit sur la fiche avant l'entretien, comme le poste,
+> et non l'inverse — les questions posées à la candidate changent en conséquence.
+
 Trois mécanismes font le travail :
 
 - **Les questions en miroir.** Une compétence annoncée doit pouvoir s'expliquer étape par étape. Ce qu'elle

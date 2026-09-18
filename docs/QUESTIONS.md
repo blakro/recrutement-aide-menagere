@@ -427,16 +427,50 @@ Une réponse trop parfaite n'est pas une faute : c'est un signal qu'il faut creu
 
 ## Q9 — Disponibilité
 
-**Sous-score : Stabilité.** Points bruts : **20 max**.
+**Sous-score : Stabilité.** Points bruts : **20 max**, quelle que soit la variante ci-dessous.
+
+**Décidé le 18/09/2026 : deux variantes selon le logement.** Beaucoup d'aides ménagères venues d'autres pays
+logent dans la maison plutôt que de rentrer chaque soir ; les questions ne sont pas les mêmes. Le logement se
+choisit sur la fiche, comme le poste — **avant** l'entretien, ce n'est pas une question posée à la candidate.
+
+**Règle commune aux deux variantes** : cette question porte sur le travail à venir. Elle ne demande **jamais**
+chez qui la candidate a travaillé, ni de citer quelqu'un qui pourrait parler d'elle. Elle ne demande pas non
+plus où elle habite exactement ni avec qui elle vit : ces éléments n'entrent pas dans le score.
+
+### Variante « loge dans la maison »
+
+- **Français** : « Parlons de l'organisation, pour que chacun sache à quoi s'attendre. »
+
+#### Le jour de repos (8 pts)
+
+| Option | Points | Drapeau |
+|---|---|---|
+| Oui, elle trouve ça normal et propose même un jour | 8 | — |
+| Elle est ouverte, mais veut en reparler une fois arrivée | 5 | — |
+| Elle dit qu'elle n'a pas besoin de jour de repos | 1 | `disponibilite_trop_parfaite` — leger |
+
+#### Si elle est malade ou a un empêchement (8 pts)
+
+| Option | Points | Drapeau |
+|---|---|---|
+| Elle en parle avec toi et propose une solution (se faire remplacer un moment, rattraper) | 8 | — |
+| Elle prévient, mais sans proposer de solution | 5 | — |
+| Elle s'absente ou repart sans prévenir personne | 0 | `absence_sans_prevenir` — leger |
+
+#### Un essai payé de quelques jours (4 pts)
+
+| Option | Points | Drapeau |
+|---|---|---|
+| D'accord tout de suite pour un essai payé de quelques jours | 4 | — |
+| D'accord sur le principe, mais veut d'abord parler du salaire | 3 | — |
+| Refuse l'essai | 0 | — |
+
+### Variante « rentre chez elle chaque soir »
 
 - **Français** : « Parlons de l'organisation. À quelle heure tu peux être ici le matin, jusqu'à quelle heure tu
   peux rester, et comment tu viendras ? »
 
-**Règle** : cette question porte sur le travail à venir. Elle ne demande **jamais** chez qui la candidate a
-travaillé, ni de citer quelqu'un qui pourrait parler d'elle. Elle ne demande pas non plus où elle habite
-exactement ni avec qui elle vit : ces éléments n'entrent pas dans le score.
-
-### Q9.1 — Les heures qu'elle peut faire (5 pts)
+#### Les heures qu'elle peut faire (5 pts)
 
 | Option | Points | Drapeau |
 |---|---|---|
@@ -444,7 +478,7 @@ exactement ni avec qui elle vit : ces éléments n'entrent pas dans le score.
 | À peu près, mais elle accepte de fixer les heures maintenant | 3 | — |
 | Elle ne sait pas, ou ses heures changent d'un jour à l'autre | 1 | — |
 
-### Q9.2 — Le trajet jusqu'à la maison (5 pts)
+#### Le trajet jusqu'à la maison (5 pts)
 
 | Option | Points | Drapeau |
 |---|---|---|
@@ -454,7 +488,7 @@ exactement ni avec qui elle vit : ces éléments n'entrent pas dans le score.
 
 **Règle** : on note la solution de transport, jamais le quartier d'habitation.
 
-### Q9.3 — Le jour où elle ne peut pas venir (6 pts)
+#### Le jour où elle ne peut pas venir (6 pts)
 
 | Option | Points | Drapeau |
 |---|---|---|
@@ -463,7 +497,7 @@ exactement ni avec qui elle vit : ces éléments n'entrent pas dans le score.
 | Elle envoie quelqu'un d'autre travailler à sa place | 1 | — |
 | Elle ne vient pas, et explique une fois revenue | 0 | `absence_sans_prevenir` — leger |
 
-### Q9.4 — Un essai payé de quelques jours (4 pts)
+#### Un essai payé de quelques jours (4 pts)
 
 | Option | Points | Drapeau |
 |---|---|---|
@@ -472,8 +506,9 @@ exactement ni avec qui elle vit : ces éléments n'entrent pas dans le score.
 | Refuse l'essai | 0 | — |
 
 **Points à vérifier générés** : « Fixer avec elle les dates de l'essai payé, et ce qui sera regardé pendant
-ces jours-là », plus, selon les réponses, écrire les heures jour par jour, vérifier le trajet du matin, ou
-poser la règle que personne d'autre n'entre travailler à sa place.
+ces jours-là », plus, selon les réponses et la variante : écrire les heures jour par jour, vérifier le trajet
+du matin, poser la règle que personne d'autre n'entre travailler à sa place, ou convenir de ce qu'on fait
+ensemble les jours où elle ne peut pas travailler.
 
 ## Q10 — Projet et congés
 
@@ -520,8 +555,8 @@ ces éléments n'entrent pas dans le score (SPEC § 6) et n'ont pas à être dem
 
 | Option | Points | Drapeau |
 |---|---|---|
-| La durée et les congés qu'elle annonce tiennent debout avec ses heures et son trajet | 5 | — |
-| Elle promet de rester des années, mais n'arrive pas à dire quand elle peut être là | 0 | `engagement_incoherent` — leger |
+| La durée et les congés qu'elle annonce tiennent debout avec ce qu'elle a dit sur sa disponibilité | 5 | — |
+| Elle promet de rester des années, mais n'arrive pas à dire comment elle sera disponible au jour le jour | 0 | `engagement_incoherent` — leger |
 
 **Note pour l'employeur** : le but est de fixer un calendrier, pas de faire promettre l'impossible.
 Une candidate qui annonce des congés précis est plus fiable qu'une candidate qui promet de ne jamais partir.
@@ -564,9 +599,10 @@ Sans épreuve pratique, Compétences = 100 % entretien. Aucune candidate n'est p
 | `se_sert_sans_demander` | leger | Q6 C | Se servirait sans demander. Dire clairement ce qui est permis pour les repas. |
 | `surdeclaration` | bloquant | Q7 | Dit connaître un produit qui n'existe pas. Vérifier une par une les compétences annoncées. |
 | `reponse_trop_parfaite` | leger | Q8 | Réponses trop parfaites. Creuser avec des exemples concrets, sans conclure au mensonge. |
-| `absence_sans_prevenir` | leger | Q9 | Elle ne prévient pas quand elle ne peut pas venir. Convenir d'un moyen simple de prévenir, et d'une heure limite le matin. |
+| `absence_sans_prevenir` | leger | Q9 | Elle ne prévient pas en cas d'empêchement ou d'absence. Convenir d'un moyen simple de prévenir, quelle que soit la situation. |
+| `disponibilite_trop_parfaite` | leger ✱ | Q9 (loge sur place) | Elle dit ne pas avoir besoin de repos. Une réponse trop généreuse s'use vite : fixer quand même un jour de repos fixe. |
 | `engagement_irrealiste` | leger | Q10 | Promet de ne jamais prendre de congés. Risque de départ brusque : fixer un calendrier écrit. |
-| `engagement_incoherent` | leger | Q10 | Ce qu'elle promet sur la durée ne tient pas avec les heures qu'elle peut faire. En reparler et fixer un calendrier écrit. |
+| `engagement_incoherent` | leger | Q10 | Ce qu'elle promet sur la durée ne tient pas avec ce qu'elle a dit sur sa disponibilité. En reparler et fixer un calendrier écrit. |
 | `hygiene_risquee` | leger ✱ | Q3 | Pratique d'hygiène à risque. Montrer la façon de faire de la maison dès le premier jour. |
 
 Rappel SPEC § 5 : 1 drapeau bloquant → verdict au mieux `approfondir` ; 2 bloquants ou plus → `non_recommande` ;
@@ -584,7 +620,7 @@ Points **bruts** de l'entretien. Chaque sous-score est ensuite ramené sur 100, 
 | **Hygiène & sécurité** | Q3, Q4 | Q3 : 15 (5 × 3) · Q4 : 15 | **30** |
 | **Intégrité** | Q5, Q6 | Q5 : 10 · Q6 : 15 | **25** |
 | **Cohérence** | Q2, Q7, Q8, Q10 | Q2 : 10 · Q7 : 10 · Q8 : 5 · Q10.4 : 5 | **30** |
-| **Stabilité** | Q9, Q10 | Q9 : 20 (5+5+6+4) · Q10 : 10 (4+3+3) | **30** |
+| **Stabilité** | Q9, Q10 | Q9 : 20 (8+8+4 si logée, 5+5+6+4 si externe) · Q10 : 10 (4+3+3) | **30** |
 | **Total entretien** | | | **145** |
 
 Épreuve pratique, en plus et seulement sur Compétences : 16 points (menage), 18 (cuisine), 18 (polyvalent).
@@ -618,6 +654,14 @@ marqués ✱ dans le corps du document. Les tableaux ci-dessus font foi pour les
    de Stabilité. Les drapeaux `refus_reference` et `incoherence_q9_q10` disparaissent, remplacés par
    `absence_sans_prevenir` et `engagement_incoherent`. La notion de « première expérience » n'a plus lieu
    d'être : toutes les candidates peuvent répondre à Q9.
+4bis. **Q9 a deux variantes selon le logement** (décidé le 18/09/2026). Beaucoup d'aides ménagères venues
+   d'autres pays logent dans la maison plutôt que de rentrer chaque soir : leur demander une heure d'arrivée
+   et un trajet du matin n'a pas de sens. Le logement (« loge sur place » / « rentre chaque soir ») se
+   choisit sur la fiche avant l'entretien, comme le poste — ce n'est jamais une question posée à la
+   candidate, et ce n'est pas non plus sa situation familiale : c'est une donnée du poste proposé. Chaque
+   variante totalise les mêmes 20 points ; `absence_sans_prevenir` est réutilisé dans les deux, un nouveau
+   drapeau léger `disponibilite_trop_parfaite` n'existe que dans la variante « loge sur place » (dire qu'on
+   n'a besoin d'aucun repos est le même genre de signal que le « jamais » de Q8).
 5. **Épreuve pratique** : `Compétences = 70 % entretien (Q1 + Q2) + 30 % épreuve pratique`, chacun ramené
    sur 100, dès qu'au moins un geste est observé. Sans épreuve pratique, Compétences = entretien seul.
 6. **Q4 variante A** : « je prends la marmite en feu pour la sortir » → 0 point et `geste_dangereux` bloquant.
