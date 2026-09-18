@@ -425,65 +425,55 @@ Une réponse trop parfaite n'est pas une faute : c'est un signal qu'il faut creu
 
 ---
 
-## Q9 — Parcours
+## Q9 — Disponibilité
 
 **Sous-score : Stabilité.** Points bruts : **20 max**.
 
-- **Français** : « Parle-moi de tes deux derniers travails. Pour chacun : combien de temps tu es restée,
-  pourquoi tu es partie, et le nom et le numéro d'une personne qui peut parler de ton travail. »
-- **Zarma** *(à valider)* : « Ma ci ay se ni goy hinka kaŋ ga ban gaa. Afo kulu se : han marge no ni te,
-  ifo se no ni fun, nda boro fo maa nda telefon kaŋ ga hin ka salaŋ ni goyo boŋ. »
-- **Haoussa** *(à valider)* : « Ki gaya mini game da ayyukanki biyu na ƙarshe. Ga kowanne: tsawon lokacin
-  da kika yi, dalilin barin aikin, da sunan mutum da lambar wayarsa wanda zai iya magana a kan aikinki. »
+- **Français** : « Parlons de l'organisation. À quelle heure tu peux être ici le matin, jusqu'à quelle heure tu
+  peux rester, et comment tu viendras ? »
 
-### Q9.1 — Durée du dernier emploi (6 pts)
+**Règle** : cette question porte sur le travail à venir. Elle ne demande **jamais** chez qui la candidate a
+travaillé, ni de citer quelqu'un qui pourrait parler d'elle. Elle ne demande pas non plus où elle habite
+exactement ni avec qui elle vit : ces éléments n'entrent pas dans le score.
 
-| Option | Points | Drapeau |
-|---|---|---|
-| 2 ans ou plus | 6 | — |
-| 1 à 2 ans | 5 | — |
-| 6 à 12 mois | 3 | — |
-| 3 à 6 mois | 2 | — |
-| Moins de 3 mois | 1 | — |
-
-### Q9.2 — Motif de départ du dernier emploi (3 pts)
+### Q9.1 — Les heures qu'elle peut faire (5 pts)
 
 | Option | Points | Drapeau |
 |---|---|---|
-| Motif clair et vérifiable (fin de contrat, famille employeuse partie, déménagement) | 3 | — |
-| Motif personnel mais cohérent et assumé | 2 | — |
-| Motif flou, ou la version change pendant l'entretien | 1 | — |
-| Partie sans prévenir | 0 | — ✱ |
+| Elle annonce des heures précises, qui couvrent le besoin de la maison | 5 | — |
+| À peu près, mais elle accepte de fixer les heures maintenant | 3 | — |
+| Elle ne sait pas, ou ses heures changent d'un jour à l'autre | 1 | — |
 
-### Q9.3 — Durée de l'avant-dernier emploi (3 pts)
-
-| Option | Points | Drapeau |
-|---|---|---|
-| 1 an ou plus | 3 | — |
-| 3 à 12 mois | 2 | — |
-| Moins de 3 mois | 1 | — |
-| Un seul emploi avant celui-ci | non posée (retirée du maximum) | — |
-
-### Q9.4 — Référence (8 pts)
+### Q9.2 — Le trajet jusqu'à la maison (5 pts)
 
 | Option | Points | Drapeau |
 |---|---|---|
-| Accepte, donne un nom et un numéro tout de suite | 8 | — |
-| Donne un nom, dit qu'elle doit demander le numéro | 4 | — |
-| Ne peut pas joindre l'ancienne employeuse (partie du pays, décès), mais donne un autre témoin | 4 | — ✱ |
-| Refuse de donner une référence alors qu'elle a déjà travaillé | 0 | `refus_reference` — **bloquant** |
+| Elle sait comment elle vient et combien de temps ça lui prend | 5 | — |
+| Le trajet est long ou coûteux, mais elle a déjà une solution | 3 | — |
+| Elle ne sait pas encore comment elle viendra le matin | 1 | — |
 
-### Première expérience
+**Règle** : on note la solution de transport, jamais le quartier d'habitation.
 
-Si la candidate n'a jamais travaillé : Q9.1 à Q9.4 sont **non posées**, **aucun drapeau** (surtout pas
-`refus_reference`), et la part Q9 du sous-score Stabilité est neutralisée à la **valeur médiane**
-(10 points sur 20). Seule Q10 apporte des points réels. ✱ (voir « Points à valider », n° 4)
+### Q9.3 — Le jour où elle ne peut pas venir (6 pts)
 
-**Point à vérifier généré** : « Noter ce qu'elle a dit de son dernier emploi, sa durée et sa raison de départ,
-et regarder si l'essai le confirme. » Joindre les anciens employeurs est rarement possible à Niamey :
-aucun point à vérifier ne suppose un appel.
+| Option | Points | Drapeau |
+|---|---|---|
+| Elle prévient la veille ou tôt le matin, et propose de rattraper | 6 | — |
+| Elle prévient le matin même, par appel ou par message | 4 | — |
+| Elle envoie quelqu'un d'autre travailler à sa place | 1 | — |
+| Elle ne vient pas, et explique une fois revenue | 0 | `absence_sans_prevenir` — leger |
 
----
+### Q9.4 — Un essai payé de quelques jours (4 pts)
+
+| Option | Points | Drapeau |
+|---|---|---|
+| D'accord tout de suite pour un essai payé de quelques jours | 4 | — |
+| D'accord sur le principe, mais veut d'abord parler du salaire | 3 | — |
+| Refuse l'essai | 0 | — |
+
+**Points à vérifier générés** : « Fixer avec elle les dates de l'essai payé, et ce qui sera regardé pendant
+ces jours-là », plus, selon les réponses, écrire les heures jour par jour, vérifier le trajet du matin, ou
+poser la règle que personne d'autre n'entre travailler à sa place.
 
 ## Q10 — Projet et congés
 
@@ -526,13 +516,12 @@ ces éléments n'entrent pas dans le score (SPEC § 6) et n'ont pas à être dem
 | D'accord sur le principe, veut en reparler | 1 | — |
 | Refuse d'en parler | 0 | — |
 
-### Q10.4 — Cohérence avec Q9 (5 pts, Cohérence)
+### Q10.4 — Cohérence entre ce qu'elle annonce et ce qu'elle peut faire (5 pts, Cohérence)
 
 | Option | Points | Drapeau |
 |---|---|---|
-| Le projet annoncé est cohérent avec les emplois précédents | 5 | — |
-| Tous les emplois précédents duraient moins de 3 mois, mais elle promet plusieurs années | 0 | `incoherence_q9_q10` — leger |
-| Première expérience (rien à comparer) | non posée (retirée du maximum) | — |
+| La durée et les congés qu'elle annonce tiennent debout avec ses heures et son trajet | 5 | — |
+| Elle promet de rester des années, mais n'arrive pas à dire quand elle peut être là | 0 | `engagement_incoherent` — leger |
 
 **Note pour l'employeur** : le but est de fixer un calendrier, pas de faire promettre l'impossible.
 Une candidate qui annonce des congés précis est plus fiable qu'une candidate qui promet de ne jamais partir.
@@ -575,9 +564,9 @@ Sans épreuve pratique, Compétences = 100 % entretien. Aucune candidate n'est p
 | `se_sert_sans_demander` | leger | Q6 C | Se servirait sans demander. Dire clairement ce qui est permis pour les repas. |
 | `surdeclaration` | bloquant | Q7 | Dit connaître un produit qui n'existe pas. Vérifier une par une les compétences annoncées. |
 | `reponse_trop_parfaite` | leger | Q8 | Réponses trop parfaites. Creuser avec des exemples concrets, sans conclure au mensonge. |
-| `refus_reference` | bloquant | Q9 | Refuse une référence alors qu'elle a déjà travaillé. Demander pourquoi, ne pas embaucher sans vérification. |
+| `absence_sans_prevenir` | leger | Q9 | Elle ne prévient pas quand elle ne peut pas venir. Convenir d'un moyen simple de prévenir, et d'une heure limite le matin. |
 | `engagement_irrealiste` | leger | Q10 | Promet de ne jamais prendre de congés. Risque de départ brusque : fixer un calendrier écrit. |
-| `incoherence_q9_q10` | leger | Q10 | Emplois courts mais promesse de rester longtemps. À confronter aux références. |
+| `engagement_incoherent` | leger | Q10 | Ce qu'elle promet sur la durée ne tient pas avec les heures qu'elle peut faire. En reparler et fixer un calendrier écrit. |
 | `hygiene_risquee` | leger ✱ | Q3 | Pratique d'hygiène à risque. Montrer la façon de faire de la maison dès le premier jour. |
 
 Rappel SPEC § 5 : 1 drapeau bloquant → verdict au mieux `approfondir` ; 2 bloquants ou plus → `non_recommande` ;
@@ -595,7 +584,7 @@ Points **bruts** de l'entretien. Chaque sous-score est ensuite ramené sur 100, 
 | **Hygiène & sécurité** | Q3, Q4 | Q3 : 15 (5 × 3) · Q4 : 15 | **30** |
 | **Intégrité** | Q5, Q6 | Q5 : 10 · Q6 : 15 | **25** |
 | **Cohérence** | Q2, Q7, Q8, Q10 | Q2 : 10 · Q7 : 10 · Q8 : 5 · Q10.4 : 5 | **30** |
-| **Stabilité** | Q9, Q10 | Q9 : 20 (6+3+3+8) · Q10 : 10 (4+3+3) | **30** |
+| **Stabilité** | Q9, Q10 | Q9 : 20 (5+5+6+4) · Q10 : 10 (4+3+3) | **30** |
 | **Total entretien** | | | **145** |
 
 Épreuve pratique, en plus et seulement sur Compétences : 16 points (menage), 18 (cuisine), 18 (polyvalent).
@@ -607,8 +596,6 @@ Points **bruts** de l'entretien. Chaque sous-score est ensuite ramené sur 100, 
 | Poste `menage` | Q1 famille D retirée (le maximum reste 12) |
 | Aucune tâche cochée en Q1 | Q2 non posée : Compétences −18, Cohérence −10 |
 | Pas de frigo dans la maison | Q3.4 retirée : Hygiène & sécurité −3 |
-| Un seul emploi précédent | Q9.3 retirée : Stabilité −3 |
-| Première expérience | Q9 neutralisée à 10/20 ; Q10.4 retirée : Cohérence −5 |
 | Épreuve pratique non faite | Compétences = entretien seul |
 
 ---
@@ -626,16 +613,20 @@ marqués ✱ dans le corps du document. Les tableaux ci-dessus font foi pour les
    drapeau bloquant, niveau différent.
 3. **Sévérité inégale des variantes de Q6** : acceptée. Les variantes A (argent) et B (objet cassé)
    peuvent donner un drapeau bloquant, la variante C (nourriture) seulement un drapeau léger.
-4. **Première expérience** : la part Q9 du sous-score Stabilité est neutralisée à la valeur médiane
-   (10 points sur 20) et Q10 compte normalement. Aucun drapeau, jamais `refus_reference`.
+4. **Aucune question sur le passé professionnel** (décidé le 18/09/2026). Q9 ne porte plus sur les emplois
+   précédents ni sur une personne à citer : elle porte sur la disponibilité à venir, pour les mêmes 20 points
+   de Stabilité. Les drapeaux `refus_reference` et `incoherence_q9_q10` disparaissent, remplacés par
+   `absence_sans_prevenir` et `engagement_incoherent`. La notion de « première expérience » n'a plus lieu
+   d'être : toutes les candidates peuvent répondre à Q9.
 5. **Épreuve pratique** : `Compétences = 70 % entretien (Q1 + Q2) + 30 % épreuve pratique`, chacun ramené
    sur 100, dès qu'au moins un geste est observé. Sans épreuve pratique, Compétences = entretien seul.
 6. **Q4 variante A** : « je prends la marmite en feu pour la sortir » → 0 point et `geste_dangereux` bloquant.
 7. **Q4 variante C** : « Javel + savon ou poudre à laver » → 5 points, sans drapeau.
 8. **Q5** : deux options distinctes pour l'usage sans autorisation (2 points si elle le dit ensuite,
    0 sinon), le drapeau `electromenager_sans_autorisation` dans les deux cas.
-9. **Q9.2** : « partie sans prévenir » → 0 point, sans drapeau.
-10. **Q9.4** : « ancienne employeuse injoignable, autre témoin proposé » → 4 points, sans `refus_reference`.
+9. **Q9.3** : « elle envoie quelqu'un d'autre à sa place » → 1 point, sans drapeau, mais un point à vérifier
+   (personne d'autre n'entre travailler dans la maison).
+10. **Q9.4** : « refuse l'essai » → 0 point, sans drapeau : c'est un point de discussion, pas une faute.
 11. **Q2** : pour les postes `cuisine` et `polyvalent`, tirer en priorité une tâche de la famille D si
     elle est cochée en Q1.
 12. **Préambule** : conservé dans ce document, non noté.

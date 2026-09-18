@@ -18,6 +18,8 @@ Dans le périmètre :
 
 Hors périmètre :
 - Garde d'enfants.
+- Toute question sur les employeurs précédents, et toute demande de citer une personne de référence.
+- Toute vérification qui suppose un appel téléphonique à un tiers.
 - Serveur, comptes utilisateurs, synchronisation.
 - Stockage de pièces d'identité ou de photos.
 - Toute prétention à « détecter le mensonge ». L'app repère des **incohérences** et des **signaux à vérifier**.
@@ -34,7 +36,7 @@ Hors périmètre :
 | Q6 | Intégrité (scénario) | Intégrité | Variante tirée au hasard |
 | Q7 | Produit fictif | Cohérence | Détection de surdéclaration |
 | Q8 | Désirabilité sociale | Cohérence | Détection du « jamais » absolu |
-| Q9 | Parcours | Stabilité | Faits vérifiables |
+| Q9 | Disponibilité | Stabilité | Organisation du travail à venir |
 | Q10 | Projet et congés | Stabilité, Cohérence | Vérifie Q9 |
 
 ### Q1 — Compétences déclarées
@@ -81,17 +83,22 @@ Question sur un produit d'entretien ou un ustensile **qui n'existe pas**.
 « Ne t'est-il jamais, même une seule fois, arrivé d'être en retard ou de te mettre en colère ? »
 Un « jamais » absolu → drapeau léger `reponse_trop_parfaite`.
 
-### Q9 — Parcours
-Deux derniers emplois : durée, motif de départ, contact d'une personne de référence.
-- Refus de donner une référence alors qu'il y a eu des emplois → drapeau bloquant `refus_reference`.
-- **Première expérience** : aucun drapeau, sous-score Stabilité neutre (valeur médiane).
+### Q9 — Disponibilité
+« À quelle heure tu peux être ici le matin, jusqu'à quelle heure tu peux rester, et comment tu viendras ? »
+Quatre points : les heures possibles, le trajet, ce qu'elle fait le jour où elle ne peut pas venir,
+et son accord pour un essai payé de quelques jours.
+- Ne pas prévenir quand elle ne peut pas venir → drapeau léger `absence_sans_prevenir`.
+- **Aucune question sur les employeurs précédents, et aucune demande de citer quelqu'un.** Les joindre est
+  rarement possible à Niamey, et une candidate ne doit pas être notée sur des personnes qu'on n'appellera pas.
+- Ni le quartier d'habitation ni les personnes avec qui elle vit n'entrent dans le score : seule compte
+  la solution d'organisation qu'elle décrit.
 
 ### Q10 — Projet et congés
 Durée d'engagement souhaitée, fréquence de congés souhaitée pour voir la famille, accord sur un calendrier écrit.
 - Question posée à **toutes** les candidates, sans lien avec leur situation familiale.
 - Fréquence réaliste + accord sur un calendrier → points pleins.
 - « Je n'aurai jamais besoin de congés » sur une longue durée → drapeau léger `engagement_irrealiste`.
-- Emplois précédents tous courts (< 3 mois) + promesse de rester plusieurs années → drapeau léger `incoherence_q9_q10`.
+- Promesse de rester des années sans pouvoir dire quand elle peut être là → drapeau léger `engagement_incoherent`.
 
 ### Format commun à toutes les questions
 - Texte en français uniquement en v1. La candidate peut répondre dans sa langue : le barème note le contenu,
@@ -147,7 +154,8 @@ Ces seuils sont des valeurs de départ. Ils seront calibrés après une quinzain
 - La situation familiale, la nationalité, l'ethnie, la religion et la langue d'entretien **n'entrent jamais dans le score**.
 - Techniquement : `computeScore` ne reçoit jamais la fiche. Le test injecte de fausses données de fiche
   et vérifie que le résultat ne change pas.
-- La stabilité s'évalue uniquement sur des faits vérifiables (durées d'emploi, personnes citées) et sur un accord explicite sur les congés.
+- La stabilité s'évalue uniquement sur l'organisation du travail à venir : heures possibles, trajet, façon de
+  prévenir une absence, accord sur un essai payé et sur un calendrier de congés.
 - **Joindre les anciens employeurs est souvent impossible à Niamey.** Aucun point à vérifier ne suppose un appel :
   la vérification passe par l'essai court et payé, qui ne dépend que de l'employeur.
 
@@ -213,7 +221,7 @@ Cas minimum attendus (8 au total, le cas 7 en compte deux) :
 2. Même candidate, mais jette de l'eau sur l'huile en feu → drapeau `geste_dangereux`, verdict au mieux `approfondir`.
 3. Dit connaître le produit fictif + garde l'argent trouvé → `non_recommande`.
 4. Répond « jamais » en Q8, sinon solide → drapeau `reponse_trop_parfaite`, verdict inchangé (`essai`).
-5. Première expérience sans référence → aucun drapeau `refus_reference`.
+5. Ne prévient pas quand elle ne peut pas venir → drapeau `absence_sans_prevenir`, verdict inchangé.
 6. Déclare savoir cuisiner en Q1 mais incapable d'expliquer en Q2 → drapeau `incoherence_q1_q2`.
 7. Candidate bonne en ménage mais faible en hygiène alimentaire, testée en poste `menage` puis `cuisine`
    (deux cas, bornés par `minTotal` / `maxTotal`) → total plus bas en `cuisine` (vérifie la pondération).

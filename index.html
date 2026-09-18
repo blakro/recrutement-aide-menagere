@@ -292,8 +292,7 @@ pre{white-space:pre-wrap;word-break:break-word;background:var(--surface-douce);p
        q6:  { variante: 'argent' | 'objet' | 'nourriture', option: '...' },
        q7:  { option: '...' },
        q8:  { option: '...' },
-       q9:  { premiereExperience: false, dureeDernier: '...', motifDernier: '...',
-              dureeAvantDernier: '...', reference: '...' },
+       q9:  { horaires: '...', trajet: '...', absence: '...', essai: '...' },
        q10: { duree: '...', conges: '...', calendrier: '...', coherence: '...' }
      },
      pratique: { g1: 'reussi' | 'partiel' | 'non_fait' | 'non_observe', ... }   // facultatif
@@ -321,7 +320,7 @@ const CONFIG = {
     { id: 'coherence', libelle: 'Cohérence', couleur: 'prune', icone: 'balance',
       resume: "L’accord entre ce qu’elle annonce et ce qu’elle montre." },
     { id: 'stabilite', libelle: 'Stabilité', couleur: 'orange', icone: 'ancre',
-      resume: "Ce que son parcours dit de sa façon de rester en poste." }
+      resume: "Ce qui rend possible sa présence, chaque jour et dans la durée." }
   ],
 
   // SPEC § 5 — chaque poste totalise 100.
@@ -367,14 +366,14 @@ const CONFIG = {
     reponse_trop_parfaite: {
       leger: "Ses réponses sont trop parfaites pour être vraies. Lui demander des exemples concrets, sans en conclure qu’elle ment."
     },
-    refus_reference: {
-      bloquant: "Elle a déjà travaillé, mais ne veut citer personne qui puisse parler d’elle. Lui demander calmement pourquoi, et écouter sa réponse avant de décider."
+    absence_sans_prevenir: {
+      leger: "Elle ne prévient pas quand elle ne peut pas venir. Convenir dès le départ d’un moyen simple de prévenir, et d’une heure limite le matin."
     },
     engagement_irrealiste: {
       leger: "Elle promet de ne jamais prendre de congés, ce qui finit rarement bien. Fixer avec elle un calendrier écrit dès le départ."
     },
-    incoherence_q9_q10: {
-      leger: "Ses emplois précédents étaient courts, mais elle promet de rester longtemps. En reparler avec elle et fixer un calendrier écrit."
+    engagement_incoherent: {
+      leger: "Ce qu’elle promet sur la durée ne tient pas avec les heures qu’elle peut faire. En reparler avec elle et fixer un calendrier écrit."
     },
     hygiene_risquee: {
       leger: "Elle a décrit une pratique d’hygiène à risque. Lui montrer la façon de faire de la maison dès le premier jour."
@@ -683,51 +682,50 @@ const CONFIG = {
     },
 
     {
-      id: 'q9', numero: 9, titre: 'Parcours', type: 'criteres',
-      sujet: "Ses emplois précédents",
-      couleur: 'orange', icone: 'valise',
+      id: 'q9', numero: 9, titre: 'Disponibilité', type: 'criteres',
+      sujet: "Ce qu’il faut pour qu’elle soit là chaque jour",
+      couleur: 'orange', icone: 'chemin',
       sousScores: ['stabilite'],
-      texte: "Parle-moi de tes deux derniers travails. Pour chacun : combien de temps tu es restée, pourquoi tu es partie, et le nom et le numéro d’une personne qui peut parler de ton travail.",
-      consigne: "Première expérience : coche la case ci-dessous. Aucun drapeau n’est levé et le sous-score Stabilité est neutralisé.",
-      // ✱ QUESTIONS.md, décision 4 : première expérience -> part Q9 neutralisée à la valeur médiane.
-      neutralisation: { quand: 'premiereExperience', sousScore: 'stabilite', obtenus: 10, max: 20 },
+      texte: "Parlons de l’organisation. À quelle heure tu peux être ici le matin, jusqu’à quelle heure tu peux rester, et comment tu viendras ?",
+      consigne: "Cette question porte sur l’organisation du travail à venir. Ne lui demande ni où elle habite exactement, ni avec qui elle vit, ni chez qui elle a travaillé : rien de tout cela n’entre dans le score.",
       criteres: [
         {
-          id: 'dureeDernier', titre: 'Durée du dernier emploi',
+          id: 'horaires', titre: 'Les heures qu’elle peut faire',
           options: [
-            { id: 'deux_ans', libelle: '2 ans ou plus', points: { stabilite: 6 } },
-            { id: 'un_deux', libelle: '1 à 2 ans', points: { stabilite: 5 } },
-            { id: 'six_douze', libelle: '6 à 12 mois', points: { stabilite: 3 } },
-            { id: 'trois_six', libelle: '3 à 6 mois', points: { stabilite: 2 } },
-            { id: 'moins_trois', libelle: 'Moins de 3 mois', points: { stabilite: 1 } }
+            { id: 'precis', libelle: 'Elle annonce des heures précises, qui couvrent le besoin de la maison', points: { stabilite: 5 } },
+            { id: 'ajustable', libelle: 'À peu près, mais elle accepte de fixer les heures maintenant', points: { stabilite: 3 } },
+            { id: 'flou', libelle: 'Elle ne sait pas, ou ses heures changent d’un jour à l’autre', points: { stabilite: 1 },
+              aVerifier: "Fixer avec elle des heures précises, jour par jour, et les écrire avant le premier jour." }
           ]
         },
         {
-          id: 'motifDernier', titre: 'Motif de départ du dernier emploi',
+          id: 'trajet', titre: 'Le trajet jusqu’à la maison',
           options: [
-            { id: 'clair', libelle: 'Motif clair et vérifiable (fin de contrat, employeurs partis, déménagement)', points: { stabilite: 3 } },
-            { id: 'personnel', libelle: 'Motif personnel mais cohérent et assumé', points: { stabilite: 2 } },
-            { id: 'flou', libelle: 'Motif flou, ou la version change pendant l’entretien', points: { stabilite: 1 } },
-            { id: 'sans_prevenir', libelle: 'Partie sans prévenir', points: { stabilite: 0 } }
+            { id: 'sur', libelle: 'Elle sait comment elle vient et combien de temps ça lui prend', points: { stabilite: 5 } },
+            { id: 'long', libelle: 'Le trajet est long ou coûteux, mais elle a déjà une solution', points: { stabilite: 3 } },
+            { id: 'incertain', libelle: 'Elle ne sait pas encore comment elle viendra le matin', points: { stabilite: 1 },
+              aVerifier: "Regarder ensemble comment elle vient le matin, et si l’heure d’arrivée tient vraiment." }
           ]
         },
         {
-          id: 'dureeAvantDernier', titre: "Durée de l’avant-dernier emploi",
+          id: 'absence', titre: 'Le jour où elle ne peut pas venir',
           options: [
-            { id: 'un_an', libelle: '1 an ou plus', points: { stabilite: 3 } },
-            { id: 'trois_douze', libelle: '3 à 12 mois', points: { stabilite: 2 } },
-            { id: 'moins_trois', libelle: 'Moins de 3 mois', points: { stabilite: 1 } },
-            { id: 'aucun', libelle: 'Un seul emploi avant celui-ci (question retirée du calcul)', nonPosee: true }
+            { id: 'previent_veille', libelle: 'Elle prévient la veille ou tôt le matin, et propose de rattraper', points: { stabilite: 6 } },
+            { id: 'previent_jour', libelle: 'Elle prévient le matin même, par appel ou par message', points: { stabilite: 4 } },
+            { id: 'envoie_quelquun', libelle: 'Elle envoie quelqu’un d’autre travailler à sa place', points: { stabilite: 1 },
+              aVerifier: "Lui dire clairement que personne d’autre n’entre travailler dans la maison à sa place." },
+            { id: 'ne_previent_pas', libelle: 'Elle ne vient pas, et explique une fois revenue', points: { stabilite: 0 },
+              drapeau: { id: 'absence_sans_prevenir', niveau: 'leger' } }
           ]
         },
         {
-          id: 'reference', titre: 'Une personne qui peut parler de son travail',
-          aVerifierToujours: "Noter ce qu’elle a dit de son dernier emploi, sa durée et sa raison de départ, et regarder si l’essai le confirme.",
+          id: 'essai', titre: 'Un essai payé de quelques jours',
+          aVerifierToujours: "Fixer avec elle les dates de l’essai payé, et ce qui sera regardé pendant ces jours-là.",
           options: [
-            { id: 'complete', libelle: 'Accepte tout de suite, et donne un nom et un numéro', points: { stabilite: 8 } },
-            { id: 'nom_seul', libelle: "Donne un nom, dit qu’elle doit demander le numéro", points: { stabilite: 4 } },
-            { id: 'autre_temoin', libelle: 'Son ancienne employeuse est partie ou décédée, mais elle cite quelqu’un d’autre', points: { stabilite: 4 } },
-            { id: 'refus', libelle: 'Refuse de citer qui que ce soit, alors qu’elle a déjà travaillé', points: { stabilite: 0 }, drapeau: { id: 'refus_reference', niveau: 'bloquant' } }
+            { id: 'accepte', libelle: 'D’accord tout de suite pour un essai payé de quelques jours', points: { stabilite: 4 } },
+            { id: 'discute', libelle: 'D’accord sur le principe, mais veut d’abord parler du salaire', points: { stabilite: 3 } },
+            { id: 'refuse', libelle: 'Refuse l’essai', points: { stabilite: 0 },
+              aVerifier: "Lui demander ce qui la gêne dans l’essai avant d’aller plus loin." }
           ]
         }
       ]
@@ -767,11 +765,10 @@ const CONFIG = {
           ]
         },
         {
-          id: 'coherence', titre: 'Cohérence avec ses emplois précédents',
+          id: 'coherence', titre: 'Cohérence entre ce qu’elle annonce et ce qu’elle peut faire',
           options: [
-            { id: 'coherent', libelle: 'Le projet annoncé est cohérent avec les emplois précédents', points: { coherence: 5 } },
-            { id: 'incoherent', libelle: 'Emplois précédents tous courts (moins de 3 mois) mais promesse de plusieurs années', points: { coherence: 0 }, drapeau: { id: 'incoherence_q9_q10', niveau: 'leger' } },
-            { id: 'premiere_experience', libelle: 'Première expérience : rien à comparer (question retirée du calcul)', nonPosee: true }
+            { id: 'coherent', libelle: 'La durée et les congés qu’elle annonce tiennent debout avec ses heures et son trajet', points: { coherence: 5 } },
+            { id: 'incoherent', libelle: 'Elle promet de rester des années, mais n’arrive pas à dire quand elle peut être là', points: { coherence: 0 }, drapeau: { id: 'engagement_incoherent', niveau: 'leger' } }
           ]
         }
       ]
@@ -882,12 +879,6 @@ function computeScore(answers, config) {
     }
 
     if (question.type === 'criteres') {
-      const neutralisation = question.neutralisation;
-      if (neutralisation && rep[neutralisation.quand] === true) {
-        const cible = acc[neutralisation.sousScore];
-        if (cible) { cible.obtenus += neutralisation.obtenus; cible.max += neutralisation.max; }
-        return;
-      }
       (question.criteres || []).forEach(function (critere) {
         appliquerCritere(critere, rep[critere.id], critere.titre);
       });
@@ -977,7 +968,7 @@ function reponsesSolides() {
     q6: { variante: 'argent', option: 'pose' },
     q7: { option: 'inconnu' },
     q8: { option: 'exemple' },
-    q9: { premiereExperience: false, dureeDernier: 'deux_ans', motifDernier: 'clair', dureeAvantDernier: 'un_an', reference: 'complete' },
+    q9: { horaires: 'precis', trajet: 'sur', absence: 'previent_veille', essai: 'accepte' },
     q10: { duree: 'un_an', conges: 'realiste', calendrier: 'oui', coherence: 'coherent' }
   };
 }
@@ -997,7 +988,7 @@ const TEST_CASES = [
   {
     name: '1. Candidate solide, sans drapeau',
     answers: candidate('menage', {}),
-    expect: { verdict: 'essai', minTotal: 95, drapeauxExclus: ['geste_dangereux', 'surdeclaration', 'integrite', 'refus_reference'] }
+    expect: { verdict: 'essai', minTotal: 95, drapeauxExclus: ['geste_dangereux', 'surdeclaration', 'integrite', 'absence_sans_prevenir'] }
   },
   {
     name: '2. Même candidate, mais jette de l’eau sur l’huile en feu',
@@ -1012,15 +1003,12 @@ const TEST_CASES = [
   {
     name: '4. Dit n’avoir jamais été en retard ni fâchée, sinon solide',
     answers: candidate('menage', { q8: { option: 'jamais' } }),
-    expect: { verdict: 'essai', drapeauxInclus: ['reponse_trop_parfaite'], drapeauxExclus: ['refus_reference'] }
+    expect: { verdict: 'essai', drapeauxInclus: ['reponse_trop_parfaite'], drapeauxExclus: ['engagement_incoherent'] }
   },
   {
-    name: '5. Première expérience, sans référence',
-    answers: candidate('menage', {
-      q9: { premiereExperience: true, dureeDernier: null, motifDernier: null, dureeAvantDernier: null, reference: null },
-      q10: { coherence: 'premiere_experience' }
-    }),
-    expect: { verdict: 'essai', drapeauxExclus: ['refus_reference', 'incoherence_q9_q10'] }
+    name: '5. Ne prévient pas quand elle ne peut pas venir',
+    answers: candidate('menage', { q9: { absence: 'ne_previent_pas' } }),
+    expect: { verdict: 'essai', drapeauxInclus: ['absence_sans_prevenir'] }
   },
   {
     name: '6. Déclare savoir cuisiner mais incapable d’expliquer',
@@ -1054,9 +1042,9 @@ const TEST_CASES = [
     expect: { verdict: 'approfondir', drapeauxInclus: ['hygiene_risquee'] }
   },
   {
-    name: '9. Refuse de donner une référence alors qu’elle a travaillé',
-    answers: candidate('menage', { q9: { reference: 'refus' } }),
-    expect: { verdict: 'approfondir', drapeauxInclus: ['refus_reference'] }
+    name: '9. Ne sait pas quand elle peut venir et refuse l’essai payé',
+    answers: candidate('menage', { q9: { horaires: 'flou', trajet: 'incertain', essai: 'refuse' } }),
+    expect: { verdict: 'essai', maxTotal: 95, drapeauxExclus: ['absence_sans_prevenir', 'engagement_incoherent'] }
   },
   {
     name: '10. Garde l’argent de côté : drapeau léger d’intégrité',
@@ -1076,12 +1064,12 @@ const TEST_CASES = [
     }
   },
   {
-    name: '12. Emplois courts et promesse de plusieurs années, jamais de congés',
+    name: '12. Promet des années sans pouvoir dire quand elle vient, et jamais de congés',
     answers: candidate('menage', {
-      q9: { dureeDernier: 'moins_trois', motifDernier: 'flou', dureeAvantDernier: 'moins_trois', reference: 'nom_seul' },
+      q9: { horaires: 'flou', trajet: 'incertain', absence: 'previent_jour', essai: 'discute' },
       q10: { conges: 'jamais', coherence: 'incoherent' }
     }),
-    expect: { verdict: 'essai', drapeauxInclus: ['engagement_irrealiste', 'incoherence_q9_q10'] }
+    expect: { verdict: 'essai', drapeauxInclus: ['engagement_irrealiste', 'engagement_incoherent'] }
   },
   {
     name: '13. Épreuve pratique ratée : les compétences baissent',
@@ -1099,7 +1087,7 @@ const TEST_CASES = [
       q6: { variante: 'objet', option: 'attend' },
       q7: { option: 'hesite' },
       q8: { option: 'rarement' },
-      q9: { dureeDernier: 'moins_trois', motifDernier: 'sans_prevenir', dureeAvantDernier: 'moins_trois', reference: 'nom_seul' },
+      q9: { horaires: 'flou', trajet: 'incertain', absence: 'ne_previent_pas', essai: 'refuse' },
       q10: { duree: 'court', conges: 'vague', calendrier: 'refus', coherence: 'incoherent' }
     }),
     expect: { verdict: 'non_recommande', maxTotal: 49 }
@@ -1184,7 +1172,7 @@ function etatInitial() {
       q1: { familles: [] },
       q2: { famille: null, tache: null, option: null },
       q3: {}, q4: {}, q5: {}, q6: {}, q7: {}, q8: {},
-      q9: { premiereExperience: false },
+      q9: {},
       q10: {}
     },
     pratique: {},
@@ -1260,7 +1248,6 @@ function etatQuestion(question) {
   if (question.type === 'familles') return (rep.familles || []).length ? 'complet' : 'vide';
   if (question.type === 'critere' || question.type === 'variantes') return rep.option ? 'complet' : 'vide';
   if (question.type === 'criteres') {
-    if (question.neutralisation && rep[question.neutralisation.quand] === true) return 'complet';
     const faits = question.criteres.filter(function (c) { return rep[c.id]; }).length;
     if (!faits) return 'vide';
     return faits === question.criteres.length ? 'complet' : 'partiel';
@@ -1316,6 +1303,7 @@ const DESSINS = {
   piece: '<ellipse cx="12" cy="6.4" rx="6.8" ry="2.9"/><path d="M5.2 6.4v5.2c0 1.6 3 2.9 6.8 2.9s6.8-1.3 6.8-2.9V6.4"/><path d="M5.2 11.6v5.2c0 1.6 3 2.9 6.8 2.9s6.8-1.3 6.8-2.9v-5.2"/>',
   flacon: '<path d="M10 3.2h4v3.1l3 4.1V20a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-9.6l3-4.1V3.2Z"/><path d="M7.2 13.6h9.6"/>',
   horloge: '<circle cx="12" cy="12" r="8.6"/><path d="M12 7.2V12l3.1 2"/>',
+  chemin: '<path d="M8.5 3 4 21M15.5 3 20 21"/><path d="M12 4.2v2.6M12 10v2.6M12 15.8v2.6"/>',
   valise: '<rect x="3" y="7.4" width="18" height="12.2" rx="2.2"/><path d="M8.8 7.4V5.6h6.4v1.8"/><path d="M3 12.8h18"/>',
   calendrier: '<rect x="3.4" y="5.4" width="17.2" height="15.2" rx="2.2"/><path d="M3.4 10.2h17.2M8 3.4v4M16 3.4v4"/><path d="M7.6 14h3.2"/>',
   bouclier: '<path d="M12 3 5.2 5.9v5.4c0 4.1 2.8 7.5 6.8 9.3 4-1.8 6.8-5.2 6.8-9.3V5.9L12 3Z"/><path d="m9 11.8 2 2 4-4"/>',
@@ -1566,13 +1554,7 @@ function rendreEntretien() {
   } else if (question.type === 'criteres') {
     html += '<p class="enonce">' + esc(question.texte) + '</p>';
     if (question.consigne) html += '<p class="consigne">' + esc(question.consigne) + '</p>';
-    if (question.neutralisation) {
-      html += '<label class="option"><input type="checkbox" data-neutralisation="' + esc(question.id) + '"' +
-        (rep[question.neutralisation.quand] === true ? ' checked' : '') + '>' +
-        '<span class="marque" aria-hidden="true"></span><span class="texte">Première expérience : elle n’a jamais travaillé' +
-        '<span class="sous">Aucun drapeau n’est levé et le sous-score Stabilité est neutralisé.</span></span></label>';
-    }
-    if (!(question.neutralisation && rep[question.neutralisation.quand] === true)) {
+    {
       question.criteres.forEach(function (critere) {
         html += '<div class="carte"><h3>' + esc(critere.titre) + '</h3>';
         if (critere.texte) html += '<p class="enonce" style="font-size:1.08rem">' + esc(critere.texte) + '</p>';
@@ -1619,12 +1601,6 @@ function rendreEntretien() {
     etat.reponses.q1.familles = liste;
     majPastilles();
     planifierSauvegarde();
-  });
-  brancher('[data-neutralisation]', 'change', function (e) {
-    const q = e.currentTarget.getAttribute('data-neutralisation');
-    const def = CONFIG.questions.filter(function (x) { return x.id === q; })[0];
-    etat.reponses[q][def.neutralisation.quand] = e.currentTarget.checked;
-    rendre();
   });
   brancher('[data-retirage]', 'click', function (e) {
     tirerVariantes(e.currentTarget.getAttribute('data-retirage'));
@@ -1744,8 +1720,7 @@ function detailReponses() {
         .map(function (f) { return f.libelle; });
       html += noms.length ? 'Elle dit savoir faire : ' + esc(noms.join(', ')) + '.' : 'Elle n\u2019a rien coché.';
     } else if (q.type === 'criteres') {
-      if (q.neutralisation && rep[q.neutralisation.quand] === true) html += 'Première expérience : elle n\u2019a jamais travaillé.';
-      else html += q.criteres.map(function (c) {
+      html += q.criteres.map(function (c) {
         return esc(c.titre) + ' : ' + esc(libelleOption(c.options, rep[c.id]) || 'pas de réponse cochée');
       }).join('<br>');
     } else {
@@ -1909,7 +1884,6 @@ function exporterCsv() {
     if (q.type === 'familles') valeur = (rep.familles || []).join(' | ');
     else if (q.type === 'criteres') {
       valeur = q.criteres.map(function (c) { return c.id + '=' + (rep[c.id] || ''); }).join(' | ');
-      if (q.neutralisation && rep[q.neutralisation.quand] === true) valeur = q.neutralisation.quand;
     } else valeur = (rep.variante ? rep.variante + ':' : '') + (rep.option || '');
     lignes.push([q.id, valeur]);
     if (rep.note) lignes.push([q.id + '_note', rep.note]);
