@@ -9,6 +9,11 @@
 > locuteurs natifs, et un texte approximatif lu à voix haute fait plus de dégâts qu'un texte absent.
 > Leur reprise éventuelle est renvoyée en v2 (`docs/ROADMAP.md`).
 >
+> **Décision du 18/09/2026 : aucune vérification ne repose sur un appel aux anciens employeurs.**
+> Les joindre est rarement possible à Niamey. Les points à vérifier passent tous par l'essai court et payé,
+> le seul moyen de contrôle qui dépende de l'employeur. Le rapport est aussi écrit en phrases complètes :
+> les repères `Q1`…`Q10` restent internes à ce document et n'apparaissent jamais à l'écran.
+>
 > **Une vérification reste ouverte** et ne bloque pas le code : le nom du produit fictif de Q7 est à vérifier
 > au marché, puis à saisir dans Réglages.
 
@@ -126,7 +131,7 @@ légumes · préparer une sauce arachide · préparer une sauce feuille.
 - Si Q1 ne contient aucune tâche cochée, Q2 est « non posée » et sort du maximum des deux sous-scores.
 - Ne pas pénaliser le vocabulaire : une explication juste en zarma ou en haoussa vaut une explication en français.
 
-**Point à vérifier généré** : « Faire refaire [tâche] devant toi le premier jour. »
+**Point à vérifier généré** : « Lui faire refaire devant toi, le premier jour, la tâche qu'elle vient d'expliquer. »
 
 ---
 
@@ -343,7 +348,8 @@ demande la règle de la maison d'elle-même, c'est un bon signe à noter.
 **Note pour l'employeur** : cette variante teste une règle de maison, pas la faim. Prévoir de dire clairement
 dès le premier jour ce qui est permis pour les repas.
 
-**Point à vérifier généré** (si drapeau) : « Appeler les anciens employeurs et poser la question de la confiance. »
+**Point à vérifier généré** (si drapeau) : « Dire clairement dès le premier jour ce qu'on fait quand on trouve
+de l'argent ou qu'on casse un objet, et l'écrire dans l'accord. »
 
 ---
 
@@ -389,7 +395,8 @@ Recommandation par défaut : **Sablonet** (le moins susceptible d'entrer en coll
 - Ce test repère une **surdéclaration**, pas un mensonge : il dit que les compétences annoncées doivent
   être vérifiées une par une, rien de plus.
 
-**Point à vérifier généré** (si drapeau) : « Reprendre une par une les tâches cochées en Q1 et les faire montrer. »
+**Point à vérifier généré** (si drapeau) : « Reprendre une par une les tâches qu'elle dit savoir faire, et se les
+faire montrer pendant l'essai. »
 
 ---
 
@@ -414,7 +421,7 @@ Recommandation par défaut : **Sablonet** (le moins susceptible d'entrer en coll
 **Règle** : relancer **une fois** (« même quand tu étais fatiguée ou malade ? ») avant de cocher la dernière option.
 Une réponse trop parfaite n'est pas une faute : c'est un signal qu'il faut creuser avec des exemples.
 
-**Point à vérifier généré** (si drapeau) : « Demander aux références un exemple de jour difficile. »
+**Point à vérifier généré** (si drapeau) : « Lui redemander pendant l'essai de raconter une journée où ça s'est mal passé. »
 
 ---
 
@@ -472,9 +479,9 @@ Si la candidate n'a jamais travaillé : Q9.1 à Q9.4 sont **non posées**, **auc
 `refus_reference`), et la part Q9 du sous-score Stabilité est neutralisée à la **valeur médiane**
 (10 points sur 20). Seule Q10 apporte des points réels. ✱ (voir « Points à valider », n° 4)
 
-**Points à vérifier générés** : « Appeler [nom de la référence] au [numéro] », un par emploi déclaré, plus
-une phrase type à lire au téléphone (à rédiger à l'étape 2 : durée réelle, ponctualité, honnêteté,
-raison du départ, « la reprendriez-vous ? »).
+**Point à vérifier généré** : « Noter ce qu'elle a dit de son dernier emploi, sa durée et sa raison de départ,
+et regarder si l'essai le confirme. » Joindre les anciens employeurs est rarement possible à Niamey :
+aucun point à vérifier ne suppose un appel.
 
 ---
 

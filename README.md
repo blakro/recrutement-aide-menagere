@@ -5,11 +5,13 @@ Outil d'aide à l'entretien d'embauche des **aides ménagères** et **aides cuis
 L'employeur pose 10 questions à l'oral en français, coche les réponses et obtient :
 
 - un score sur 100 et 5 sous-scores : compétences, hygiène & sécurité, intégrité, cohérence, stabilité ;
+- un rapport écrit en phrases complètes, sans jargon ni numéro de question ;
 - des drapeaux sur les réponses à risque (geste dangereux en cuisine, surdéclaration, incohérences…) ;
 - la liste des points à vérifier avant d'embaucher.
 
 > **Important :** cet outil est une aide à la décision, **pas un détecteur de mensonge**.
-> Rien ne remplace un appel à l'ancien employeur et une période d'essai rémunérée de quelques jours.
+> Rien ne remplace une période d'essai rémunérée de quelques jours : joindre les anciens employeurs est rarement possible,
+> c'est donc l'essai qui vérifie.
 
 ## Utiliser l'app
 
@@ -22,7 +24,6 @@ L'employeur pose 10 questions à l'oral en français, coche les réponses et obt
 - **Scénarios concrets** (huile en feu, odeur de gaz, argent trouvé…), tirés au hasard pour que les candidates ne puissent pas se passer les réponses.
 - **Détection de surdéclaration** et de réponses « trop parfaites ».
 - **Épreuve pratique** facultative de 5 gestes observés.
-- **Script d'appel** imprimable pour interroger l'ancienne employeuse au téléphone.
 - **Reprise** d'un entretien interrompu, **sommaire** des questions, **mode plein soleil** pour lire dehors.
 
 Le détail des règles est dans [`docs/SPEC.md`](docs/SPEC.md).

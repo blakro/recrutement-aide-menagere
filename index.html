@@ -7,94 +7,132 @@
 <title>Entretien aide ménagère — Niamey</title>
 <style>
 :root{
-  --fond:#f5f6f8; --surface:#ffffff; --surface-douce:#f0f2f5;
-  --encre:#111827; --encre-douce:#4b5563;
-  --trait:#cbd2da; --trait-fort:#7c8797;
-  --primaire:#0a4a94; --primaire-sombre:#073a76; --primaire-pale:#e7f0fb;
-  --vert:#0f5c28; --vert-pale:#e5f3e9;
-  --orange:#8a4b00; --orange-pale:#fdf0df;
+  --fond:#faf6f0; --surface:#ffffff; --surface-douce:#f4efe7;
+  --encre:#1c1917; --encre-douce:#57514b;
+  --trait:#ddd2c2; --trait-fort:#a89780;
+  --primaire:#1f4f8f; --primaire-sombre:#153a6d; --primaire-pale:#e7eefa;
+  --sable:#c9832b; --sable-pale:#fbf0dc;
+  --vert:#15603a; --vert-pale:#e2f2e8;
+  --orange:#9a5410; --orange-pale:#fcefdd;
   --rouge:#96111a; --rouge-pale:#fceaea;
-  --sable:#c9832b;
-  --rayon:14px; --rayon-petit:10px;
+  --t:var(--primaire); --t-pale:var(--primaire-pale);
+  --rayon:16px; --rayon-petit:11px;
   --bord:2px;
-  --ombre:0 1px 2px rgba(17,24,39,.05), 0 6px 16px rgba(17,24,39,.07);
+  --ombre:0 1px 2px rgba(60,40,20,.06), 0 8px 20px rgba(60,40,20,.08);
+  --ombre-douce:0 1px 3px rgba(60,40,20,.08);
   --base:17px;
 }
-html[data-contraste="fort"]{
+[data-theme=indigo]   {--t:#33539e;--t-pale:#e9edf9}
+[data-theme=violet]   {--t:#6b4ea8;--t-pale:#efe9fa}
+[data-theme=turquoise]{--t:#0e7a72;--t-pale:#e0f4f1}
+[data-theme=brique]   {--t:#b34524;--t-pale:#fbe9e3}
+[data-theme=ocre]     {--t:#8d6114;--t-pale:#faf0dd}
+[data-theme=foret]    {--t:#2a6e46;--t-pale:#e4f2e9}
+[data-theme=prune]    {--t:#8d3a63;--t-pale:#f9e7f0}
+[data-theme=ardoise]  {--t:#3f6483;--t-pale:#e8f0f6}
+[data-theme=orange]   {--t:#a85c18;--t-pale:#fceede}
+[data-theme=bleu]     {--t:#1f5aa8;--t-pale:#e6eefa}
+
+html[data-contraste=fort]{
   --fond:#ffffff; --surface:#ffffff; --surface-douce:#ffffff;
-  --encre:#000000; --encre-douce:#111827;
+  --encre:#000000; --encre-douce:#1c1917;
   --trait:#000000; --trait-fort:#000000;
   --primaire:#00316f; --primaire-pale:#dbe8fa;
   --vert:#04471c; --orange:#6d3a00; --rouge:#7d0d14;
-  --bord:3px; --ombre:none; --base:20px;
+  --bord:3px; --ombre:none; --ombre-douce:none; --base:20px;
 }
+html[data-contraste=fort] [data-theme]{--t-pale:#ffffff}
+html[data-contraste=fort] body{background-image:none}
+
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
-  background:var(--fond); color:var(--encre);
+  background-color:var(--fond); color:var(--encre);
+  background-image:radial-gradient(circle at 1px 1px, rgba(140,110,70,.10) 1px, transparent 0);
+  background-size:20px 20px;
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   font-size:var(--base); line-height:1.5;
   -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased;
 }
-.enveloppe{max-width:760px;margin:0 auto;padding:14px 16px 120px}
-h1{font-size:1.45rem;line-height:1.2;margin:.1em 0 .5em;letter-spacing:-.01em}
-h2{font-size:1.15rem;margin:1.4em 0 .5em;letter-spacing:-.005em}
-h3{font-size:1rem;margin:0 0 .5em}
+.enveloppe{max-width:760px;margin:0 auto;padding:14px 16px 122px}
+h1{font-size:1.5rem;line-height:1.15;margin:.1em 0 .5em;letter-spacing:-.02em}
+h2{font-size:1.18rem;margin:1.5em 0 .5em;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+h3{font-size:1.02rem;margin:0 0 .5em}
 p{margin:.55em 0}
 small,.petit{font-size:.84rem;color:var(--encre-douce);line-height:1.4}
-b,strong{font-weight:700}
 
 /* ---- Bandeau ---- */
-.bandeau{background:var(--primaire);color:#fff;border-bottom:4px solid var(--sable)}
+.bandeau{
+  color:#fff;border-bottom:4px solid var(--sable);
+  background:linear-gradient(135deg,#1f4f8f 0%,#153a6d 60%,#15325e 100%);
+}
 .bandeau .dedans{max-width:760px;margin:0 auto;padding:9px 16px;display:flex;gap:10px;align-items:center}
+.bandeau .marque{flex:0 0 auto;width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.14);
+  display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.3)}
+.bandeau .marque svg{width:21px;height:21px}
 .bandeau .titre{flex:1 1 auto;min-width:0}
 .bandeau .titre b{display:block;font-size:.95rem;line-height:1.2}
-.bandeau .titre span{display:block;font-size:.74rem;line-height:1.25;color:#cfe0f5}
-.soleil{
-  flex:0 0 auto;background:rgba(255,255,255,.12);color:#fff;border:2px solid rgba(255,255,255,.55);
-  border-radius:999px;padding:7px 11px;font-size:.78rem;font-weight:700;white-space:nowrap;
-}
-html[data-contraste="fort"] .soleil{background:#fff;color:var(--primaire);border-color:#fff}
+.bandeau .titre span{display:block;font-size:.74rem;line-height:1.25;color:#d7e3f3}
+.soleil{flex:0 0 auto;background:rgba(255,255,255,.14);color:#fff;border:2px solid rgba(255,255,255,.5);
+  border-radius:999px;padding:7px 11px;font-size:.78rem;font-weight:700;white-space:nowrap}
+html[data-contraste=fort] .soleil{background:#fff;color:#00316f;border-color:#fff}
 
 /* ---- Blocs ---- */
-.carte{
-  background:var(--surface);border:1px solid var(--trait);border-radius:var(--rayon);
-  padding:14px;margin:12px 0;box-shadow:var(--ombre);
-}
-html[data-contraste="fort"] .carte{border-width:2px}
+.carte{background:var(--surface);border:1px solid var(--trait);border-radius:var(--rayon);
+  padding:15px;margin:13px 0;box-shadow:var(--ombre-douce)}
+html[data-contraste=fort] .carte{border-width:2px}
 .carte.plate{box-shadow:none;background:var(--surface-douce)}
-.encadre{
-  border-left:6px solid var(--sable);background:var(--orange-pale);color:#3d2400;
-  border-radius:var(--rayon-petit);padding:12px 14px;margin:12px 0;font-size:.95rem;
-}
-.encadre b{color:var(--orange)}
-.info{border-left-color:var(--primaire);background:var(--primaire-pale);color:#0b2545}
-.info b{color:var(--primaire)}
-.consigne{background:var(--surface-douce);border:1px dashed var(--trait-fort);border-radius:var(--rayon-petit);padding:10px 12px;font-size:.9rem;margin:.6em 0}
-.enonce{font-size:1.28rem;font-weight:700;line-height:1.3;margin:.3em 0 .6em;letter-spacing:-.01em}
+.carte.teintee{background:var(--t-pale);border-color:var(--t)}
+.encadre{border-left:6px solid var(--sable);background:var(--sable-pale);color:#402b09;
+  border-radius:var(--rayon-petit);padding:12px 14px;margin:13px 0;font-size:.95rem}
+.encadre b{color:#8a5a10}
+.encadre.info{border-left-color:var(--primaire);background:var(--primaire-pale);color:#122c52}
+.encadre.info b{color:var(--primaire)}
+.consigne{background:var(--surface-douce);border:1px dashed var(--trait-fort);border-radius:var(--rayon-petit);
+  padding:11px 13px;font-size:.9rem;margin:.7em 0}
+.enonce{font-size:1.3rem;font-weight:700;line-height:1.28;margin:.35em 0 .65em;letter-spacing:-.015em}
+
+/* ---- Pictogrammes ---- */
+.pic{width:1.15em;height:1.15em;flex:0 0 auto;stroke:currentColor;fill:none;
+  stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.medaillon{flex:0 0 auto;width:46px;height:46px;border-radius:14px;background:var(--surface);
+  border:2px solid var(--t);color:var(--t);display:flex;align-items:center;justify-content:center}
+.medaillon .pic{width:25px;height:25px;stroke-width:1.9}
+.medaillon.petit{width:34px;height:34px;border-radius:10px}
+.medaillon.petit .pic{width:19px;height:19px}
+
+/* ---- En-tête de question ---- */
+.entete-question{display:flex;gap:13px;align-items:center;background:var(--t-pale);
+  border:1px solid var(--t);border-left-width:6px;border-radius:var(--rayon);padding:12px 14px;margin:6px 0 14px}
+.entete-question .infos{min-width:0}
+.entete-question .rang{display:block;font-size:.76rem;font-weight:800;text-transform:uppercase;
+  letter-spacing:.07em;color:var(--t)}
+.entete-question .titre{display:block;font-size:1.06rem;font-weight:800;line-height:1.2}
+.entete-question .sujet{display:block;font-size:.85rem;color:var(--encre-douce);margin-top:2px}
+
+/* ---- Illustration ---- */
+.illustration{display:block;width:100%;height:auto;border-radius:var(--rayon);border:1px solid var(--trait);
+  box-shadow:var(--ombre-douce)}
+html[data-contraste=fort] .illustration{display:none}
 
 /* ---- Formulaires ---- */
-label.champ{display:block;font-weight:700;margin:.9em 0 .3em;font-size:.95rem}
-input[type=text],input[type=date],select,textarea{
-  width:100%;font:inherit;padding:13px;border:var(--bord) solid var(--trait-fort);
-  border-radius:var(--rayon-petit);background:var(--surface);color:var(--encre);
-}
+label.champ{display:block;font-weight:700;margin:.95em 0 .3em;font-size:.95rem}
+input[type=text],input[type=date],select,textarea{width:100%;font:inherit;padding:13px;
+  border:var(--bord) solid var(--trait-fort);border-radius:var(--rayon-petit);background:var(--surface);color:var(--encre)}
 textarea{min-height:80px;resize:vertical}
 input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,label.option:focus-within{
-  outline:3px solid var(--primaire);outline-offset:2px
-}
+  outline:3px solid var(--primaire);outline-offset:2px}
 
 /* ---- Boutons ---- */
 button{font:inherit;cursor:pointer}
-.bouton{
-  display:block;width:100%;padding:15px 16px;margin:10px 0;border-radius:var(--rayon-petit);
+.bouton{display:block;width:100%;padding:15px 16px;margin:10px 0;border-radius:var(--rayon-petit);
   border:var(--bord) solid var(--primaire);background:var(--primaire);color:#fff;
-  font-weight:700;font-size:1rem;text-align:center;text-decoration:none;
-}
+  font-weight:700;font-size:1rem;text-align:center;text-decoration:none;box-shadow:var(--ombre-douce)}
 .bouton:active{transform:translateY(1px)}
 .bouton.secondaire{background:var(--surface);color:var(--primaire)}
 .bouton.danger{background:var(--surface);color:var(--rouge);border-color:var(--rouge)}
 .bouton.petit{padding:10px 12px;font-size:.9rem;margin:6px 0}
+.bouton.avecPic{display:flex;align-items:center;justify-content:center;gap:9px}
 .bouton:disabled{opacity:.4;cursor:not-allowed}
 .rangee{display:flex;gap:10px;flex-wrap:wrap}
 .rangee>*{flex:1 1 130px;width:auto;margin:6px 0}
@@ -102,143 +140,132 @@ button{font:inherit;cursor:pointer}
 
 /* ---- Options ---- */
 .options{margin:.5em 0}
-.option{
-  display:flex;gap:12px;align-items:flex-start;position:relative;
+.option{display:flex;gap:12px;align-items:flex-start;position:relative;
   border:var(--bord) solid var(--trait);border-radius:var(--rayon-petit);
-  padding:14px 14px 14px 12px;margin:9px 0;background:var(--surface);cursor:pointer;
-}
-.option:has(input:checked){border-color:var(--primaire);background:var(--primaire-pale);box-shadow:inset 4px 0 0 var(--primaire)}
+  padding:14px 14px 14px 12px;margin:9px 0;background:var(--surface);cursor:pointer;box-shadow:var(--ombre-douce)}
+.option:has(input:checked){border-color:var(--t);background:var(--t-pale);box-shadow:inset 5px 0 0 var(--t)}
 .option input{position:absolute;opacity:0;width:1px;height:1px}
-.marque{
-  flex:0 0 auto;width:26px;height:26px;margin-top:1px;border:var(--bord) solid var(--trait-fort);
-  background:var(--surface);display:flex;align-items:center;justify-content:center;
-}
+.marque{flex:0 0 auto;width:26px;height:26px;margin-top:1px;border:var(--bord) solid var(--trait-fort);
+  background:var(--surface);display:flex;align-items:center;justify-content:center}
 .option input[type=radio]+.marque{border-radius:50%}
 .option input[type=checkbox]+.marque{border-radius:7px}
 .marque::after{content:"";width:12px;height:12px;border-radius:inherit;background:transparent}
-.option input:checked+.marque{border-color:var(--primaire)}
-.option input:checked+.marque::after{background:var(--primaire)}
-.option input[type=checkbox]:checked+.marque::after{
-  width:14px;height:8px;border-radius:0;background:transparent;
-  border-left:3px solid var(--primaire);border-bottom:3px solid var(--primaire);
-  transform:rotate(-45deg) translate(1px,-2px);
-}
+.option input:checked+.marque{border-color:var(--t)}
+.option input:checked+.marque::after{background:var(--t)}
+.option input[type=checkbox]:checked+.marque::after{width:14px;height:8px;border-radius:0;background:transparent;
+  border-left:3px solid var(--t);border-bottom:3px solid var(--t);transform:rotate(-45deg) translate(1px,-2px)}
 .option .texte{flex:1;min-width:0;font-weight:600;line-height:1.35}
 .option .sous{display:block;font-size:.86rem;color:var(--encre-douce);font-weight:400;margin-top:3px}
 .option .note{display:block;font-size:.8rem;color:var(--orange);font-weight:700;margin-top:4px}
 
 /* ---- Progression ---- */
 .pastilles{display:flex;gap:5px;margin:4px 0 10px}
-.pastille{
-  flex:1;height:10px;border-radius:999px;background:#dfe3e9;border:1px solid transparent;
-  padding:0;min-width:0;
-}
+.pastille{flex:1;height:11px;border-radius:999px;background:#e3d9c9;border:1px solid transparent;padding:0;min-width:0}
 .pastille.complet{background:var(--primaire)}
 .pastille.partiel{background:var(--sable)}
-.pastille.courant{border-color:var(--encre);box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--encre)}
-.fil{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:.86rem;color:var(--encre-douce);margin-bottom:2px}
+.pastille.courant{border-color:var(--encre);box-shadow:0 0 0 2px var(--fond),0 0 0 4px var(--encre)}
+.fil{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:.86rem;color:var(--encre-douce)}
 .fil b{color:var(--encre);font-size:.95rem}
 
 /* ---- Barre basse ---- */
-.barre-bas{
-  position:fixed;left:0;right:0;bottom:0;background:var(--surface);
-  border-top:var(--bord) solid var(--trait);box-shadow:0 -4px 16px rgba(17,24,39,.08);
-}
+.barre-bas{position:fixed;left:0;right:0;bottom:0;background:var(--surface);
+  border-top:var(--bord) solid var(--trait);box-shadow:0 -4px 18px rgba(60,40,20,.10)}
 .barre-bas .dedans{max-width:760px;margin:0 auto;padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
 .barre-bas .rangee>*{margin:0;flex:1 1 84px}
 .barre-bas .bouton{margin:0;padding:15px 6px;font-size:.93rem}
 
 /* ---- Résultat ---- */
-.entete-resultat{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.hero{border-radius:var(--rayon);padding:18px 16px;margin:6px 0 14px;color:#fff;
+  background:linear-gradient(135deg,#1f4f8f,#153a6d);box-shadow:var(--ombre)}
+.hero.essai{background:linear-gradient(135deg,#1b7a45,#12522f)}
+.hero.approfondir{background:linear-gradient(135deg,#b97514,#8a5410)}
+.hero.non_recommande{background:linear-gradient(135deg,#a8202a,#7a0f16)}
+.hero .dedans{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.hero .texte{flex:1 1 170px;min-width:0}
+.hero .verdict-titre{font-size:1.25rem;font-weight:800;line-height:1.2;display:flex;align-items:center;gap:9px}
+.hero .verdict-detail{font-size:.88rem;margin-top:6px;color:rgba(255,255,255,.92)}
+.hero .qui{font-size:.8rem;color:rgba(255,255,255,.8);margin-bottom:8px}
+html[data-contraste=fort] .hero{background:#fff;color:#000;border:3px solid #000}
+html[data-contraste=fort] .hero .verdict-detail,html[data-contraste=fort] .hero .qui{color:#1c1917}
 .anneau{flex:0 0 auto}
-.anneau .valeur{font-size:30px;font-weight:800;fill:var(--encre)}
-.anneau .sur{font-size:11px;fill:var(--encre-douce);font-weight:600}
-.resume-verdict{flex:1 1 200px;min-width:0}
-.verdict{border-radius:var(--rayon);padding:12px 14px;border:var(--bord) solid;font-weight:800;font-size:1.1rem}
-.verdict small{display:block;font-weight:500;font-size:.85rem;margin-top:4px}
-.verdict.essai{background:var(--vert-pale);border-color:var(--vert);color:var(--vert)}
-.verdict.approfondir{background:var(--orange-pale);border-color:var(--orange);color:var(--orange)}
-.verdict.non_recommande{background:var(--rouge-pale);border-color:var(--rouge);color:var(--rouge)}
+.anneau .valeur{font-size:30px;font-weight:800;fill:currentColor}
+.anneau .sur{font-size:11px;fill:currentColor;opacity:.82;font-weight:600}
 
-.sous-score{margin:12px 0}
-.sous-score .ligne{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:.95rem}
-.sous-score .ligne span{min-width:0}
-.sous-score .ligne em{font-style:normal;font-variant-numeric:tabular-nums;white-space:nowrap}
-.sous-score .poids{display:block;font-size:.78rem;color:var(--encre-douce);font-weight:600;margin-top:3px}
-.jauge{height:12px;background:#dfe3e9;border-radius:999px;overflow:hidden;margin-top:5px;border:1px solid var(--trait)}
-.jauge i{display:block;height:100%;border-radius:999px}
-.jauge i.haut{background:var(--vert)}
-.jauge i.moyen{background:var(--sable)}
-.jauge i.bas{background:var(--rouge)}
+.sous-score{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--trait)}
+.sous-score:last-child{border-bottom:0}
+.sous-score .corps{flex:1;min-width:0}
+.sous-score .ligne{display:flex;justify-content:space-between;gap:10px;font-weight:700;font-size:.98rem}
+.sous-score .ligne em{font-style:normal;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--t)}
+.sous-score .resume{display:block;font-size:.82rem;color:var(--encre-douce);margin-top:2px}
+.jauge{height:11px;background:#e3d9c9;border-radius:999px;overflow:hidden;margin-top:7px;border:1px solid var(--trait)}
+.jauge i{display:block;height:100%;border-radius:999px;background:var(--t)}
 
-.drapeau{border-radius:var(--rayon-petit);padding:12px 14px;margin:10px 0;border:var(--bord) solid;display:flex;gap:12px}
-.drapeau .icone{flex:0 0 auto;width:26px;height:26px}
-.drapeau.bloquant{background:var(--rouge-pale);border-color:var(--rouge)}
-.drapeau.leger{background:var(--orange-pale);border-color:var(--orange)}
-.etiquette{display:inline-block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:2px 8px;border-radius:999px;border:1.5px solid}
-.drapeau.bloquant .etiquette{color:var(--rouge);border-color:var(--rouge)}
-.drapeau.leger .etiquette{color:var(--orange);border-color:var(--orange)}
-.drapeau .message{display:block;margin-top:5px;font-weight:600;line-height:1.35}
+.drapeau{border-radius:var(--rayon-petit);padding:13px 14px;margin:10px 0;border:var(--bord) solid;display:flex;gap:12px;box-shadow:var(--ombre-douce)}
+.drapeau .pic{width:26px;height:26px;stroke-width:1.9;margin-top:1px}
+.drapeau.bloquant{background:var(--rouge-pale);border-color:var(--rouge);color:var(--rouge)}
+.drapeau.leger{background:var(--orange-pale);border-color:var(--orange);color:var(--orange)}
+.etiquette{display:inline-block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;
+  padding:2px 9px;border-radius:999px;border:1.5px solid currentColor}
+.drapeau .message{display:block;margin-top:6px;font-weight:600;line-height:1.38;color:var(--encre)}
 
 ul.verifs{list-style:none;padding:0;margin:.4em 0}
-ul.verifs li{position:relative;padding:9px 0 9px 32px;border-bottom:1px solid var(--trait)}
+ul.verifs li{position:relative;padding:11px 0 11px 34px;border-bottom:1px solid var(--trait);line-height:1.4}
 ul.verifs li:last-child{border-bottom:0}
-ul.verifs li::before{
-  content:"";position:absolute;left:2px;top:11px;width:17px;height:17px;
-  border:2px solid var(--trait-fort);border-radius:5px;
-}
+ul.verifs li::before{content:"";position:absolute;left:2px;top:13px;width:18px;height:18px;
+  border:2px solid var(--trait-fort);border-radius:5px;background:var(--surface)}
 .detail-reponses summary{cursor:pointer;font-weight:700;color:var(--primaire);padding:10px 0}
 .detail-reponses dl{margin:0}
-.detail-reponses dt{font-weight:700;font-size:.9rem;margin-top:12px}
-.detail-reponses dd{margin:2px 0 0;color:var(--encre-douce);font-size:.92rem}
+.detail-reponses dt{font-weight:700;font-size:.93rem;margin-top:15px;display:flex;gap:8px;align-items:center;color:var(--t)}
+.detail-reponses dd{margin:3px 0 0;color:var(--encre);font-size:.92rem;padding-left:26px}
+.detail-reponses .sujet{display:block;font-size:.8rem;color:var(--encre-douce);font-weight:400}
 
 table{border-collapse:collapse;width:100%;font-size:.88rem;margin:.6em 0}
 th,td{border:1px solid var(--trait);padding:7px 9px;text-align:left;vertical-align:top}
-th{background:var(--surface-douce);font-size:.82rem;text-transform:uppercase;letter-spacing:.03em}
+th{background:var(--surface-douce);font-size:.8rem;text-transform:uppercase;letter-spacing:.03em}
 
 .liste{list-style:none;padding:0;margin:0}
-.liste li{border:var(--bord) solid var(--trait);border-radius:var(--rayon-petit);padding:12px;margin:10px 0;background:var(--surface)}
-.liste.sommaire li{border:0;padding:0;margin:9px 0;background:none}
-.liste.sommaire .bouton{display:flex;align-items:center;gap:10px;text-align:left;padding:13px 14px}
-.liste.sommaire .bouton b{flex:1;min-width:0;font-size:.98rem}
-.chip{display:inline-block;font-size:.75rem;font-weight:800;padding:3px 9px;border-radius:999px;border:1.5px solid;text-transform:uppercase;letter-spacing:.04em}
+.liste li{border:var(--bord) solid var(--trait);border-radius:var(--rayon-petit);padding:13px;margin:10px 0;
+  background:var(--surface);box-shadow:var(--ombre-douce)}
+.liste.sommaire li{border:0;padding:0;margin:9px 0;background:none;box-shadow:none}
+.liste.sommaire .bouton{display:flex;align-items:center;gap:11px;text-align:left;padding:12px 13px;
+  border-color:var(--t);color:var(--encre)}
+.liste.sommaire .bouton .infos{flex:1;min-width:0}
+.liste.sommaire .bouton b{display:block;font-size:.97rem;line-height:1.2}
+.liste.sommaire .bouton .sujet{display:block;font-size:.78rem;color:var(--encre-douce);font-weight:400;margin-top:2px}
+.chip{display:inline-block;font-size:.72rem;font-weight:800;padding:3px 9px;border-radius:999px;
+  border:1.5px solid;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
 .chip.essai{color:var(--vert);border-color:var(--vert);background:var(--vert-pale)}
 .chip.approfondir{color:var(--orange);border-color:var(--orange);background:var(--orange-pale)}
 .chip.non_recommande{color:var(--rouge);border-color:var(--rouge);background:var(--rouge-pale)}
 .chip.vide{color:var(--encre-douce);border-color:var(--trait-fort);background:var(--surface-douce)}
-.chip.complet{color:var(--primaire);border-color:var(--primaire);background:var(--primaire-pale)}
+.chip.complet{color:var(--vert);border-color:var(--vert);background:var(--vert-pale)}
 .chip.partiel{color:var(--orange);border-color:var(--orange);background:var(--orange-pale)}
-
-.script{counter-reset:q}
-.script li{margin:14px 0;padding-bottom:10px;border-bottom:1px dashed var(--trait-fort)}
-.script li b{display:block;font-size:1.02rem}
-.ligne-notes{display:block;border-bottom:1px solid var(--trait);height:26px;margin-top:8px}
 
 pre{white-space:pre-wrap;word-break:break-word;background:var(--surface-douce);padding:10px;border-radius:8px;font-size:.8rem}
 .ok{color:var(--vert);font-weight:800}
 .ko{color:var(--rouge);font-weight:800}
-.cache{display:none}
 
-@media (min-width:640px){ :root{--base:18px} .enveloppe{padding:20px 20px 120px} }
+@media (min-width:640px){ :root{--base:18px} .enveloppe{padding:20px 20px 122px} }
 
 @media print{
   .bandeau,.barre-bas,.sansImpression{display:none !important}
-  body{font-size:11pt;background:#fff}
+  body{font-size:11pt;background:#fff;background-image:none}
   .enveloppe{max-width:none;padding:0}
-  .carte,.verdict,.drapeau,.entete-resultat,.script li{break-inside:avoid;box-shadow:none}
+  .carte,.drapeau,.hero,.sous-score{break-inside:avoid;box-shadow:none}
   .carte{border:1px solid #999}
-  .detail-reponses[open] summary{display:none}
-  .detail-reponses:not([open])>*:not(summary){display:block !important}
+  .hero{background:#fff !important;color:#000;border:2px solid #333}
+  .hero .verdict-detail,.hero .qui{color:#333}
+  .anneau .valeur{fill:#000}.anneau .sur{fill:#333}
+  .detail-reponses summary{display:none}
   h2{margin-top:14pt}
   a[href]:after{content:""}
 }
-.drapeau.bloquant .icone{color:var(--rouge)}
-.drapeau.leger .icone{color:var(--orange)}
 </style>
 </head>
 <body>
 <header class="bandeau sansImpression">
   <div class="dedans">
+    <span class="marque" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.4 11 12 4l8.6 7"/><path d="M5.6 9.5V20h12.8V9.5"/><path d="M9.9 20v-5.2h4.2V20"/></svg></span>
     <div class="titre">
       <b>Entretien aide ménagère</b>
       <span>Aide à la décision, pas un détecteur de mensonge.</span>
@@ -285,11 +312,16 @@ const CONFIG = {
   ],
 
   sousScores: [
-    { id: 'competences', libelle: 'Compétences' },
-    { id: 'hygieneSecurite', libelle: 'Hygiène & sécurité' },
-    { id: 'integrite', libelle: 'Intégrité' },
-    { id: 'coherence', libelle: 'Cohérence' },
-    { id: 'stabilite', libelle: 'Stabilité' }
+    { id: 'competences', libelle: 'Compétences', couleur: 'indigo', icone: 'liste',
+      resume: "Ce qu’elle sait vraiment faire, une fois vérifié." },
+    { id: 'hygieneSecurite', libelle: 'Hygiène & sécurité', couleur: 'turquoise', icone: 'bouclier',
+      resume: "Sa façon de traiter la nourriture, l’eau, le feu et les produits." },
+    { id: 'integrite', libelle: 'Intégrité', couleur: 'foret', icone: 'coeur',
+      resume: "Son honnêteté et son respect des règles de la maison." },
+    { id: 'coherence', libelle: 'Cohérence', couleur: 'prune', icone: 'balance',
+      resume: "L’accord entre ce qu’elle annonce et ce qu’elle montre." },
+    { id: 'stabilite', libelle: 'Stabilité', couleur: 'orange', icone: 'ancre',
+      resume: "Ce que son parcours dit de sa façon de rester en poste." }
   ],
 
   // SPEC § 5 — chaque poste totalise 100.
@@ -308,50 +340,50 @@ const CONFIG = {
 
   // Toujours rappelés, quel que soit le résultat.
   verifsSystematiques: [
-    "Faire un essai court et payé de quelques jours avant d\u2019embaucher.",
+    "Faire un essai court et payé de quelques jours : c’est la vérification la plus sûre, et la seule qui dépende de toi.",
     "Écrire ensemble les tâches, les horaires et les règles de la maison avant le premier jour."
   ],
 
   drapeaux: {
     incoherence_q1_q2: {
-      bloquant: "Compétence annoncée mais impossible à expliquer. À faire montrer avant toute embauche."
+      bloquant: "Elle annonce une compétence qu’elle n’arrive pas à expliquer. La lui faire montrer avant de l’embaucher."
     },
     geste_dangereux: {
-      bloquant: "Geste dangereux avec le feu, le gaz ou les produits. À corriger avant qu'elle touche à la cuisine."
+      bloquant: "Elle a décrit un geste dangereux avec le feu, le gaz ou les produits. À corriger avec elle avant qu’elle touche à la cuisine."
     },
     electromenager_sans_autorisation: {
-      leger: "Utiliserait un appareil sans demander. Poser la règle par écrit dès le premier jour."
+      leger: "Elle utiliserait un appareil de la maison sans demander. Poser la règle par écrit dès le premier jour."
     },
     integrite: {
-      bloquant: "Réponse à risque sur l'honnêteté. Appeler les références avant de décider.",
-      leger: "Réponse en demi-teinte sur l'honnêteté. À reposer autrement et à vérifier auprès des références."
+      bloquant: "Sa réponse sur l’honnêteté est inquiétante. En parler franchement avec elle, et écrire la règle sur l’argent et les objets avant le premier jour.",
+      leger: "Sa réponse sur l’honnêteté est en demi-teinte. Reposer la question autrement, et écrire clairement la règle sur l’argent et les objets."
     },
     se_sert_sans_demander: {
-      leger: "Se servirait sans demander. Dire clairement ce qui est permis pour les repas."
+      leger: "Elle se servirait dans la nourriture sans demander. Dire clairement ce qui est permis pour les repas."
     },
     surdeclaration: {
-      bloquant: "Dit connaître un produit qui n'existe pas. Vérifier une par une les compétences annoncées."
+      bloquant: "Elle dit connaître un produit qui n’existe pas. Ses autres compétences annoncées sont donc à vérifier une par une."
     },
     reponse_trop_parfaite: {
-      leger: "Réponses trop parfaites. Creuser avec des exemples concrets, sans conclure au mensonge."
+      leger: "Ses réponses sont trop parfaites pour être vraies. Lui demander des exemples concrets, sans en conclure qu’elle ment."
     },
     refus_reference: {
-      bloquant: "Refuse une référence alors qu'elle a déjà travaillé. Demander pourquoi, ne pas embaucher sans vérification."
+      bloquant: "Elle a déjà travaillé, mais ne veut citer personne qui puisse parler d’elle. Lui demander calmement pourquoi, et écouter sa réponse avant de décider."
     },
     engagement_irrealiste: {
-      leger: "Promet de ne jamais prendre de congés. Risque de départ brusque : fixer un calendrier écrit."
+      leger: "Elle promet de ne jamais prendre de congés, ce qui finit rarement bien. Fixer avec elle un calendrier écrit dès le départ."
     },
     incoherence_q9_q10: {
-      leger: "Emplois courts mais promesse de rester longtemps. À confronter aux références."
+      leger: "Ses emplois précédents étaient courts, mais elle promet de rester longtemps. En reparler avec elle et fixer un calendrier écrit."
     },
     hygiene_risquee: {
-      leger: "Pratique d'hygiène à risque. Montrer la façon de faire de la maison dès le premier jour."
+      leger: "Elle a décrit une pratique d’hygiène à risque. Lui montrer la façon de faire de la maison dès le premier jour."
     }
   },
 
   verdicts: {
-    essai: { libelle: 'Période d’essai recommandée', detail: 'Faire quand même un essai court et payé, et appeler les références.' },
-    approfondir: { libelle: 'À approfondir', detail: 'Vérifier les références et faire un essai court avant de décider.' },
+    essai: { libelle: 'Période d’essai recommandée', detail: 'Faire quand même un essai court et payé de quelques jours avant de l’engager pour de bon.' },
+    approfondir: { libelle: 'À approfondir', detail: 'Reprendre avec elle les points ci-dessous, puis faire un essai court et payé avant de décider.' },
     non_recommande: { libelle: 'Non recommandé', detail: 'Les points ci-dessous demandent trop de vérifications pour embaucher en l’état.' }
   },
 
@@ -362,54 +394,24 @@ const CONFIG = {
     notes: { reussi: 2, partiel: 1, non_fait: 0 },
     libellesNotes: { reussi: 'Réussi', partiel: 'Partiel', non_fait: 'Non fait', non_observe: 'Non observé' },
     gestes: [
-      { id: 'g1', libelle: 'Lavage des mains', coefficients: { menage: 1, cuisine: 2, polyvalent: 2 } },
-      { id: 'g2', libelle: 'Nettoyage d’un plan de travail ou d’un sanitaire', coefficients: { menage: 2, cuisine: 1, polyvalent: 2 } },
-      { id: 'g3', libelle: 'Épluchage et découpe de légumes', coefficients: { menage: 1, cuisine: 3, polyvalent: 2 } },
-      { id: 'g4', libelle: 'Vaisselle', coefficients: { menage: 2, cuisine: 2, polyvalent: 2 } },
-      { id: 'g5', libelle: 'Tri et pliage du linge', coefficients: { menage: 2, cuisine: 1, polyvalent: 1 } }
+      { id: 'g1', icone: 'goutte', libelle: 'Lavage des mains', coefficients: { menage: 1, cuisine: 2, polyvalent: 2 } },
+      { id: 'g2', icone: 'eponge', libelle: 'Nettoyage d’un plan de travail ou d’un sanitaire', coefficients: { menage: 2, cuisine: 1, polyvalent: 2 } },
+      { id: 'g3', icone: 'couteau', libelle: 'Épluchage et découpe de légumes', coefficients: { menage: 1, cuisine: 3, polyvalent: 2 } },
+      { id: 'g4', icone: 'assiette', libelle: 'Vaisselle', coefficients: { menage: 2, cuisine: 2, polyvalent: 2 } },
+      { id: 'g5', icone: 'linge', libelle: 'Tri et pliage du linge', coefficients: { menage: 2, cuisine: 1, polyvalent: 1 } }
     ]
   },
 
   preambule: "Bonjour. Je vais te poser dix questions sur le travail. Je note tes réponses sur mon téléphone, pour m’aider à me souvenir et à comparer. Il n’y a pas de piège. Si tu ne sais pas, dis-le, ce n’est pas grave. Tu peux me poser des questions toi aussi.",
 
-  appelReference: {
-    intro: "Bonjour, je suis [MOI]. [PRENOM] se présente chez moi pour un travail de maison et m\u2019a donné votre nom. Vous avez deux minutes ?",
-    questions: [
-      "Combien de temps a-t-elle travaillé chez vous, de quand à quand ?",
-      "Quelles tâches faisait-elle exactement ?",
-      "Arrivait-elle à l\u2019heure ? Prévenait-elle quand elle ne pouvait pas venir ?",
-      "Avez-vous eu des soucis d\u2019argent ou d\u2019objets manquants ?",
-      "Comment réagissait-elle quand vous lui faisiez une remarque ?",
-      "Pourquoi est-elle partie ?",
-      "Est-ce que vous la reprendriez ?"
-    ],
-    cloture: "Merci beaucoup pour votre temps.",
-    conseils: [
-      "Appelle toi-même : ne te contente pas d\u2019un numéro transmis par la candidate sans vérifier qui décroche.",
-      "Pose les questions dans cet ordre et laisse la personne parler.",
-      "Une réponse gênée sur l\u2019argent ou sur « la reprendriez-vous ? » en dit plus qu\u2019un long discours."
-    ],
-    // Questions ajoutées automatiquement selon les drapeaux levés pendant l'entretien.
-    selonDrapeau: {
-      integrite: "Y a-t-il déjà eu un objet ou de l\u2019argent qui a disparu pendant qu\u2019elle travaillait chez vous ?",
-      se_sert_sans_demander: "Comment ça se passait pour les repas et pour ce qu\u2019elle prenait dans la maison ?",
-      surdeclaration: "Savait-elle vraiment faire ce qu\u2019elle annonçait, ou a-t-il fallu tout lui apprendre ?",
-      incoherence_q1_q2: "Est-ce qu\u2019elle savait cuisiner et tenir une maison seule, sans qu\u2019on lui dise quoi faire ?",
-      geste_dangereux: "Y a-t-il déjà eu un accident ou un début d\u2019incendie dans la cuisine ?",
-      electromenager_sans_autorisation: "Utilisait-elle vos appareils sans demander ?",
-      refus_reference: "Depuis quand la connaissez-vous et à quel titre ?",
-      engagement_irrealiste: "Prenait-elle des congés ? Prévenait-elle à l\u2019avance ?",
-      incoherence_q9_q10: "Est-elle partie brusquement, ou en prévenant ?",
-      reponse_trop_parfaite: "Racontez-moi une journée où ça s\u2019est mal passé avec elle."
-    }
-  },
-
   questions: [
     {
       id: 'q1', numero: 1, titre: 'Compétences déclarées', type: 'familles',
+      sujet: "Ce qu’elle dit savoir faire dans la maison",
+      couleur: 'indigo', icone: 'liste',
       sousScores: ['competences'],
       texte: "Dis-moi ce que tu sais faire dans une maison. Je coche au fur et à mesure. Si tu ne sais pas faire une chose, dis-le, ce n’est pas grave.",
-      consigne: "Coche ce qu’elle dit savoir faire. Rien n’est obligatoire : Q2 vérifiera ce qui est réel.",
+      consigne: "Coche ce qu’elle dit savoir faire. Rien n’est obligatoire : la question suivante vérifiera ce qui est réel.",
       familles: [
         {
           id: 'f_menage', libelle: 'Ménage',
@@ -447,25 +449,29 @@ const CONFIG = {
 
     {
       id: 'q2', numero: 2, titre: 'Démonstration orale', type: 'critere',
+      sujet: "Sa façon d’expliquer une tâche, étape par étape",
+      couleur: 'violet', icone: 'parole',
       sousScores: ['competences', 'coherence'],
       texte: "Explique-moi, étape par étape, comment tu fais [TACHE]. Prends ton temps. Commence par le début.",
-      consigne: "La tâche est tirée au hasard parmi celles cochées en Q1. Ne pénalise ni le vocabulaire ni la langue : une explication juste dans sa langue vaut une explication en français.",
+      consigne: "La tâche est tirée au hasard parmi celles qu’elle vient de cocher. Ne pénalise ni le vocabulaire ni la langue : une explication juste dans sa langue vaut une explication en français.",
       critere: {
         id: 'option',
         options: [
           { id: 'precise', libelle: 'Explication précise et complète', detail: 'étapes dans l’ordre, produits, finition', points: { competences: 18, coherence: 10 } },
           { id: 'approximative', libelle: 'Explication approximative', detail: 'grandes lignes, étapes manquantes', points: { competences: 9, coherence: 5 },
-            aVerifier: "Faire refaire la tâche demandée en Q2 devant toi le premier jour." },
+            aVerifier: "Lui faire refaire devant toi, le premier jour, la tâche qu’elle vient d’expliquer." },
           { id: 'incapable', libelle: 'Incapable d’expliquer, ou décrit autre chose', points: { competences: 0, coherence: 0 },
             drapeau: { id: 'incoherence_q1_q2', niveau: 'bloquant' },
-            aVerifier: "Faire refaire la tâche demandée en Q2 devant toi le premier jour." },
-          { id: 'non_posee', libelle: 'Question non posée (aucune tâche cochée en Q1)', nonPosee: true }
+            aVerifier: "Lui faire refaire devant toi, le premier jour, la tâche qu’elle vient d’expliquer." },
+          { id: 'non_posee', libelle: 'Question non posée : elle n’a coché aucune tâche', nonPosee: true }
         ]
       }
     },
 
     {
       id: 'q3', numero: 3, titre: 'Hygiène alimentaire', type: 'criteres',
+      sujet: "Son hygiène pour la nourriture et pour l’eau",
+      couleur: 'turquoise', icone: 'goutte',
       sousScores: ['hygieneSecurite'],
       texte: "Maintenant, parlons de la nourriture et de l’eau.",
       criteres: [
@@ -525,6 +531,8 @@ const CONFIG = {
 
     {
       id: 'q4', numero: 4, titre: 'Sécurité', type: 'variantes',
+      sujet: "Sa réaction devant un danger dans la cuisine",
+      couleur: 'brique', icone: 'flamme',
       sousScores: ['hygieneSecurite'],
       consigne: "Une variante est tirée au hasard. Lis-la telle quelle, sans souffler la réponse.",
       variantes: [
@@ -572,6 +580,8 @@ const CONFIG = {
 
     {
       id: 'q5', numero: 5, titre: 'Règles de la maison', type: 'critere',
+      sujet: "Le respect des règles de la maison",
+      couleur: 'ocre', icone: 'maison',
       sousScores: ['integrite'],
       texte: "Il n’y a personne à la maison. Tu veux réchauffer ton repas. Le micro-ondes est là. Que fais-tu ?",
       consigne: "La bonne réponse est « demander », pas « savoir s’en servir ». Si elle demande la règle de la maison d’elle-même, c’est un bon signe.",
@@ -591,13 +601,15 @@ const CONFIG = {
 
     {
       id: 'q6', numero: 6, titre: 'Intégrité', type: 'variantes',
+      sujet: "Son honnêteté devant une tentation",
+      couleur: 'foret', icone: 'piece',
       sousScores: ['integrite'],
       consigne: "Une variante est tirée au hasard. Lis-la telle quelle, sans souffler la réponse.",
       variantes: [
         {
           id: 'argent', libelle: 'Argent trouvé',
           texte: "Tu fais le ménage dans la chambre. Tu trouves un billet de 10 000 francs par terre, sous le lit. Que fais-tu ?",
-          aVerifier: "Appeler les anciens employeurs et poser la question de la confiance.",
+          aVerifier: "Dire clairement dès le premier jour ce qu’on fait quand on trouve de l’argent ou qu’on casse un objet, et l’écrire dans l’accord.",
           options: [
             { id: 'pose', libelle: "Je le pose bien en vue et je le dis tout de suite", points: { integrite: 15 } },
             { id: 'laisse', libelle: "Je le laisse où il est et je le signale", points: { integrite: 15 } },
@@ -608,7 +620,7 @@ const CONFIG = {
         {
           id: 'objet', libelle: 'Objet cassé',
           texte: "En faisant le ménage, tu casses un verre. Personne ne t’a vue. Que fais-tu ?",
-          aVerifier: "Appeler les anciens employeurs et poser la question de la confiance.",
+          aVerifier: "Dire clairement dès le premier jour ce qu’on fait quand on trouve de l’argent ou qu’on casse un objet, et l’écrire dans l’accord.",
           options: [
             { id: 'dit_tout_de_suite', libelle: "Je le dis tout de suite, même si j’ai peur", points: { integrite: 15 } },
             { id: 'range_puis_dit', libelle: "Je ramasse les morceaux, je les mets de côté et je le dis dès que quelqu’un rentre", points: { integrite: 12 } },
@@ -632,6 +644,8 @@ const CONFIG = {
 
     {
       id: 'q7', numero: 7, titre: 'Produit fictif', type: 'critere',
+      sujet: "Sa réaction devant un produit qui n’existe pas",
+      couleur: 'prune', icone: 'flacon',
       sousScores: ['coherence'],
       produitParDefaut: 'Sablonet',
       usageParDefaut: 'récurer les marmites et les sanitaires',
@@ -639,7 +653,7 @@ const CONFIG = {
       consigne: "Ce produit n’existe pas. Relance une seule fois (« tu es sûre ? c’est celui pour [USAGE] »), puis passe à la suite sans commenter, quelle que soit la réponse. Le nom se change dans Réglages.",
       critere: {
         id: 'option',
-        aVerifier: "Reprendre une par une les tâches cochées en Q1 et les faire montrer.",
+        aVerifier: "Reprendre une par une les tâches qu’elle dit savoir faire, et se les faire montrer pendant l’essai.",
         options: [
           { id: 'inconnu', libelle: "« Je ne connais pas ce produit »", points: { coherence: 10 } },
           { id: 'apprend', libelle: "« Je ne connais pas, montre-moi et j’apprends »", points: { coherence: 10 } },
@@ -651,12 +665,14 @@ const CONFIG = {
 
     {
       id: 'q8', numero: 8, titre: 'Désirabilité sociale', type: 'critere',
+      sujet: "Sa façon de parler de ses propres erreurs",
+      couleur: 'ardoise', icone: 'horloge',
       sousScores: ['coherence'],
       texte: "Personne n’est parfait. Est-ce qu’il t’est déjà arrivé, même une seule fois, d’arriver en retard ou de te fâcher au travail ? Raconte-moi.",
       consigne: "Relance une fois (« même quand tu étais fatiguée ou malade ? ») avant de cocher « jamais ». Une réponse trop parfaite n’est pas une faute : c’est un signal à creuser.",
       critere: {
         id: 'option',
-        aVerifier: "Demander aux références un exemple de jour difficile.",
+        aVerifier: "Lui redemander pendant l’essai de raconter une journée où ça s’est mal passé.",
         options: [
           { id: 'exemple', libelle: "« Oui », avec un exemple concret et ce qu’elle a fait ensuite", points: { coherence: 5 } },
           { id: 'oui_sans_exemple', libelle: "« Oui, ça arrive », sans exemple", points: { coherence: 3 } },
@@ -668,6 +684,8 @@ const CONFIG = {
 
     {
       id: 'q9', numero: 9, titre: 'Parcours', type: 'criteres',
+      sujet: "Ses emplois précédents",
+      couleur: 'orange', icone: 'valise',
       sousScores: ['stabilite'],
       texte: "Parle-moi de tes deux derniers travails. Pour chacun : combien de temps tu es restée, pourquoi tu es partie, et le nom et le numéro d’une personne qui peut parler de ton travail.",
       consigne: "Première expérience : coche la case ci-dessous. Aucun drapeau n’est levé et le sous-score Stabilité est neutralisé.",
@@ -703,13 +721,13 @@ const CONFIG = {
           ]
         },
         {
-          id: 'reference', titre: 'Référence',
-          aVerifierToujours: "Appeler la référence du dernier emploi : durée réelle, ponctualité, honnêteté, raison du départ, « la reprendriez-vous ? ».",
+          id: 'reference', titre: 'Une personne qui peut parler de son travail',
+          aVerifierToujours: "Noter ce qu’elle a dit de son dernier emploi, sa durée et sa raison de départ, et regarder si l’essai le confirme.",
           options: [
-            { id: 'complete', libelle: 'Accepte, donne un nom et un numéro tout de suite', points: { stabilite: 8 } },
+            { id: 'complete', libelle: 'Accepte tout de suite, et donne un nom et un numéro', points: { stabilite: 8 } },
             { id: 'nom_seul', libelle: "Donne un nom, dit qu’elle doit demander le numéro", points: { stabilite: 4 } },
-            { id: 'autre_temoin', libelle: 'Ancienne employeuse injoignable, mais un autre témoin est proposé', points: { stabilite: 4 } },
-            { id: 'refus', libelle: 'Refuse de donner une référence alors qu’elle a déjà travaillé', points: { stabilite: 0 }, drapeau: { id: 'refus_reference', niveau: 'bloquant' } }
+            { id: 'autre_temoin', libelle: 'Son ancienne employeuse est partie ou décédée, mais elle cite quelqu’un d’autre', points: { stabilite: 4 } },
+            { id: 'refus', libelle: 'Refuse de citer qui que ce soit, alors qu’elle a déjà travaillé', points: { stabilite: 0 }, drapeau: { id: 'refus_reference', niveau: 'bloquant' } }
           ]
         }
       ]
@@ -717,6 +735,8 @@ const CONFIG = {
 
     {
       id: 'q10', numero: 10, titre: 'Projet et congés', type: 'criteres',
+      sujet: "Le temps qu’elle compte rester et ses congés",
+      couleur: 'bleu', icone: 'calendrier',
       sousScores: ['stabilite', 'coherence'],
       texte: "Si on travaille ensemble, combien de temps tu penses rester ? Combien de fois dans l’année tu veux des jours de congé, et combien de jours à chaque fois ? Est-ce qu’on écrit ces dates ensemble maintenant ?",
       consigne: "Question posée à toutes les candidates, dans les mêmes termes. Elle porte sur l’organisation du travail : ne demande pas si elle est mariée ni où vivent ses proches, cela n’entre pas dans le score.",
@@ -747,7 +767,7 @@ const CONFIG = {
           ]
         },
         {
-          id: 'coherence', titre: 'Cohérence avec le parcours (Q9)',
+          id: 'coherence', titre: 'Cohérence avec ses emplois précédents',
           options: [
             { id: 'coherent', libelle: 'Le projet annoncé est cohérent avec les emplois précédents', points: { coherence: 5 } },
             { id: 'incoherent', libelle: 'Emplois précédents tous courts (moins de 3 mois) mais promesse de plusieurs années', points: { coherence: 0 }, drapeau: { id: 'incoherence_q9_q10', niveau: 'leger' } },
@@ -794,7 +814,7 @@ function computeScore(answers, config) {
     drapeaux.push({
       id: drapeau.id,
       niveau: drapeau.niveau,
-      message: contexte ? base + ' (' + contexte + ')' : base
+      message: contexte ? base + ' Point concerné : ' + contexte + '.' : base
     });
   }
 
@@ -990,7 +1010,7 @@ const TEST_CASES = [
     expect: { verdict: 'non_recommande', drapeauxInclus: ['surdeclaration', 'integrite'] }
   },
   {
-    name: '4. Répond « jamais » en Q8, sinon solide',
+    name: '4. Dit n’avoir jamais été en retard ni fâchée, sinon solide',
     answers: candidate('menage', { q8: { option: 'jamais' } }),
     expect: { verdict: 'essai', drapeauxInclus: ['reponse_trop_parfaite'], drapeauxExclus: ['refus_reference'] }
   },
@@ -1279,20 +1299,71 @@ function anneauScore(total) {
   const rayon = 42;
   const tour = 2 * Math.PI * rayon;
   const valeur = Math.max(0, Math.min(100, total));
-  const couleur = valeur >= CONFIG.seuils.essai ? 'var(--vert)'
-    : valeur >= CONFIG.seuils.approfondir ? 'var(--sable)' : 'var(--rouge)';
   return '<svg class="anneau" width="124" height="124" viewBox="0 0 100 100" role="img" aria-label="Score ' + valeur + ' sur 100">' +
-    '<circle cx="50" cy="50" r="' + rayon + '" fill="none" stroke="#dfe3e9" stroke-width="11"/>' +
-    '<circle cx="50" cy="50" r="' + rayon + '" fill="none" stroke="' + couleur + '" stroke-width="11" stroke-linecap="round"' +
+    '<circle cx="50" cy="50" r="' + rayon + '" fill="none" stroke="rgba(125,125,125,.38)" stroke-width="11"/>' +
+    '<circle cx="50" cy="50" r="' + rayon + '" fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round"' +
       ' stroke-dasharray="' + (tour * valeur / 100).toFixed(1) + ' ' + tour.toFixed(1) + '" transform="rotate(-90 50 50)"/>' +
     '<text class="valeur" x="50" y="48" text-anchor="middle" dominant-baseline="middle">' + valeur + '</text>' +
     '<text class="sur" x="50" y="68" text-anchor="middle">sur 100</text></svg>';
 }
 
-const ICONES = {
-  bloquant: '<svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1.7 21h20.6L12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="18" r="1.2" fill="currentColor"/></svg>',
-  leger: '<svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1.1" fill="currentColor"/></svg>'
+const DESSINS = {
+  liste: '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2.9h6V4"/><path d="m8.6 11 2 2 4-4"/><path d="M8.6 16.5h6.8"/>',
+  parole: '<path d="M21 11.6c0 3.9-4 7-9 7a11 11 0 0 1-2.9-.4L4.2 20l1.2-3.3A6.5 6.5 0 0 1 3 11.6c0-3.9 4-7 9-7s9 3.1 9 7Z"/><path d="M8.5 9.8h7M8.5 13.4h4"/>',
+  goutte: '<path d="M12 3s6 6.4 6 10.3A6 6 0 0 1 6 13.3C6 9.4 12 3 12 3Z"/><path d="M9.2 13.8a2.9 2.9 0 0 0 2.8 2.9"/>',
+  flamme: '<path d="M12 2.8s5.2 4.7 5.2 9.2a5.2 5.2 0 0 1-10.4 0c0-1.7.8-3.1 1.7-4.3.4 1.3 1.2 2.1 2.2 2.1 1.1-2.8 0-6.2 1.3-7Z"/>',
+  maison: '<path d="M3.4 11 12 4l8.6 7"/><path d="M5.6 9.5V20h12.8V9.5"/><path d="M9.9 20v-5.2h4.2V20"/>',
+  piece: '<ellipse cx="12" cy="6.4" rx="6.8" ry="2.9"/><path d="M5.2 6.4v5.2c0 1.6 3 2.9 6.8 2.9s6.8-1.3 6.8-2.9V6.4"/><path d="M5.2 11.6v5.2c0 1.6 3 2.9 6.8 2.9s6.8-1.3 6.8-2.9v-5.2"/>',
+  flacon: '<path d="M10 3.2h4v3.1l3 4.1V20a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-9.6l3-4.1V3.2Z"/><path d="M7.2 13.6h9.6"/>',
+  horloge: '<circle cx="12" cy="12" r="8.6"/><path d="M12 7.2V12l3.1 2"/>',
+  valise: '<rect x="3" y="7.4" width="18" height="12.2" rx="2.2"/><path d="M8.8 7.4V5.6h6.4v1.8"/><path d="M3 12.8h18"/>',
+  calendrier: '<rect x="3.4" y="5.4" width="17.2" height="15.2" rx="2.2"/><path d="M3.4 10.2h17.2M8 3.4v4M16 3.4v4"/><path d="M7.6 14h3.2"/>',
+  bouclier: '<path d="M12 3 5.2 5.9v5.4c0 4.1 2.8 7.5 6.8 9.3 4-1.8 6.8-5.2 6.8-9.3V5.9L12 3Z"/><path d="m9 11.8 2 2 4-4"/>',
+  coeur: '<path d="M12 20.2s-7.2-4.5-7.2-9.4A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7.2 2.8c0 4.9-7.2 9.4-7.2 9.4Z"/>',
+  balance: '<path d="M12 4.2v15.4M7 19.6h10M3.6 8.4h16.8"/><path d="M3.6 8.4 1.6 13h4l-2-4.6ZM20.4 8.4l-2 4.6h4l-2-4.6Z"/>',
+  ancre: '<circle cx="12" cy="4.9" r="2.1"/><path d="M12 7v12.8M7.6 10.8h8.8M4.6 14.4a7.4 7.4 0 0 0 14.8 0"/>',
+  eponge: '<rect x="4" y="9.4" width="16" height="9.2" rx="2.2"/><path d="M4 13.4h16"/><path d="M7.2 9.4V7.8a3 3 0 0 1 3-3h3.6a3 3 0 0 1 3 3v1.6"/>',
+  couteau: '<path d="M4 16.2 14.2 6l4 4L8 20.2H4v-4Z"/><path d="m13.1 7.1 4 4"/>',
+  assiette: '<circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="4.4"/>',
+  linge: '<path d="M8.2 3 4 5.6l2 4 2-1V21h8V8.6l2 1 2-4L15.8 3l-1.9 2h-3.8L8.2 3Z"/>',
+  bloquant: '<path d="M12 3 1.7 21h20.6L12 3z"/><path d="M12 10v5"/><circle cx="12" cy="18" r="1.1" fill="currentColor" stroke="none"/>',
+  leger: '<circle cx="12" cy="12" r="9.2"/><path d="M12 7.2v6"/><circle cx="12" cy="16.6" r="1" fill="currentColor" stroke="none"/>',
+  coche: '<path d="m4.5 12.5 5 5 10-11"/>',
+  imprimer: '<path d="M6.5 9V3.5h11V9"/><rect x="3.5" y="9" width="17" height="7.5" rx="2"/><path d="M6.5 14h11v6.5h-11z"/>',
+  telecharger: '<path d="M12 3.5v11M7.5 10.5 12 15l4.5-4.5"/><path d="M4 18.5v2h16v-2"/>',
+  archive: '<rect x="3.5" y="4.5" width="17" height="5" rx="1.5"/><path d="M5 9.5v9a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5v-9"/><path d="M10 13.5h4"/>',
+  reglages: '<circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M4.5 12H2M22 12h-2.5M6.2 6.2 4.4 4.4M19.6 19.6l-1.8-1.8M17.8 6.2l1.8-1.8M4.4 19.6l1.8-1.8"/>',
+  reprendre: '<path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.2 4.4v5h5"/>'
 };
+
+function pic(nom) {
+  return '<svg class="pic" viewBox="0 0 24 24" aria-hidden="true">' + (DESSINS[nom] || '') + '</svg>';
+}
+function medaillon(nom, petit) {
+  return '<span class="medaillon' + (petit ? ' petit' : '') + '">' + pic(nom) + '</span>';
+}
+
+const ILLUSTRATION_ACCUEIL =
+  '<svg class="illustration" viewBox="0 0 320 150" role="img" aria-label="Une maison, une marmite sur le feu et un balai">' +
+  '<defs><linearGradient id="g-ciel" x1="0" y1="0" x2="0" y2="1">' +
+  '<stop offset="0" stop-color="#fdf3e0"/><stop offset="1" stop-color="#f6ddb9"/></linearGradient></defs>' +
+  '<rect width="320" height="150" fill="url(#g-ciel)"/>' +
+  '<circle cx="262" cy="38" r="19" fill="#e9a23b"/>' +
+  '<g stroke="#e9a23b" stroke-width="3" stroke-linecap="round">' +
+  '<path d="M262 10V4M262 72v6M233 38h-6M291 38h6M241 17l-4-4M283 17l4-4M241 59l-4 4M283 59l4 4"/></g>' +
+  '<path d="M0 120h320v30H0z" fill="#e7d6b6"/><path d="M0 120h320" stroke="#c4a877" stroke-width="3"/>' +
+  '<path d="M44 120V72h84v48z" fill="#fdfaf5" stroke="#7a5c37" stroke-width="2.5"/>' +
+  '<path d="M34 75 86 43l52 32" fill="none" stroke="#b34524" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>' +
+  '<rect x="76" y="92" width="24" height="28" fill="#7a5c37"/>' +
+  '<circle cx="95.5" cy="106" r="1.8" fill="#e9c46a"/>' +
+  '<rect x="54" y="84" width="16" height="16" fill="#9fc3d9" stroke="#7a5c37" stroke-width="2"/>' +
+  '<path d="M148 120c0-11 7-15 7-15s7 4 7 15z" fill="#5a8a4a"/>' +
+  '<path d="M190 86c4-5-4-8 0-13M206 86c4-5-4-8 0-13" fill="none" stroke="#cbb48a" stroke-width="3" stroke-linecap="round"/>' +
+  '<path d="M177 98h42v11a11 11 0 0 1-11 11h-20a11 11 0 0 1-11-11z" fill="#4a5568"/>' +
+  '<path d="M172 95h52" stroke="#2f3846" stroke-width="5" stroke-linecap="round"/>' +
+  '<path d="M256 120V80" stroke="#7a5c37" stroke-width="5" stroke-linecap="round"/>' +
+  '<path d="M246 120h20l-4-18h-12z" fill="#c9832b"/><path d="M246.6 111h18.8" stroke="#8a5a10" stroke-width="2"/>' +
+  '</svg>';
 
 function libellePoste(id) {
   const p = CONFIG.postes.filter(function (x) { return x.id === id; })[0];
@@ -1303,11 +1374,16 @@ function libellePoste(id) {
 
 const ECRANS = {
   accueil: rendreAccueil, sommaire: rendreSommaire, entretien: rendreEntretien,
-  pratique: rendrePratique, resultat: rendreResultat, appel: rendreAppel,
+  pratique: rendrePratique, resultat: rendreResultat,
   historique: rendreHistorique, reglages: rendreReglages
 };
 
+function theme(nom) {
+  try { $ecran.setAttribute('data-theme', nom || 'bleu'); } catch (e) { /* sans effet hors navigateur */ }
+}
+
 function rendre() {
+  theme('bleu');
   (ECRANS[etat.ecran] || rendreAccueil)();
   appliquerAffichage();
   planifierSauvegarde();
@@ -1336,13 +1412,14 @@ function rendreAccueil() {
     html += '<div class="carte"><h2 style="margin-top:0">Entretien en cours</h2>' +
       '<p><b>' + esc(brouillon.identite.prenom || 'Candidate') + '</b> — ' + esc(brouillon.identite.date) +
       ' — question ' + Math.min((brouillon.index || 0) + 1, fait) + ' sur ' + fait + '</p>' +
-      '<button class="bouton" id="reprendre">Reprendre cet entretien</button>' +
+      '<button class="bouton avecPic" id="reprendre">' + pic('reprendre') + 'Reprendre cet entretien</button>' +
       '<button class="bouton secondaire petit" id="jeter">Supprimer ce brouillon</button></div>';
   }
 
+  html += ILLUSTRATION_ACCUEIL;
   html += '<h1>Nouvel entretien</h1>';
   html += '<div class="encadre"><b>Cet outil est une aide à la décision. Ce n’est pas un détecteur de mensonge.</b> ' +
-    'Il repère des incohérences et des points à vérifier. Rien ne remplace un appel à l’ancien employeur et un essai court et payé.</div>';
+    'Il repère des incohérences et des points à vérifier. Rien ne remplace un essai court et payé de quelques jours.</div>';
 
   html += '<div class="carte">';
   html += '<label class="champ" for="prenom">Prénom de la candidate</label>' +
@@ -1358,12 +1435,12 @@ function rendreAccueil() {
     '<small>Aucun numéro de pièce d’identité, aucune photo. Rien de ce qui est écrit ici n’entre dans le calcul.</small>';
   html += '</div>';
 
-  html += '<div class="carte"><h2 style="margin-top:0">À lire à la candidate avant de commencer</h2>' +
+  html += '<div class="carte"><h2 style="margin-top:0">' + pic('parole') + 'À lire à la candidate avant de commencer</h2>' +
     '<p class="enonce">' + esc(CONFIG.preambule) + '</p></div>';
 
   html += '<div class="rangee sansImpression">' +
-    '<button class="bouton secondaire" data-aller="historique">Historique</button>' +
-    '<button class="bouton secondaire" data-aller="reglages">Réglages</button></div>';
+    '<button class="bouton secondaire avecPic" data-aller="historique">' + pic('archive') + 'Historique</button>' +
+    '<button class="bouton secondaire avecPic" data-aller="reglages">' + pic('reglages') + 'Réglages</button></div>';
 
   $ecran.innerHTML = html;
   $barre.innerHTML = '<div class="dedans"><button class="bouton" id="commencer">Commencer l’entretien</button></div>';
@@ -1409,16 +1486,17 @@ function rendreAccueil() {
 /* ---------- Sommaire ---------- */
 
 function rendreSommaire() {
-  let html = '<h1>Sommaire</h1><p>Touche une question pour y aller directement.</p><ul class="liste sommaire">';
+  let html = '<h1>Où en est l\u2019entretien</h1><p>Touche une question pour y aller directement.</p><ul class="liste sommaire">';
   CONFIG.questions.forEach(function (q, position) {
     const statut = etatQuestion(q);
     const mots = { complet: 'Répondu', partiel: 'À compléter', vide: 'À faire' };
-    html += '<li><button class="bouton secondaire" data-question="' + position + '">' +
-      '<b>' + q.numero + '. ' + esc(q.titre) + '</b>' +
+    html += '<li data-theme="' + esc(q.couleur) + '"><button class="bouton secondaire" data-question="' + position + '">' +
+      medaillon(q.icone, true) +
+      '<span class="infos"><b>' + esc(q.titre) + '</b><span class="sujet">' + esc(q.sujet) + '</span></span>' +
       '<span class="chip ' + statut + '">' + mots[statut] + '</span></button></li>';
   });
   html += '</ul>';
-  html += '<button class="bouton secondaire" data-aller="pratique">Épreuve pratique</button>';
+  html += '<button class="bouton secondaire" data-aller="pratique">Épreuve pratique (facultative)</button>';
 
   $ecran.innerHTML = html;
   $barre.innerHTML = '<div class="dedans"><div class="rangee">' +
@@ -1437,6 +1515,7 @@ function rendreSommaire() {
 
 function rendreEntretien() {
   const question = CONFIG.questions[etat.index];
+  theme(question.couleur);
   const total = CONFIG.questions.length;
   const rep = etat.reponses[question.id] || {};
   let html = '';
@@ -1447,7 +1526,10 @@ function rendreEntretien() {
       '" data-question="' + position + '" title="' + esc(q.numero + '. ' + q.titre) + '" aria-label="' + esc(q.numero + '. ' + q.titre) + '"></button>';
   });
   html += '</div>';
-  html += '<div class="fil"><span>Question ' + (etat.index + 1) + ' sur ' + total + '</span><b>' + esc(question.titre) + '</b></div>';
+  html += '<div class="entete-question">' + medaillon(question.icone) +
+    '<span class="infos"><span class="rang">Question ' + (etat.index + 1) + ' sur ' + total + '</span>' +
+    '<span class="titre">' + esc(question.titre) + '</span>' +
+    '<span class="sujet">' + esc(question.sujet) + '</span></span></div>';
 
   if (question.type === 'familles') {
     html += '<p class="enonce">' + esc(question.texte) + '</p>';
@@ -1469,7 +1551,7 @@ function rendreEntretien() {
     if (question.id === 'q7') texte = texte.split('[PRODUIT]').join(reglages.produit);
     html += '<p class="enonce">' + esc(texte) + '</p>';
     if (question.id === 'q2' && !etat.tirage.q2Tache) {
-      html += '<p class="encadre">Aucune tâche n’a été cochée en Q1 : la question est retirée du calcul.</p>';
+      html += '<p class="encadre">Elle n’a coché aucune tâche : cette question est retirée du calcul.</p>';
     }
     if (question.consigne) {
       html += '<p class="consigne">' +
@@ -1503,7 +1585,7 @@ function rendreEntretien() {
     }
   } else if (question.type === 'variantes') {
     const variante = varianteDe(question, rep) || question.variantes[0];
-    html += '<div class="fil"><span>Scénario tiré au hasard</span><b>' + esc(variante.libelle) + '</b></div>';
+    html += '<p class="fil"><span>Scénario tiré au hasard</span><b>' + esc(variante.libelle) + '</b></p>';
     html += '<p class="enonce">' + esc(variante.texte) + '</p>';
     if (question.consigne) html += '<p class="consigne">' + esc(question.consigne) + '</p>';
     html += '<div class="options">';
@@ -1590,8 +1672,9 @@ function rendrePratique() {
 
   CONFIG.pratique.gestes.forEach(function (geste) {
     const valeur = etat.pratique[geste.id] || 'non_observe';
-    html += '<div class="carte"><h3>' + esc(geste.libelle) +
-      ' <small>poids ' + esc(geste.coefficients[poste]) + '</small></h3><div class="options grille2">';
+    html += '<div class="carte"><h3 style="display:flex;align-items:center;gap:10px">' + medaillon(geste.icone, true) +
+      '<span>' + esc(geste.libelle) + '<small style="display:block;font-weight:400">poids ' +
+      esc(geste.coefficients[poste]) + '</small></span></h3><div class="options grille2">';
     ['reussi', 'partiel', 'non_fait', 'non_observe'].forEach(function (note) {
       html += optionHtml('pratique.' + geste.id, { id: note, libelle: CONFIG.pratique.libellesNotes[note] }, valeur, 'radio');
     });
@@ -1640,7 +1723,7 @@ function construireAnswers() {
 
 function questionsSansReponse() {
   return CONFIG.questions.filter(function (q) { return etatQuestion(q) !== 'complet'; })
-    .map(function (q) { return q.numero + '. ' + q.titre; });
+    .map(function (q) { return q.sujet.charAt(0).toLowerCase() + q.sujet.slice(1); });
 }
 
 function calculerEtAfficher() {
@@ -1654,24 +1737,25 @@ function detailReponses() {
   let html = '<dl>';
   CONFIG.questions.forEach(function (q) {
     const rep = etat.reponses[q.id] || {};
-    html += '<dt>' + q.numero + '. ' + esc(q.titre) + '</dt><dd>';
+    html += '<dt data-theme="' + esc(q.couleur) + '">' + pic(q.icone) + esc(q.titre) + '</dt>' +
+      '<dd><span class="sujet">' + esc(q.sujet) + '</span>';
     if (q.type === 'familles') {
       const noms = q.familles.filter(function (f) { return (rep.familles || []).indexOf(f.id) !== -1; })
         .map(function (f) { return f.libelle; });
-      html += noms.length ? esc(noms.join(' · ')) : 'Rien de coché';
+      html += noms.length ? 'Elle dit savoir faire : ' + esc(noms.join(', ')) + '.' : 'Elle n\u2019a rien coché.';
     } else if (q.type === 'criteres') {
-      if (q.neutralisation && rep[q.neutralisation.quand] === true) html += 'Première expérience';
+      if (q.neutralisation && rep[q.neutralisation.quand] === true) html += 'Première expérience : elle n\u2019a jamais travaillé.';
       else html += q.criteres.map(function (c) {
-        return esc(c.titre) + ' : ' + esc(libelleOption(c.options, rep[c.id]) || '—');
+        return esc(c.titre) + ' : ' + esc(libelleOption(c.options, rep[c.id]) || 'pas de réponse cochée');
       }).join('<br>');
     } else {
       const variante = q.type === 'variantes' ? varianteDe(q, rep) : null;
       const options = variante ? variante.options : q.critere.options;
-      if (variante) html += '<b>' + esc(variante.libelle) + '</b> — ';
-      if (q.id === 'q2' && etat.tirage.q2Tache) html += '<b>' + esc(etat.tirage.q2Tache) + '</b> — ';
-      html += esc(libelleOption(options, rep.option) || 'Pas de réponse cochée');
+      if (variante) html += 'Scénario « ' + esc(variante.libelle) + ' ». ';
+      if (q.id === 'q2' && etat.tirage.q2Tache) html += 'Tâche demandée : ' + esc(etat.tirage.q2Tache) + '. ';
+      html += esc(libelleOption(options, rep.option) || 'Pas de réponse cochée') + '.';
     }
-    if (rep.note) html += '<br><small>Note : ' + esc(rep.note) + '</small>';
+    if (rep.note) html += '<br><small>Ce qu\u2019elle a dit : ' + esc(rep.note) + '</small>';
     html += '</dd>';
   });
   return html + '</dl>';
@@ -1682,65 +1766,71 @@ function rendreResultat() {
   const id = etat.identite;
   const verdict = CONFIG.verdicts[r.verdict];
   const manquantes = questionsSansReponse();
+  const iconeVerdict = r.verdict === 'essai' ? 'coche' : (r.verdict === 'approfondir' ? 'leger' : 'bloquant');
 
-  let html = '<h1>Résultat</h1>';
-  html += '<p class="petit">' + esc(id.prenom || 'Candidate') + ' — ' + esc(id.date) + ' — ' + esc(libellePoste(id.poste)) + '</p>';
+  let html = '<h1>Ce que dit l\u2019entretien</h1>';
+  html += '<div class="hero ' + esc(r.verdict) + '"><div class="dedans">' + anneauScore(r.total) +
+    '<div class="texte"><p class="qui">' + esc(id.prenom || 'Candidate') + ' — ' + esc(id.date) + ' — ' +
+    esc(libellePoste(id.poste)) + '</p>' +
+    '<p class="verdict-titre">' + pic(iconeVerdict) + esc(verdict.libelle) + '</p>' +
+    '<p class="verdict-detail">' + esc(verdict.detail) + '</p></div></div></div>';
 
-  html += '<div class="carte"><div class="entete-resultat">' + anneauScore(r.total) +
-    '<div class="resume-verdict"><div class="verdict ' + esc(r.verdict) + '">' + esc(verdict.libelle) +
-    '<small>' + esc(verdict.detail) + '</small></div></div></div></div>';
-
-  html += '<div class="encadre"><b>Cet outil est une aide à la décision. Ce n’est pas un détecteur de mensonge.</b> ' +
+  html += '<div class="encadre"><b>Cet outil est une aide à la décision. Ce n\u2019est pas un détecteur de mensonge.</b> ' +
     'Il signale des incohérences et des points à vérifier, pas des mensonges.</div>';
 
   if (manquantes.length) {
-    html += '<p class="encadre info"><b>Questions sans réponse complète, retirées du calcul :</b> ' + esc(manquantes.join(' · ')) + '</p>';
+    html += '<p class="encadre info"><b>Ces questions n\u2019ont pas reçu de réponse complète et sont retirées du calcul :</b> ' +
+      esc(manquantes.join(' ; ')) + '.</p>';
   }
 
-  html += '<h2>Sous-scores</h2><div class="carte">';
-  CONFIG.sousScores.forEach(function (s) {
-    const v = r.sousScores[s.id];
-    const niveau = v >= CONFIG.seuils.essai ? 'haut' : v >= CONFIG.seuils.approfondir ? 'moyen' : 'bas';
-    html += '<div class="sous-score"><div class="ligne"><span>' + esc(s.libelle) + '</span><em>' + v + ' / 100</em></div>' +
-      '<div class="jauge"><i class="' + niveau + '" style="width:' + v + '%"></i></div>' +
-      '<span class="poids">poids ' + CONFIG.ponderations[id.poste][s.id] + ' sur 100 dans le total</span></div>';
+  html += '<h2>' + pic('balance') + 'Le détail par domaine</h2><div class="carte">';
+  CONFIG.sousScores.forEach(function (sous) {
+    const v = r.sousScores[sous.id];
+    html += '<div class="sous-score" data-theme="' + esc(sous.couleur) + '">' + medaillon(sous.icone, true) +
+      '<div class="corps"><div class="ligne"><span>' + esc(sous.libelle) + '</span><em>' + v + ' sur 100</em></div>' +
+      '<span class="resume">' + esc(sous.resume) + '</span>' +
+      '<div class="jauge"><i style="width:' + v + '%"></i></div>' +
+      '<span class="resume">Ce domaine pèse ' + CONFIG.ponderations[id.poste][sous.id] +
+      ' points sur les 100 du total, pour ce poste.</span></div></div>';
   });
   html += '</div>';
 
-  html += '<h2>Drapeaux</h2>';
-  if (!r.drapeaux.length) html += '<p>Aucun drapeau.</p>';
-  else r.drapeaux.forEach(function (d) {
-    html += '<div class="drapeau ' + esc(d.niveau) + '">' + ICONES[d.niveau] +
-      '<div><span class="etiquette">' + (d.niveau === 'bloquant' ? 'Bloquant' : 'Léger') + '</span>' +
-      '<span class="message">' + esc(d.message) + '</span></div></div>';
-  });
+  html += '<h2>' + pic('leger') + 'Ce qui doit t\u2019alerter</h2>';
+  if (!r.drapeaux.length) {
+    html += '<p>Rien ne s\u2019est allumé pendant cet entretien : aucune de ses réponses ne demande de précaution particulière.</p>';
+  } else {
+    r.drapeaux.forEach(function (d) {
+      html += '<div class="drapeau ' + esc(d.niveau) + '">' + pic(d.niveau) +
+        '<div><span class="etiquette">' + (d.niveau === 'bloquant' ? 'À ne pas laisser passer' : 'À garder en tête') + '</span>' +
+        '<span class="message">' + esc(d.message) + '</span></div></div>';
+    });
+  }
 
-  html += '<h2>Points à vérifier</h2>';
-  if (!r.pointsAVerifier.length) html += '<p>Rien de particulier.</p>';
+  html += '<h2>' + pic('coche') + 'Ce qu\u2019il reste à faire</h2>';
+  if (!r.pointsAVerifier.length) html += '<p>Rien de particulier à vérifier.</p>';
   else {
     html += '<div class="carte"><ul class="verifs">';
-    r.pointsAVerifier.forEach(function (p) { html += '<li>' + esc(p) + '</li>'; });
+    r.pointsAVerifier.forEach(function (point) { html += '<li>' + esc(point) + '</li>'; });
     html += '</ul></div>';
   }
 
-  if (id.note) html += '<h2>Note libre</h2><p>' + esc(id.note) + '</p>';
+  if (id.note) html += '<h2>' + pic('parole') + 'Ta note libre</h2><p>' + esc(id.note) + '</p>';
 
-  html += '<h2>Détail des réponses</h2><details class="detail-reponses carte">' +
-    '<summary>Voir les 10 réponses cochées</summary>' + detailReponses() + '</details>';
+  html += '<h2>' + pic('liste') + 'Ce qu\u2019elle a répondu</h2><details class="detail-reponses carte">' +
+    '<summary>Voir les dix réponses, une par une</summary>' + detailReponses() + '</details>';
 
-  html += '<div class="carte sansImpression"><h3>Garder une trace</h3><div class="rangee">' +
-    '<button class="bouton secondaire" id="imprimer">Imprimer</button>' +
-    '<button class="bouton secondaire" id="json">Export JSON</button>' +
-    '<button class="bouton secondaire" id="csv">Export CSV</button></div>' +
-    '<button class="bouton secondaire" id="enregistrer">' +
-      (etat.enregistre ? 'Enregistré ✓' : 'Enregistrer dans l’historique (ce téléphone)') + '</button>' +
-    '<small>Les exports restent sur ce téléphone. Ne les envoie pas à des tiers sans l’accord de la candidate.</small></div>';
+  html += '<div class="carte sansImpression"><h3>Garder une trace de cet entretien</h3><div class="rangee">' +
+    '<button class="bouton secondaire avecPic" id="imprimer">' + pic('imprimer') + 'Imprimer</button>' +
+    '<button class="bouton secondaire avecPic" id="json">' + pic('telecharger') + 'JSON</button>' +
+    '<button class="bouton secondaire avecPic" id="csv">' + pic('telecharger') + 'CSV</button></div>' +
+    '<button class="bouton secondaire avecPic" id="enregistrer">' + pic('archive') +
+      (etat.enregistre ? 'Enregistré sur ce téléphone' : 'Enregistrer sur ce téléphone') + '</button>' +
+    '<small>Les exports restent sur ce téléphone. Ne les envoie pas à des tiers sans l\u2019accord de la candidate.</small></div>';
 
   $ecran.innerHTML = html;
   $barre.innerHTML = '<div class="dedans"><div class="rangee">' +
-    '<button class="bouton secondaire" data-aller="sommaire">Revoir</button>' +
-    '<button class="bouton" data-aller="appel">Appeler la référence</button>' +
-    '</div><button class="bouton secondaire petit" id="nouveau">Nouvel entretien</button></div>';
+    '<button class="bouton secondaire" data-aller="sommaire">Revoir les réponses</button>' +
+    '<button class="bouton" id="nouveau">Nouvel entretien</button></div></div>';
 
   surClic('imprimer', function () { print(); });
   surClic('json', exporterJson);
@@ -1753,45 +1843,6 @@ function rendreResultat() {
     etat = etatInitial();
     aller('accueil');
   });
-}
-
-/* ---------- Appel de la référence ---------- */
-
-function rendreAppel() {
-  const a = CONFIG.appelReference;
-  const r = etat.resultat;
-  const supplementaires = [];
-  if (r) r.drapeaux.forEach(function (d) {
-    const question = a.selonDrapeau[d.id];
-    if (question && supplementaires.indexOf(question) === -1) supplementaires.push(question);
-  });
-
-  let html = '<h1>Appeler l’ancienne employeuse</h1>';
-  html += '<p class="petit">' + esc(etat.identite.prenom || 'Candidate') + ' — ' + esc(etat.identite.date) + '</p>';
-  html += '<div class="encadre"><b>À lire au téléphone.</b> Note les réponses dans les blancs, puis compare-les à ce qu’elle a dit pendant l’entretien.</div>';
-  html += '<div class="carte"><h3>Pour commencer</h3><p class="enonce">' +
-    esc(a.intro.split('[PRENOM]').join(etat.identite.prenom || 'La candidate').split('[MOI]').join('[ton nom]')) + '</p></div>';
-
-  html += '<h2>Les questions</h2><ol class="liste script">';
-  a.questions.forEach(function (q) {
-    html += '<li><b>' + esc(q) + '</b><span class="ligne-notes"></span></li>';
-  });
-  if (supplementaires.length) {
-    supplementaires.forEach(function (q) {
-      html += '<li><b>' + esc(q) + '</b><span class="petit">Question ajoutée à cause d’un drapeau de l’entretien.</span><span class="ligne-notes"></span></li>';
-    });
-  }
-  html += '</ol>';
-  html += '<div class="carte"><h3>Pour finir</h3><p class="enonce">' + esc(a.cloture) + '</p></div>';
-  html += '<div class="carte plate"><h3>Conseils</h3><ul>' +
-    a.conseils.map(function (c) { return '<li>' + esc(c) + '</li>'; }).join('') + '</ul></div>';
-
-  $ecran.innerHTML = html;
-  $barre.innerHTML = '<div class="dedans"><div class="rangee">' +
-    '<button class="bouton secondaire" data-aller="resultat">Retour</button>' +
-    '<button class="bouton" id="imprimerAppel">Imprimer</button></div></div>';
-  brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
-  surClic('imprimerAppel', function () { print(); });
 }
 
 /* ---------- Exports ---------- */

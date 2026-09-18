@@ -136,7 +136,9 @@ Ces seuils sont des valeurs de départ. Ils seront calibrés après une quinzain
 ### Affichage du résultat
 - Score global, 5 sous-scores, verdict.
 - Tous les drapeaux, affichés quel que soit le score, avec un message clair.
-- Liste précise des **points à vérifier** (ex. « Appeler la référence de l'emploi X », « Faire refaire le geste Y pendant l'essai »).
+- Liste précise des **points à vérifier**, écrits en phrases complètes et réalisables par l'employeur seul
+  (ex. « Lui faire refaire devant toi, le premier jour, la tâche qu'elle vient d'expliquer »).
+- Le rapport ne montre jamais les repères internes `Q1`…`Q10` : chaque question y est nommée en toutes lettres.
 - Encart permanent : « Cet outil est une aide à la décision. Ce n'est pas un détecteur de mensonge. »
 
 ## 6. Équité (règles strictes)
@@ -145,7 +147,9 @@ Ces seuils sont des valeurs de départ. Ils seront calibrés après une quinzain
 - La situation familiale, la nationalité, l'ethnie, la religion et la langue d'entretien **n'entrent jamais dans le score**.
 - Techniquement : `computeScore` ne reçoit jamais la fiche. Le test injecte de fausses données de fiche
   et vérifie que le résultat ne change pas.
-- La stabilité s'évalue uniquement sur des faits vérifiables (durées d'emploi, références) et sur un accord explicite sur les congés.
+- La stabilité s'évalue uniquement sur des faits vérifiables (durées d'emploi, personnes citées) et sur un accord explicite sur les congés.
+- **Joindre les anciens employeurs est souvent impossible à Niamey.** Aucun point à vérifier ne suppose un appel :
+  la vérification passe par l'essai court et payé, qui ne dépend que de l'employeur.
 
 ## 7. Fonctionnalités
 
@@ -161,7 +165,6 @@ Ces seuils sont des valeurs de départ. Ils seront calibrés après une quinzain
 - **Reprise d'un entretien interrompu** : brouillon enregistré au fil de l'eau, proposé au retour sur l'accueil.
 - **Sommaire** : état de chaque question (répondu / à compléter / à faire) et accès direct à n'importe laquelle.
 - **Nouveau tirage** possible du scénario de Q4 ou Q6, quand la variante a déjà servi avec une autre candidate.
-- **Appel de la référence** : script imprimable à lire au téléphone, complété selon les drapeaux levés.
 - **Détail des réponses** sur l'écran de résultat, replié à l'écran et déplié à l'impression.
 - **Mode plein soleil** : texte agrandi et contrastes renforcés, mémorisé localement.
 
