@@ -126,8 +126,10 @@ fieldset.groupe{border:0;margin:0;padding:0;min-width:0}
 input[type=text],input[type=date],select,textarea{width:100%;font:inherit;padding:13px;
   border:var(--bord) solid var(--trait-fort);border-radius:var(--rayon-petit);background:var(--surface);color:var(--encre)}
 textarea{min-height:80px;resize:vertical}
-input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,label.option:focus-within{
+/* L'anneau de focus suit le clavier, pas le doigt : un appui sur une réponse ne l'encadre pas de bleu. */
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible{
   outline:3px solid var(--primaire);outline-offset:2px}
+label.option:has(input:focus-visible){outline:3px solid var(--primaire);outline-offset:2px}
 
 /* ---- Boutons ---- */
 button{font:inherit;cursor:pointer}
@@ -142,6 +144,8 @@ button,label,summary,a{-webkit-tap-highlight-color:transparent}
 .bouton.petit{padding:10px 12px;font-size:.9rem;margin:6px 0}
 .bouton.avecPic{display:flex;align-items:center;justify-content:center;gap:9px}
 .bouton:disabled{opacity:.4;cursor:not-allowed}
+.bouton.pret{animation:pret 1s ease-out 1}
+@keyframes pret{0%{box-shadow:0 0 0 0 rgba(31,79,143,.55)}100%{box-shadow:0 0 0 14px rgba(31,79,143,0)}}
 .bouton.fait:disabled{opacity:1;cursor:default;color:var(--vert);border-color:var(--vert);background:var(--vert-pale)}
 .rangee{display:flex;gap:10px;flex-wrap:wrap}
 .rangee>*{flex:1 1 130px;width:auto;margin:6px 0}
@@ -175,13 +179,36 @@ button,label,summary,a{-webkit-tap-highlight-color:transparent}
 .option:has(input:checked) .option-pic{color:var(--t)}
 
 /* ---- Progression ---- */
-.pastilles{display:flex;gap:5px;margin:4px 0 10px}
-.pastille{flex:1;height:11px;border-radius:999px;background:#e3d9c9;border:1px solid transparent;padding:0;min-width:0}
-.pastille.complet{background:var(--primaire)}
-.pastille.partiel{background:var(--sable)}
-.pastille.courant{border-color:var(--encre);box-shadow:0 0 0 2px var(--fond),0 0 0 4px var(--encre)}
+/* La zone à toucher fait 30 px de haut ; seule la barre du milieu est dessinée. */
+.pastilles{display:flex;gap:5px;margin:0 0 6px}
+.pastille{flex:1;min-width:0;height:30px;padding:0;border:0;background:none;position:relative;cursor:pointer}
+.pastille::before{content:"";position:absolute;left:0;right:0;top:9px;height:12px;border-radius:999px;
+  background:#e3d9c9;border:1px solid transparent;transition:background-color .2s ease}
+.pastille.complet::before{background:var(--primaire)}
+.pastille.partiel::before{background:var(--sable)}
+.pastille.courant::before{border-color:var(--encre);box-shadow:0 0 0 2px var(--fond),0 0 0 4px var(--encre)}
 .fil{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:.86rem;color:var(--encre-douce)}
 .fil b{color:var(--encre);font-size:.95rem}
+
+/* ---- Questions à plusieurs points ---- */
+.volet{scroll-margin-top:10px;transition:border-color .2s ease}
+.volet h3{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.volet .badge-fait{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;
+  border-radius:50%;background:var(--t);color:#fff;transform:scale(0);transition:transform .22s cubic-bezier(.3,1.6,.5,1)}
+.volet .badge-fait .pic{width:16px;height:16px;stroke-width:3}
+.volet.fait{border-color:var(--t)}
+.volet.fait .badge-fait{transform:scale(1)}
+
+/* ---- Note libre, repliée tant qu'elle est vide ---- */
+.note-libre{padding:0 15px}
+.note-libre summary{display:flex;align-items:center;gap:9px;padding:14px 0;font-weight:700;color:var(--primaire);
+  cursor:pointer;list-style:none}
+.note-libre summary::-webkit-details-marker{display:none}
+.note-libre summary::after{content:"";margin-left:auto;width:9px;height:9px;border-right:2.5px solid currentColor;
+  border-bottom:2.5px solid currentColor;transform:translateY(-3px) rotate(45deg);transition:transform .2s ease}
+.note-libre[open] summary::after{transform:translateY(2px) rotate(-135deg)}
+.note-libre summary .petit{font-weight:400}
+.note-libre small{display:block;margin:6px 0 14px}
 
 /* ---- Barre basse ---- */
 .barre-bas{position:fixed;left:0;right:0;bottom:0;background:var(--surface);
@@ -1418,9 +1445,10 @@ function optionHtml(nom, option, valeurCochee, type, extra) {
 }
 
 function champNote(valeur) {
-  return '<div class="carte plate sansImpression"><label class="champ" for="noteQ">Note libre (facultatif)</label>' +
-    '<textarea id="noteQ" placeholder="Ce qu’elle a dit, avec ses mots.">' + esc(valeur || '') + '</textarea>' +
-    '<small>Les notes libres ne sont jamais comptées dans le score et ne sont pas transmises au calcul.</small></div>';
+  return '<details class="note-libre carte plate sansImpression"' + (valeur ? ' open' : '') + '>' +
+    '<summary>' + pic('crayon') + 'Note libre <span class="petit">(facultatif)</span></summary>' +
+    '<textarea id="noteQ" aria-label="Note libre" placeholder="Ce qu’elle a dit, avec ses mots.">' + esc(valeur || '') + '</textarea>' +
+    '<small>Les notes libres ne sont jamais comptées dans le score et ne sont pas transmises au calcul.</small></details>';
 }
 
 function anneauScore(total) {
@@ -1776,7 +1804,11 @@ function rendrePreambule() {
 /* ---------- Sommaire ---------- */
 
 function rendreSommaire() {
-  let html = '<h1>Où en est l\u2019entretien</h1><p>Touche une question pour y aller directement.</p><ul class="liste sommaire">';
+  const repondues = CONFIG.questions.filter(function (q) { return etatQuestion(q) === 'complet'; }).length;
+  const pluriel = repondues > 1;
+  let html = '<h1>Où en est l\u2019entretien</h1><p><b>' + repondues + (pluriel ? ' questions' : ' question') + ' sur ' +
+    CONFIG.questions.length + '</b>' + (pluriel ? ' ont' : ' a') + ' une réponse. Touche une question pour y aller.</p>' +
+    '<ul class="liste sommaire">';
   CONFIG.questions.forEach(function (q, position) {
     const statut = etatQuestion(q);
     const mots = { complet: 'Répondu', partiel: 'À compléter', vide: 'À faire' };
@@ -1857,19 +1889,22 @@ function rendreEntretien() {
     });
     html += '</div>';
   } else if (question.type === 'criteres') {
+    const criteres = criteresDe(question, etat.identite);
+    const faits = criteres.filter(function (c) { return rep[c.id]; }).length;
     html += '<p class="enonce">' + esc(question.texte) + '</p>';
     if (question.consigne) html += '<p class="consigne">' + esc(question.consigne) + '</p>';
-    {
-      criteresDe(question, etat.identite).forEach(function (critere) {
-        html += '<div class="carte"><h3>' + esc(critere.titre) + '</h3>';
-        if (critere.texte) html += '<p class="enonce" style="font-size:1.08rem">' + esc(critere.texte) + '</p>';
-        html += '<div class="options">';
-        critere.options.forEach(function (o) {
-          html += optionHtml(question.id + '.' + critere.id, o, rep[critere.id], 'radio');
-        });
-        html += '</div></div>';
+    html += '<p class="fil"><span>Une réponse par point</span><b><span id="compteVolets">' + faits + '</span> sur ' +
+      criteres.length + '</b></p>';
+    criteres.forEach(function (critere) {
+      html += '<div class="carte volet' + (rep[critere.id] ? ' fait' : '') + '"><h3><span>' + esc(critere.titre) + '</span>' +
+        '<span class="badge-fait" aria-hidden="true">' + pic('coche') + '</span></h3>';
+      if (critere.texte) html += '<p class="enonce" style="font-size:1.08rem">' + esc(critere.texte) + '</p>';
+      html += '<div class="options">';
+      critere.options.forEach(function (o) {
+        html += optionHtml(question.id + '.' + critere.id, o, rep[critere.id], 'radio');
       });
-    }
+      html += '</div></div>';
+    });
   } else if (question.type === 'variantes') {
     const variante = varianteDe(question, rep) || question.variantes[0];
     html += '<p class="fil"><span>Scénario tiré au hasard</span><b>' + esc(variante.libelle) + '</b></p>';
@@ -1884,18 +1919,25 @@ function rendreEntretien() {
   html += champNote(rep.note);
 
   $ecran.innerHTML = html;
+  const retourLibelle = etat.index ? 'Question précédente' : 'Revenir au texte d’introduction';
   $barre.innerHTML = '<div class="dedans"><div class="rangee">' +
-    '<button class="bouton secondaire" id="precedent">Précédent</button>' +
+    '<button class="bouton secondaire icone" id="precedent" aria-label="' + retourLibelle + '" title="' + retourLibelle + '">' +
+      pic('gauche') + '</button>' +
     '<button class="bouton secondaire" data-aller="sommaire">Sommaire</button>' +
-    '<button class="bouton" id="suivant">' + (etat.index === total - 1 ? 'Terminer' : 'Suivant') + '</button>' +
+    '<button class="bouton avecPic large" id="suivant">' + (etat.index === total - 1 ? 'Terminer' : 'Suivant') + pic('droite') + '</button>' +
     '</div></div>';
 
   brancher('input[type=radio]', 'change', function (e) {
-    const morceaux = e.currentTarget.getAttribute('name').split('.');
-    if (morceaux.length === 2) etat.reponses[morceaux[0]][morceaux[1]] = e.currentTarget.value;
-    else etat.reponses[morceaux[0]].option = e.currentTarget.value;
+    const entree = e.currentTarget;
+    const avant = etatQuestion(question);
+    const morceaux = entree.getAttribute('name').split('.');
+    if (morceaux.length === 2) etat.reponses[morceaux[0]][morceaux[1]] = entree.value;
+    else etat.reponses[morceaux[0]].option = entree.value;
+    marquerChoix(entree);
     majPastilles();
     planifierSauvegarde();
+    if (morceaux.length === 2) avancerVolet(entree.closest('.volet'));
+    if (avant !== 'complet' && etatQuestion(question) === 'complet') signalerPret();
   });
   brancher('[data-famille]', 'change', function (e) {
     const cible = e.currentTarget.getAttribute('data-famille');
@@ -1904,6 +1946,7 @@ function rendreEntretien() {
     if (e.currentTarget.checked && position === -1) liste.push(cible);
     if (!e.currentTarget.checked && position !== -1) liste.splice(position, 1);
     etat.reponses.q1.familles = liste;
+    marquerChoix(e.currentTarget);
     majPastilles();
     planifierSauvegarde();
   });
@@ -1925,8 +1968,10 @@ function rendreEntretien() {
     }).then(function (choix) { if (choix === 'tirer') tirer(); });
   });
   brancher('[data-question]', 'click', function (e) {
-    etat.index = Number(e.currentTarget.getAttribute('data-question'));
-    rendre();
+    const cible = Number(e.currentTarget.getAttribute('data-question'));
+    const sens = cible > etat.index ? 'avant' : (cible < etat.index ? 'arriere' : null);
+    etat.index = cible;
+    rendre(sens);
   });
   brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
 
@@ -1935,18 +1980,47 @@ function rendreEntretien() {
     etat.reponses[question.id].note = noteQ.value;
     planifierSauvegarde();
   });
+  const repli = $ecran.querySelector('.note-libre');
+  if (repli && noteQ) repli.addEventListener('toggle', function () { if (repli.open && !noteQ.value) noteQ.focus(); });
 
   surClic('precedent', function () {
     if (etat.index === 0) { aller('preambule', 'arriere'); return; }
     etat.index--;
-    rendre();
+    rendre('arriere');
   });
   surClic('suivant', function () {
     if (question.id === 'q1') tirerTacheQ2();
-    if (etat.index === total - 1) { aller('pratique'); return; }
+    if (etat.index === total - 1) { aller('pratique', 'avant'); return; }
     etat.index++;
-    rendre();
+    rendre('avant');
   });
+}
+
+/* Questions à plusieurs points (hygiène, disponibilité, projet) : quand un point reçoit sa première réponse,
+   l'écran descend tout seul vers le point suivant encore sans réponse. Corriger une réponse ne fait pas bouger l'écran. */
+function avancerVolet(volet) {
+  if (!volet || volet.classList.contains('fait')) return;
+  volet.classList.add('fait');
+  const compte = document.getElementById('compteVolets');
+  if (compte) compte.textContent = $ecran.querySelectorAll('.volet.fait').length;
+  const volets = Array.prototype.slice.call($ecran.querySelectorAll('.volet'));
+  const suivant = volets.slice(volets.indexOf(volet) + 1).filter(function (v) { return !v.classList.contains('fait'); })[0];
+  if (suivant) setTimeout(function () { defilerVers(suivant); }, 280);
+}
+
+function defilerVers(noeud) {
+  if (!noeud || !document.body.contains(noeud)) return;
+  const haut = noeud.getBoundingClientRect().top + (pageYOffset || 0) - 10;
+  try { scrollTo({ top: haut, behavior: mouvementReduit() ? 'auto' : 'smooth' }); } catch (e) { scrollTo(0, haut); }
+}
+
+/* La question est complète : le bouton Suivant s'éclaire une fois, sans rien imposer. */
+function signalerPret() {
+  const bouton = document.getElementById('suivant');
+  if (!bouton) return;
+  bouton.classList.remove('pret');
+  void bouton.offsetWidth;
+  bouton.classList.add('pret');
 }
 
 function majPastilles() {
@@ -1977,16 +2051,17 @@ function rendrePratique() {
 
   $ecran.innerHTML = html;
   $barre.innerHTML = '<div class="dedans"><div class="rangee">' +
-    '<button class="bouton secondaire" id="retour">Précédent</button>' +
+    '<button class="bouton secondaire icone" id="retour" aria-label="Dernière question" title="Dernière question">' + pic('gauche') + '</button>' +
     '<button class="bouton secondaire" id="passer">Passer</button>' +
-    '<button class="bouton" id="terminer">Voir le résultat</button></div></div>';
+    '<button class="bouton large" id="terminer">Voir le résultat</button></div></div>';
 
   brancher('input[type=radio]', 'change', function (e) {
     etat.pratique[e.currentTarget.getAttribute('name').split('.')[1]] = e.currentTarget.value;
     etat.pratiqueFaite = true;
+    marquerChoix(e.currentTarget);
     planifierSauvegarde();
   });
-  surClic('retour', function () { etat.index = CONFIG.questions.length - 1; aller('entretien'); });
+  surClic('retour', function () { etat.index = CONFIG.questions.length - 1; aller('entretien', 'arriere'); });
   surClic('passer', function () { etat.pratique = {}; etat.pratiqueFaite = false; calculerEtAfficher(); });
   surClic('terminer', calculerEtAfficher);
 }
