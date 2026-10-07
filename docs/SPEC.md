@@ -171,8 +171,12 @@ Ces seuils sont des valeurs de départ. Ils seront calibrés après une quinzain
 ## 7. Fonctionnalités
 
 - **Fiche candidate** : prénom, date, poste visé, note libre (dont situation familiale facultative).
-- **Rappel à l'écran** avant de commencer : informer la candidate que ses réponses sont notées.
+- **Fiche en gros boutons** : le poste et le logement se choisissent d'un seul appui.
+- **Rappel à l'écran** avant de commencer : un écran « À lire à voix haute », juste avant la première question,
+  pour informer la candidate que ses réponses sont notées.
 - **Entretien pas à pas** : une question par écran, barre de progression, gros boutons, retour arrière possible.
+  Dans les questions à plusieurs points, chaque point coché est marqué et l'écran descend seul vers le suivant.
+- **Questions oubliées** : avant le résultat, l'app liste les questions sans réponse complète et propose d'y revenir.
 - **Épreuve pratique** facultative (section 4).
 - **Écran de résultat** imprimable (CSS `@media print`).
 - **Export** de l'entretien en JSON et CSV (téléchargement local), fichiers nommés `entretien-<prénom>-<date>.json` / `.csv`.
@@ -184,6 +188,8 @@ Ces seuils sont des valeurs de départ. Ils seront calibrés après une quinzain
 - **Nouveau tirage** possible du scénario de Q4 ou Q6, quand la variante a déjà servi avec une autre candidate.
 - **Détail des réponses** sur l'écran de résultat, replié à l'écran et déplié à l'impression.
 - **Mode plein soleil** : texte agrandi et contrastes renforcés, mémorisé localement.
+- **Confort** : confirmations dans l'app plutôt que dans les fenêtres du navigateur, courte annonce après chaque
+  enregistrement, transitions douces entre les écrans, supprimées si le téléphone demande moins de mouvement.
 
 ## 8. Contrat technique
 
