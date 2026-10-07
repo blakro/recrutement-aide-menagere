@@ -134,6 +134,7 @@ button{font:inherit;cursor:pointer}
 .bouton.petit{padding:10px 12px;font-size:.9rem;margin:6px 0}
 .bouton.avecPic{display:flex;align-items:center;justify-content:center;gap:9px}
 .bouton:disabled{opacity:.4;cursor:not-allowed}
+.bouton.fait:disabled{opacity:1;cursor:default;color:var(--vert);border-color:var(--vert);background:var(--vert-pale)}
 .rangee{display:flex;gap:10px;flex-wrap:wrap}
 .rangee>*{flex:1 1 130px;width:auto;margin:6px 0}
 .grille2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -245,10 +246,38 @@ pre{white-space:pre-wrap;word-break:break-word;background:var(--surface-douce);p
 .ok{color:var(--vert);font-weight:800}
 .ko{color:var(--rouge);font-weight:800}
 
+/* ---- Dialogues et annonces (à la place des fenêtres du navigateur) ---- */
+.voile{position:fixed;top:0;right:0;bottom:0;left:0;z-index:40;background:rgba(28,25,23,.52);
+  display:flex;align-items:flex-end;justify-content:center;
+  padding:12px 12px calc(12px + env(safe-area-inset-bottom));animation:fondu .18s ease-out}
+.voile.sortie{animation:disparaitre .16s ease-in forwards}
+.dialogue{width:100%;max-width:520px;max-height:calc(100vh - 40px);overflow:auto;background:var(--surface);color:var(--encre);
+  border-radius:20px;padding:20px 18px 12px;box-shadow:0 18px 50px rgba(0,0,0,.3);animation:monter .26s cubic-bezier(.2,.7,.3,1)}
+.dialogue:focus{outline:none}
+.dialogue h2{margin:0 0 .35em;font-size:1.2rem;line-height:1.25}
+.dialogue p{margin:.3em 0 .7em;color:var(--encre-douce)}
+.dialogue .dlg-liste{margin:.2em 0 .9em;padding-left:1.25em;font-weight:700}
+.dialogue .dlg-liste li{margin:.2em 0}
+.dialogue .bouton{margin:9px 0}
+html[data-contraste=fort] .dialogue{border:3px solid #000}
+@media (min-width:640px){ .voile{align-items:center} }
+
+.annonce{position:fixed;left:50%;bottom:calc(98px + env(safe-area-inset-bottom));z-index:30;
+  transform:translate(-50%,14px);opacity:0;pointer-events:none;max-width:calc(100% - 32px);width:max-content;
+  display:flex;align-items:center;gap:9px;background:#1c1917;color:#fff;border-radius:999px;padding:11px 18px;
+  font-weight:700;font-size:.92rem;line-height:1.3;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:opacity .2s ease,transform .2s ease}
+.annonce.visible{opacity:1;transform:translate(-50%,0)}
+.annonce .pic{color:#86e0aa;width:1.3em;height:1.3em;stroke-width:2.4}
+.annonce:empty{display:none}
+
+@keyframes fondu{from{opacity:0}to{opacity:1}}
+@keyframes disparaitre{from{opacity:1}to{opacity:0}}
+@keyframes monter{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:none}}
+
 @media (min-width:640px){ :root{--base:18px} .enveloppe{padding:20px 20px 122px} }
 
 @media print{
-  .bandeau,.barre-bas,.sansImpression{display:none !important}
+  .bandeau,.barre-bas,.sansImpression,.voile,.annonce{display:none !important}
   body{font-size:11pt;background:#fff;background-image:none}
   .enveloppe{max-width:none;padding:0}
   .carte,.drapeau,.hero,.sous-score{break-inside:avoid;box-shadow:none}
@@ -275,6 +304,7 @@ pre{white-space:pre-wrap;word-break:break-word;background:var(--surface-douce);p
 </header>
 <main class="enveloppe" id="ecran"></main>
 <div class="barre-bas sansImpression" id="barre"></div>
+<div class="annonce" id="annonce" role="status" aria-live="polite"></div>
 <script>
 // @@SCORING-START
 /* Barème de l'entretien — bloc pur (aucun accès au navigateur ni au stockage).
@@ -1465,6 +1495,72 @@ function surClic(id, action) {
   if (n) n.addEventListener('click', action);
 }
 
+function mouvementReduit() {
+  try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; }
+}
+
+/* ---------- Dialogues et annonces ----------
+   Remplacent confirm() et alert() : les fenêtres du navigateur affichent l'adresse du site,
+   coupent l'entretien et ne se lisent pas bien au soleil.
+   dialogue({ titre, message, liste, actions: [{ id, libelle, style }] }) → Promise du choix (null si on ferme). */
+
+function dialogue(reglage) {
+  return new Promise(function (resoudre) {
+    const precedent = document.activeElement;
+    const autour = [document.querySelector('.bandeau'), $ecran, $barre];
+    const voile = document.createElement('div');
+    voile.className = 'voile';
+
+    let html = '<div class="dialogue" role="dialog" aria-modal="true" tabindex="-1" aria-labelledby="dlg-titre"' +
+      (reglage.message ? ' aria-describedby="dlg-message"' : '') + '>' +
+      '<h2 id="dlg-titre">' + esc(reglage.titre) + '</h2>';
+    if (reglage.message) html += '<p id="dlg-message">' + esc(reglage.message) + '</p>';
+    if (reglage.liste && reglage.liste.length) {
+      html += '<ul class="dlg-liste">' + reglage.liste.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+    }
+    (reglage.actions || []).forEach(function (a) {
+      html += '<button type="button" class="bouton' + (a.style ? ' ' + esc(a.style) : '') + '" data-choix="' + esc(a.id) + '">' +
+        esc(a.libelle) + '</button>';
+    });
+    voile.innerHTML = html + '</div>';
+    document.body.appendChild(voile);
+    autour.forEach(function (n) { if (n) n.setAttribute('inert', ''); });
+
+    function clavier(e) { if (e.key === 'Escape') { e.preventDefault(); fermer(null); } }
+    function fermer(choix) {
+      document.removeEventListener('keydown', clavier);
+      autour.forEach(function (n) { if (n) n.removeAttribute('inert'); });
+      voile.classList.add('sortie');
+      setTimeout(function () { if (voile.parentNode) voile.parentNode.removeChild(voile); }, mouvementReduit() ? 0 : 160);
+      try { if (precedent && document.body.contains(precedent)) precedent.focus(); } catch (e) { /* rien à refaire */ }
+      resoudre(choix);
+    }
+    document.addEventListener('keydown', clavier);
+    voile.addEventListener('click', function (e) {
+      const bouton = e.target.closest('[data-choix]');
+      if (bouton) fermer(bouton.getAttribute('data-choix'));
+      else if (e.target === voile) fermer(null);
+    });
+    voile.querySelector('.dialogue').focus();
+  });
+}
+
+function prevenir(titre, message) {
+  return dialogue({ titre: titre, message: message, actions: [{ id: 'ok', libelle: 'D’accord' }] });
+}
+
+let minuteurAnnonce = null;
+function annoncer(texte) {
+  const n = document.getElementById('annonce');
+  if (!n) return;
+  n.innerHTML = pic('coche') + '<span>' + esc(texte) + '</span>';
+  n.classList.remove('visible');
+  void n.offsetWidth;
+  n.classList.add('visible');
+  clearTimeout(minuteurAnnonce);
+  minuteurAnnonce = setTimeout(function () { n.classList.remove('visible'); }, 2600);
+}
+
 /* ---------- Accueil ---------- */
 
 function rendreAccueil() {
@@ -1526,7 +1622,7 @@ function rendreAccueil() {
   });
   brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
 
-  surClic('reprendre', function () {
+  function reprendre() {
     etat = Object.assign(etatInitial(), {
       identite: Object.assign(etatInitial().identite, brouillon.identite),
       tirage: brouillon.tirage || etatInitial().tirage,
@@ -1536,21 +1632,47 @@ function rendreAccueil() {
       index: brouillon.index || 0
     });
     aller('entretien');
-  });
-  surClic('jeter', function () {
-    if (!confirm('Supprimer le brouillon de cet entretien ?')) return;
-    effacerBrouillon();
-    rendre();
-  });
-  surClic('commencer', function () {
-    const reprise = brouillon && confirm('Un entretien est déjà en cours. Commencer un nouvel entretien effacera le brouillon. Continuer ?');
-    if (brouillon && !reprise) return;
+  }
+  function demarrer() {
     effacerBrouillon();
     const identite = etat.identite;
     etat = etatInitial();
     etat.identite = identite;
     tirerVariantes();
     aller('entretien');
+  }
+
+  surClic('reprendre', reprendre);
+  surClic('jeter', function () {
+    dialogue({
+      titre: 'Supprimer ce brouillon ?',
+      message: 'Les réponses déjà cochées pour ' + (brouillon.identite.prenom || 'cette candidate') + ' seront perdues.',
+      actions: [
+        { id: 'supprimer', libelle: 'Supprimer le brouillon', style: 'danger' },
+        { id: 'garder', libelle: 'Le garder', style: 'secondaire' }
+      ]
+    }).then(function (choix) {
+      if (choix !== 'supprimer') return;
+      effacerBrouillon();
+      rendre();
+      annoncer('Brouillon supprimé');
+    });
+  });
+  surClic('commencer', function () {
+    if (!brouillon || !brouillon.identite) { demarrer(); return; }
+    dialogue({
+      titre: 'Un entretien est déjà en cours',
+      message: 'Celui de ' + (brouillon.identite.prenom || 'la candidate précédente') +
+        ' n’est pas terminé. Commencer un nouvel entretien effacera son brouillon.',
+      actions: [
+        { id: 'reprendre', libelle: 'Reprendre l’entretien en cours' },
+        { id: 'nouveau', libelle: 'Commencer un nouvel entretien', style: 'danger' },
+        { id: 'annuler', libelle: 'Annuler', style: 'secondaire' }
+      ]
+    }).then(function (choix) {
+      if (choix === 'reprendre') reprendre();
+      else if (choix === 'nouveau') demarrer();
+    });
   });
 }
 
@@ -1689,8 +1811,21 @@ function rendreEntretien() {
     planifierSauvegarde();
   });
   brancher('[data-retirage]', 'click', function (e) {
-    tirerVariantes(e.currentTarget.getAttribute('data-retirage'));
-    rendre();
+    const id = e.currentTarget.getAttribute('data-retirage');
+    function tirer() {
+      tirerVariantes(id);
+      rendre();
+      annoncer('Nouveau scénario : ' + varianteDe(question, etat.reponses[id]).libelle);
+    }
+    if (!(etat.reponses[id] || {}).option) { tirer(); return; }
+    dialogue({
+      titre: 'Tirer un autre scénario ?',
+      message: 'La réponse déjà cochée pour ce scénario sera effacée.',
+      actions: [
+        { id: 'tirer', libelle: 'Tirer un autre scénario' },
+        { id: 'garder', libelle: 'Garder ce scénario', style: 'secondaire' }
+      ]
+    }).then(function (choix) { if (choix === 'tirer') tirer(); });
   });
   brancher('[data-question]', 'click', function (e) {
     etat.index = Number(e.currentTarget.getAttribute('data-question'));
@@ -1881,12 +2016,14 @@ function rendreResultat() {
   html += '<h2>' + pic('liste') + 'Ce qu\u2019elle a répondu</h2><details class="detail-reponses carte">' +
     '<summary>Voir les dix réponses, une par une</summary>' + detailReponses() + '</details>';
 
-  html += '<div class="carte sansImpression"><h3>Garder une trace de cet entretien</h3><div class="rangee">' +
+  html += '<div class="carte sansImpression"><h3>Garder une trace de cet entretien</h3>' +
+    (etat.enregistre
+      ? '<button class="bouton secondaire avecPic fait" id="enregistrer" disabled>' + pic('coche') + 'Enregistré sur ce téléphone</button>'
+      : '<button class="bouton secondaire avecPic" id="enregistrer">' + pic('archive') + 'Enregistrer sur ce téléphone</button>') +
+    '<div class="rangee">' +
     '<button class="bouton secondaire avecPic" id="imprimer">' + pic('imprimer') + 'Imprimer</button>' +
     '<button class="bouton secondaire avecPic" id="json">' + pic('telecharger') + 'JSON</button>' +
     '<button class="bouton secondaire avecPic" id="csv">' + pic('telecharger') + 'CSV</button></div>' +
-    '<button class="bouton secondaire avecPic" id="enregistrer">' + pic('archive') +
-      (etat.enregistre ? 'Enregistré sur ce téléphone' : 'Enregistrer sur ce téléphone') + '</button>' +
     '<small>Les exports restent sur ce téléphone. Ne les envoie pas à des tiers sans l\u2019accord de la candidate.</small></div>';
 
   $ecran.innerHTML = html;
@@ -1899,11 +2036,25 @@ function rendreResultat() {
   surClic('csv', exporterCsv);
   surClic('enregistrer', enregistrerHistorique);
   brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
-  surClic('nouveau', function () {
-    if (!confirm('Commencer un nouvel entretien ? Les réponses en cours seront effacées.')) return;
+  function nouvelEntretien() {
     effacerBrouillon();
     etat = etatInitial();
     aller('accueil');
+  }
+  surClic('nouveau', function () {
+    if (etat.enregistre) { nouvelEntretien(); return; }
+    dialogue({
+      titre: 'Cet entretien n’est pas enregistré',
+      message: 'Si tu commences un nouvel entretien maintenant, celui-ci sera perdu. Tu peux le garder dans l’historique de ce téléphone.',
+      actions: [
+        { id: 'enregistrer', libelle: 'L’enregistrer, puis commencer' },
+        { id: 'perdre', libelle: 'Commencer sans enregistrer', style: 'danger' },
+        { id: 'annuler', libelle: 'Annuler', style: 'secondaire' }
+      ]
+    }).then(function (choix) {
+      if (choix === 'enregistrer' && enregistrerHistorique()) nouvelEntretien();
+      else if (choix === 'perdre') nouvelEntretien();
+    });
   });
 }
 
@@ -1927,8 +2078,9 @@ function telecharger(nom, contenu, type) {
     lien.click();
     document.body.removeChild(lien);
     setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    annoncer('Fichier ' + nom + ' téléchargé');
   } catch (e) {
-    alert('Le téléchargement a échoué sur ce téléphone. Utilise « Imprimer » pour garder une trace.');
+    prevenir('Le téléchargement a échoué', 'Ce téléphone refuse le téléchargement. Utilise « Imprimer » pour garder une trace.');
   }
 }
 
@@ -1985,15 +2137,24 @@ function exporterCsv() {
 
 /* ---------- Historique ---------- */
 
+/* Renvoie true si l'entretien est (déjà) dans l'historique. Un second appui n'ajoute pas de doublon. */
 function enregistrerHistorique() {
+  if (etat.enregistre) return true;
   const liste = lireStockage(CLES.historique, []);
   liste.unshift(Object.assign({ enregistreLe: new Date().toISOString() }, enregistrementComplet()));
-  if (ecrireStockage(CLES.historique, liste.slice(0, 50))) {
-    etat.enregistre = true;
-    rendre();
-  } else {
-    alert('Impossible d’enregistrer sur ce téléphone. Utilise l’export ou l’impression.');
+  if (!ecrireStockage(CLES.historique, liste.slice(0, 50))) {
+    prevenir('Impossible d’enregistrer', 'Ce téléphone refuse de garder l’entretien. Utilise l’export ou l’impression pour en garder une trace.');
+    return false;
   }
+  etat.enregistre = true;
+  const bouton = document.getElementById('enregistrer');
+  if (bouton) {
+    bouton.disabled = true;
+    bouton.classList.add('fait');
+    bouton.innerHTML = pic('coche') + 'Enregistré sur ce téléphone';
+  }
+  annoncer('Entretien enregistré dans l’historique');
+  return true;
 }
 
 function rendreHistorique() {
@@ -2035,9 +2196,19 @@ function rendreHistorique() {
   });
   brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
   surClic('effacer', function () {
-    if (!confirm('Effacer tout l’historique de ce téléphone ? C’est définitif.')) return;
-    ecrireStockage(CLES.historique, []);
-    rendre();
+    dialogue({
+      titre: 'Effacer tout l’historique ?',
+      message: 'Les ' + liste.length + ' entretiens enregistrés sur ce téléphone seront supprimés. C’est définitif.',
+      actions: [
+        { id: 'effacer', libelle: 'Effacer l’historique', style: 'danger' },
+        { id: 'garder', libelle: 'Le garder', style: 'secondaire' }
+      ]
+    }).then(function (choix) {
+      if (choix !== 'effacer') return;
+      ecrireStockage(CLES.historique, []);
+      rendre();
+      annoncer('Historique effacé');
+    });
   });
 }
 
@@ -2091,14 +2262,18 @@ function rendreReglages() {
     reglages.produit = document.getElementById('produit').value.trim() || reglagesParDefaut.produit;
     reglages.usage = document.getElementById('usage').value.trim();
     if (!ecrireStockage(CLES.reglages, reglages)) {
-      alert('Le réglage est appliqué pour cet entretien, mais il n’a pas pu être gardé sur ce téléphone.');
+      prevenir('Réglage appliqué, mais pas gardé', 'Le nouveau nom sert pour cet entretien, mais ce téléphone n’a pas pu le garder pour les prochains.')
+        .then(function () { aller('accueil'); });
+      return;
     }
     aller('accueil');
+    annoncer('Produit fictif enregistré : ' + reglages.produit);
   });
   surClic('defaut', function () {
     reglages = Object.assign({}, reglagesParDefaut);
     ecrireStockage(CLES.reglages, reglages);
     rendre();
+    annoncer('Nom par défaut rétabli');
   });
   brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
 }
