@@ -1662,7 +1662,11 @@ function annoncer(texte) {
   void n.offsetWidth;
   n.classList.add('visible');
   clearTimeout(minuteurAnnonce);
-  minuteurAnnonce = setTimeout(function () { n.classList.remove('visible'); }, 2600);
+  minuteurAnnonce = setTimeout(function () {
+    n.classList.remove('visible');
+    // Une fois l'annonce effacée, on vide la zone pour qu'un lecteur d'écran ne la relise pas plus tard.
+    minuteurAnnonce = setTimeout(function () { n.innerHTML = ''; }, 250);
+  }, 2600);
 }
 
 /* ---------- Accueil ---------- */
