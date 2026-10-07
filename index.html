@@ -1586,6 +1586,9 @@ function rendreSommaire() {
 
 function rendreEntretien() {
   const question = CONFIG.questions[etat.index];
+  // La tâche de démonstration se tire à l'arrivée sur la question, quel que soit le chemin
+  // (bouton Suivant, sommaire ou pastilles) : sans cela, elle restait vide après un saut direct.
+  if (question.id === 'q2') tirerTacheQ2();
   theme(question.couleur);
   const total = CONFIG.questions.length;
   const rep = etat.reponses[question.id] || {};
