@@ -53,6 +53,7 @@ body{
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   font-size:var(--base); line-height:1.5;
   -webkit-text-size-adjust:100%; -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
 }
 .enveloppe{max-width:760px;margin:0 auto;padding:14px 16px 122px}
 h1{font-size:1.5rem;line-height:1.15;margin:.1em 0 .5em;letter-spacing:-.02em}
@@ -91,6 +92,10 @@ html[data-contraste=fort] .carte{border-width:2px}
 .consigne{background:var(--surface-douce);border:1px dashed var(--trait-fort);border-radius:var(--rayon-petit);
   padding:11px 13px;font-size:.9rem;margin:.7em 0}
 .enonce{font-size:1.3rem;font-weight:700;line-height:1.28;margin:.35em 0 .65em;letter-spacing:-.015em}
+.enonce.grand{font-size:1.45rem;line-height:1.32}
+.qui-entretien{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.qui-entretien span{font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:999px;
+  background:var(--surface);border:1.5px solid var(--trait-fort);color:var(--encre-douce)}
 
 /* ---- Pictogrammes ---- */
 .pic{width:1.15em;height:1.15em;flex:0 0 auto;stroke:currentColor;fill:none;
@@ -116,7 +121,8 @@ html[data-contraste=fort] .carte{border-width:2px}
 html[data-contraste=fort] .illustration{display:none}
 
 /* ---- Formulaires ---- */
-label.champ{display:block;font-weight:700;margin:.95em 0 .3em;font-size:.95rem}
+label.champ,legend.champ{display:block;font-weight:700;margin:.95em 0 .3em;font-size:.95rem;padding:0}
+fieldset.groupe{border:0;margin:0;padding:0;min-width:0}
 input[type=text],input[type=date],select,textarea{width:100%;font:inherit;padding:13px;
   border:var(--bord) solid var(--trait-fort);border-radius:var(--rayon-petit);background:var(--surface);color:var(--encre)}
 textarea{min-height:80px;resize:vertical}
@@ -125,10 +131,12 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 
 /* ---- Boutons ---- */
 button{font:inherit;cursor:pointer}
+button,label,summary,a{-webkit-tap-highlight-color:transparent}
 .bouton{display:block;width:100%;padding:15px 16px;margin:10px 0;border-radius:var(--rayon-petit);
   border:var(--bord) solid var(--primaire);background:var(--primaire);color:#fff;
   font-weight:700;font-size:1rem;text-align:center;text-decoration:none;box-shadow:var(--ombre-douce)}
-.bouton:active{transform:translateY(1px)}
+.bouton{transition:background-color .15s ease,color .15s ease,border-color .15s ease,transform .1s ease}
+.bouton:active{transform:scale(.98)}
 .bouton.secondaire{background:var(--surface);color:var(--primaire)}
 .bouton.danger{background:var(--surface);color:var(--rouge);border-color:var(--rouge)}
 .bouton.petit{padding:10px 12px;font-size:.9rem;margin:6px 0}
@@ -143,7 +151,9 @@ button{font:inherit;cursor:pointer}
 .options{margin:.5em 0}
 .option{display:flex;gap:12px;align-items:flex-start;position:relative;
   border:var(--bord) solid var(--trait);border-radius:var(--rayon-petit);
-  padding:14px 14px 14px 12px;margin:9px 0;background:var(--surface);cursor:pointer;box-shadow:var(--ombre-douce)}
+  padding:14px 14px 14px 12px;margin:9px 0;background:var(--surface);cursor:pointer;box-shadow:var(--ombre-douce);
+  transition:border-color .15s ease,background-color .15s ease,box-shadow .15s ease,transform .1s ease}
+.option:active{transform:scale(.985)}
 .option:has(input:checked){border-color:var(--t);background:var(--t-pale);box-shadow:inset 5px 0 0 var(--t)}
 .option input{position:absolute;opacity:0;width:1px;height:1px}
 .marque{flex:0 0 auto;width:26px;height:26px;margin-top:1px;border:var(--bord) solid var(--trait-fort);
@@ -158,6 +168,11 @@ button{font:inherit;cursor:pointer}
 .option .texte{flex:1;min-width:0;font-weight:600;line-height:1.35}
 .option .sous{display:block;font-size:.86rem;color:var(--encre-douce);font-weight:400;margin-top:3px}
 .option .note{display:block;font-size:.8rem;color:var(--orange);font-weight:700;margin-top:4px}
+.option.choix{align-items:center;padding:12px 14px 12px 12px;margin:8px 0}
+.option.choix .marque{margin-top:0}
+.option-pic{flex:0 0 auto;display:flex;color:var(--encre-douce)}
+.option-pic .pic{width:26px;height:26px}
+.option:has(input:checked) .option-pic{color:var(--t)}
 
 /* ---- Progression ---- */
 .pastilles{display:flex;gap:5px;margin:4px 0 10px}
@@ -172,8 +187,13 @@ button{font:inherit;cursor:pointer}
 .barre-bas{position:fixed;left:0;right:0;bottom:0;background:var(--surface);
   border-top:var(--bord) solid var(--trait);box-shadow:0 -4px 18px rgba(60,40,20,.10)}
 .barre-bas .dedans{max-width:760px;margin:0 auto;padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
-.barre-bas .rangee>*{margin:0;flex:1 1 84px}
+.barre-bas .rangee{flex-wrap:nowrap}
+.barre-bas .rangee>*{margin:0;flex:1 1 0;min-width:0}
+.barre-bas .rangee>.large{flex-grow:1.45}
+.barre-bas .rangee>.icone{flex:0 0 58px}
 .barre-bas .bouton{margin:0;padding:15px 6px;font-size:.93rem}
+.bouton.icone{display:flex;align-items:center;justify-content:center}
+.bouton.icone .pic{width:1.5em;height:1.5em;stroke-width:2.2}
 
 /* ---- Résultat ---- */
 .hero{border-radius:var(--rayon);padding:18px 16px;margin:6px 0 14px;color:#fff;
@@ -270,11 +290,25 @@ html[data-contraste=fort] .dialogue{border:3px solid #000}
 .annonce .pic{color:#86e0aa;width:1.3em;height:1.3em;stroke-width:2.4}
 .annonce:empty{display:none}
 
+/* ---- Mouvement ---- */
+.enveloppe.entree{animation:apparaitre .22s ease-out}
+.enveloppe.entree-avant{animation:glisserAvant .26s cubic-bezier(.2,.7,.3,1)}
+.enveloppe.entree-arriere{animation:glisserArriere .26s cubic-bezier(.2,.7,.3,1)}
+.option.coche-anim .marque{animation:rebond .28s ease-out}
+@keyframes apparaitre{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes glisserAvant{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+@keyframes glisserArriere{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+@keyframes rebond{0%{transform:scale(.7)}60%{transform:scale(1.14)}100%{transform:scale(1)}}
 @keyframes fondu{from{opacity:0}to{opacity:1}}
 @keyframes disparaitre{from{opacity:1}to{opacity:0}}
 @keyframes monter{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:none}}
 
 @media (min-width:640px){ :root{--base:18px} .enveloppe{padding:20px 20px 122px} }
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
 
 @media print{
   .bandeau,.barre-bas,.sansImpression,.voile,.annonce{display:none !important}
@@ -336,16 +370,16 @@ const CONFIG = {
   version: '1.0.0',
 
   postes: [
-    { id: 'menage', libelle: 'Aide ménagère' },
-    { id: 'cuisine', libelle: 'Aide cuisinière' },
-    { id: 'polyvalent', libelle: 'Polyvalente (les deux)' }
+    { id: 'menage', libelle: 'Aide ménagère', icone: 'eponge' },
+    { id: 'cuisine', libelle: 'Aide cuisinière', icone: 'marmite' },
+    { id: 'polyvalent', libelle: 'Polyvalente (les deux)', icone: 'maison' }
   ],
 
   // Loge dans la maison, ou rentre chez elle chaque soir : deux réalités très différentes,
   // fréquentes l'une comme l'autre à Niamey. Détermine quelle branche de Q9 (Disponibilité) s'applique.
   logements: [
-    { id: 'reside', libelle: 'Loge dans la maison' },
-    { id: 'externe', libelle: 'Rentre chez elle chaque soir' }
+    { id: 'reside', libelle: 'Loge dans la maison', icone: 'lit' },
+    { id: 'externe', libelle: 'Rentre chez elle chaque soir', icone: 'chemin' }
   ],
 
   sousScores: [
@@ -1428,7 +1462,12 @@ const DESSINS = {
   telecharger: '<path d="M12 3.5v11M7.5 10.5 12 15l4.5-4.5"/><path d="M4 18.5v2h16v-2"/>',
   archive: '<rect x="3.5" y="4.5" width="17" height="5" rx="1.5"/><path d="M5 9.5v9a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5v-9"/><path d="M10 13.5h4"/>',
   reglages: '<circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M4.5 12H2M22 12h-2.5M6.2 6.2 4.4 4.4M19.6 19.6l-1.8-1.8M17.8 6.2l1.8-1.8M4.4 19.6l1.8-1.8"/>',
-  reprendre: '<path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.2 4.4v5h5"/>'
+  reprendre: '<path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3.2 4.4v5h5"/>',
+  marmite: '<path d="M4.5 10.5h15v4.2a5.3 5.3 0 0 1-5.3 5.3H9.8a5.3 5.3 0 0 1-5.3-5.3v-4.2Z"/><path d="M2.6 10.5h18.8"/><path d="M9.2 7.4c.9-1-.9-1.8 0-2.9M14.8 7.4c.9-1-.9-1.8 0-2.9"/>',
+  lit: '<path d="M3 19V6.5M3 15.5h18M21 19v-6.3a2 2 0 0 0-2-2h-7.5v4.8"/><circle cx="7.2" cy="11.8" r="2"/>',
+  gauche: '<path d="M14.8 5.5 8.3 12l6.5 6.5"/>',
+  droite: '<path d="m9.2 5.5 6.5 6.5-6.5 6.5"/>',
+  crayon: '<path d="M4 20h4L19.2 8.8a2.6 2.6 0 0 0-3.7-3.7L4.3 16.3 4 20Z"/><path d="m13.8 6.8 3.7 3.7"/>'
 };
 
 function pic(nom) {
@@ -1460,6 +1499,21 @@ const ILLUSTRATION_ACCUEIL =
   '<path d="M246 120h20l-4-18h-12z" fill="#c9832b"/><path d="M246.6 111h18.8" stroke="#8a5a10" stroke-width="2"/>' +
   '</svg>';
 
+function choixHtml(nom, element, valeur) {
+  return '<label class="option choix">' +
+    '<input type="radio" name="' + esc(nom) + '" value="' + esc(element.id) + '"' + (element.id === valeur ? ' checked' : '') + '>' +
+    '<span class="marque" aria-hidden="true"></span><span class="texte">' + esc(element.libelle) + '</span>' +
+    (element.icone ? '<span class="option-pic" aria-hidden="true">' + pic(element.icone) + '</span>' : '') + '</label>';
+}
+
+const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+function dateLisible(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+  if (!m) return iso || '';
+  const jour = Number(m[3]);
+  return (jour === 1 ? '1er' : jour) + ' ' + MOIS[Number(m[2]) - 1] + ' ' + m[1];
+}
+
 function libellePoste(id) {
   const p = CONFIG.postes.filter(function (x) { return x.id === id; })[0];
   return p ? p.libelle : id;
@@ -1468,7 +1522,7 @@ function libellePoste(id) {
 /* ---------- Routage ---------- */
 
 const ECRANS = {
-  accueil: rendreAccueil, sommaire: rendreSommaire, entretien: rendreEntretien,
+  accueil: rendreAccueil, preambule: rendrePreambule, sommaire: rendreSommaire, entretien: rendreEntretien,
   pratique: rendrePratique, resultat: rendreResultat,
   historique: rendreHistorique, reglages: rendreReglages
 };
@@ -1477,14 +1531,33 @@ function theme(nom) {
   try { $ecran.setAttribute('data-theme', nom || 'bleu'); } catch (e) { /* sans effet hors navigateur */ }
 }
 
-function rendre() {
+/* `sens` règle l'entrée du nouvel écran : 'avant' (glisse depuis la droite), 'arriere' (depuis la gauche),
+   sinon un simple fondu. Les animations disparaissent si le téléphone demande moins de mouvement. */
+function rendre(sens) {
   theme('bleu');
   (ECRANS[etat.ecran] || rendreAccueil)();
   appliquerAffichage();
   planifierSauvegarde();
   try { scrollTo(0, 0); } catch (e) { /* sans effet hors navigateur */ }
+  animerEntree(sens);
 }
-function aller(ecran) { etat.ecran = ecran; rendre(); }
+function aller(ecran, sens) { etat.ecran = ecran; rendre(sens); }
+
+function animerEntree(sens) {
+  const classe = sens === 'avant' ? 'entree-avant' : (sens === 'arriere' ? 'entree-arriere' : 'entree');
+  $ecran.classList.remove('entree', 'entree-avant', 'entree-arriere');
+  void $ecran.offsetWidth;
+  $ecran.classList.add(classe);
+}
+
+/* Petit rebond de la case qu'on vient de cocher : confirme le geste sans attendre. */
+function marquerChoix(entree) {
+  const option = entree && entree.closest ? entree.closest('.option') : null;
+  if (!option || !entree.checked) return;
+  option.classList.remove('coche-anim');
+  void option.offsetWidth;
+  option.classList.add('coche-anim');
+}
 
 function brancher(selecteur, evenement, action) {
   $ecran.querySelectorAll(selecteur).forEach(function (n) { n.addEventListener(evenement, action); });
@@ -1569,11 +1642,13 @@ function rendreAccueil() {
   let html = '';
 
   if (brouillon && brouillon.identite) {
-    const fait = CONFIG.questions.length;
-    html += '<div class="carte"><h2 style="margin-top:0">Entretien en cours</h2>' +
-      '<p><b>' + esc(brouillon.identite.prenom || 'Candidate') + '</b> — ' + esc(brouillon.identite.date) +
-      ' — question ' + Math.min((brouillon.index || 0) + 1, fait) + ' sur ' + fait + '</p>' +
-      '<button class="bouton avecPic" id="reprendre">' + pic('reprendre') + 'Reprendre cet entretien</button>' +
+    const total = CONFIG.questions.length;
+    const position = Math.min(brouillon.index || 0, total - 1);
+    html += '<div class="carte teintee"><h2 style="margin-top:0">' + pic('reprendre') + 'Entretien en cours</h2>' +
+      '<p><b>' + esc(brouillon.identite.prenom || 'Candidate') + '</b> — ' + esc(dateLisible(brouillon.identite.date)) +
+      '<br><span class="petit">Arrêté à la question ' + (position + 1) + ' sur ' + total + ' : ' +
+      esc(CONFIG.questions[position].titre) + '</span></p>' +
+      '<button class="bouton avecPic" id="reprendre">Reprendre cet entretien' + pic('droite') + '</button>' +
       '<button class="bouton secondaire petit" id="jeter">Supprimer ce brouillon</button></div>';
   }
 
@@ -1583,43 +1658,41 @@ function rendreAccueil() {
     'Il repère des incohérences et des points à vérifier. Rien ne remplace un essai court et payé de quelques jours.</div>';
 
   html += '<div class="carte">';
-  html += '<label class="champ" for="prenom">Prénom de la candidate</label>' +
-    '<input type="text" id="prenom" value="' + esc(id.prenom) + '" placeholder="Prénom ou surnom" autocomplete="off">';
+  html += '<label class="champ" for="prenom" style="margin-top:0">Prénom de la candidate</label>' +
+    '<input type="text" id="prenom" value="' + esc(id.prenom) + '" placeholder="Prénom ou surnom" autocomplete="off" enterkeyhint="done">';
+  html += '<fieldset class="groupe"><legend class="champ">Poste visé</legend>';
+  CONFIG.postes.forEach(function (p) { html += choixHtml('poste', p, id.poste); });
+  html += '</fieldset>';
+  html += '<fieldset class="groupe"><legend class="champ">Logement</legend>';
+  CONFIG.logements.forEach(function (l) { html += choixHtml('logement', l, id.logement); });
+  html += '<small>Change les questions posées sur la disponibilité (question 9).</small></fieldset>';
   html += '<label class="champ" for="date">Date de l’entretien</label><input type="date" id="date" value="' + esc(id.date) + '">';
-  html += '<label class="champ" for="poste">Poste visé</label><select id="poste">';
-  CONFIG.postes.forEach(function (p) {
-    html += '<option value="' + esc(p.id) + '"' + (p.id === id.poste ? ' selected' : '') + '>' + esc(p.libelle) + '</option>';
-  });
-  html += '</select>';
-  html += '<label class="champ" for="logement">Logement</label><select id="logement">';
-  CONFIG.logements.forEach(function (l) {
-    html += '<option value="' + esc(l.id) + '"' + (l.id === id.logement ? ' selected' : '') + '>' + esc(l.libelle) + '</option>';
-  });
-  html += '</select>';
-  html += '<small>Change les questions posées sur la disponibilité (question 9).</small>';
   html += '<label class="champ" for="note">Note libre (facultatif)</label>' +
     '<textarea id="note" placeholder="Ce que tu veux retenir.">' + esc(id.note) + '</textarea>' +
     '<small>Aucun numéro de pièce d’identité, aucune photo. Rien de ce qui est écrit ici n’entre dans le calcul.</small>';
   html += '</div>';
-
-  html += '<div class="carte"><h2 style="margin-top:0">' + pic('parole') + 'À lire à la candidate avant de commencer</h2>' +
-    '<p class="enonce">' + esc(CONFIG.preambule) + '</p></div>';
 
   html += '<div class="rangee sansImpression">' +
     '<button class="bouton secondaire avecPic" data-aller="historique">' + pic('archive') + 'Historique</button>' +
     '<button class="bouton secondaire avecPic" data-aller="reglages">' + pic('reglages') + 'Réglages</button></div>';
 
   $ecran.innerHTML = html;
-  $barre.innerHTML = '<div class="dedans"><button class="bouton" id="commencer">Commencer l’entretien</button></div>';
+  $barre.innerHTML = '<div class="dedans"><button class="bouton avecPic" id="commencer">Commencer l’entretien' + pic('droite') + '</button></div>';
 
   ['prenom', 'note'].forEach(function (cle) {
     const champ = document.getElementById(cle);
     if (champ) champ.addEventListener('input', function () { etat.identite[cle] = champ.value; planifierSauvegarde(); });
   });
-  ['date', 'poste', 'logement'].forEach(function (cle) {
-    const champ = document.getElementById(cle);
-    if (champ) champ.addEventListener('change', function () { etat.identite[cle] = champ.value; planifierSauvegarde(); });
+  const date = document.getElementById('date');
+  if (date) date.addEventListener('change', function () { etat.identite.date = date.value; planifierSauvegarde(); });
+  brancher('input[name=poste], input[name=logement]', 'change', function (e) {
+    etat.identite[e.currentTarget.name] = e.currentTarget.value;
+    marquerChoix(e.currentTarget);
+    planifierSauvegarde();
   });
+  // « Entrée » ferme le clavier au lieu de ne rien faire.
+  const prenom = document.getElementById('prenom');
+  if (prenom) prenom.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); prenom.blur(); } });
   brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
 
   function reprendre() {
@@ -1639,7 +1712,7 @@ function rendreAccueil() {
     etat = etatInitial();
     etat.identite = identite;
     tirerVariantes();
-    aller('entretien');
+    aller('preambule', 'avant');
   }
 
   surClic('reprendre', reprendre);
@@ -1674,6 +1747,30 @@ function rendreAccueil() {
       else if (choix === 'nouveau') demarrer();
     });
   });
+}
+
+/* ---------- Avant la première question ---------- */
+
+function rendrePreambule() {
+  const id = etat.identite;
+  const logement = CONFIG.logements.filter(function (l) { return l.id === id.logement; })[0];
+  let html = '<div class="qui-entretien"><span>' + esc(id.prenom || 'Candidate') + '</span><span>' + esc(libellePoste(id.poste)) +
+    '</span>' + (logement ? '<span>' + esc(logement.libelle) + '</span>' : '') + '</div>';
+  html += '<div class="entete-question">' + medaillon('parole') +
+    '<span class="infos"><span class="rang">Avant la première question</span>' +
+    '<span class="titre">À lire à voix haute</span>' +
+    '<span class="sujet">Pour qu’elle sache que ses réponses sont notées</span></span></div>';
+  html += '<p class="enonce grand">' + esc(CONFIG.preambule) + '</p>';
+  html += '<p class="consigne">Laisse-lui le temps de poser ses questions. Ensuite, pour chaque question : tu lis à voix haute, ' +
+    'elle répond avec ses mots, tu coches ce qui correspond le mieux.</p>';
+
+  $ecran.innerHTML = html;
+  $barre.innerHTML = '<div class="dedans"><div class="rangee">' +
+    '<button class="bouton secondaire icone" id="retour" aria-label="Revenir à la fiche" title="Revenir à la fiche">' + pic('gauche') + '</button>' +
+    '<button class="bouton avecPic large" id="commencerQuestions">Première question' + pic('droite') + '</button></div></div>';
+
+  surClic('retour', function () { aller('accueil', 'arriere'); });
+  surClic('commencerQuestions', function () { etat.index = 0; aller('entretien', 'avant'); });
 }
 
 /* ---------- Sommaire ---------- */
@@ -1840,7 +1937,7 @@ function rendreEntretien() {
   });
 
   surClic('precedent', function () {
-    if (etat.index === 0) { aller('accueil'); return; }
+    if (etat.index === 0) { aller('preambule', 'arriere'); return; }
     etat.index--;
     rendre();
   });
