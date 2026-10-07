@@ -139,7 +139,7 @@ Compétences, Hygiène & sécurité, Intégrité, Cohérence, Stabilité.
 ### Verdict
 Seuils par défaut (dans `CONFIG.seuils`) :
 - score ≥ 70 → `essai` : « Période d'essai recommandée »
-- 50 à 69 → `approfondir` : « À approfondir (vérifier les références et faire un essai court) »
+- 50 à 69 → `approfondir` : « À approfondir » (reprendre avec elle les points à vérifier, puis faire un essai court et payé)
 - < 50 → `non_recommande` : « Non recommandé »
 
 Règles de plafonnement (appliquées après le score) :

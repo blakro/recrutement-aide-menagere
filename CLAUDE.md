@@ -50,7 +50,7 @@ const TEST_CASES = [ /* { name, answers, expect } */ ];
 
 - Tests : `node tests/run-selftest.mjs` (Node ≥ 18, aucune dépendance). À lancer après toute modification de `CONFIG` ou du barème.
 - Aperçu local : `python3 -m http.server 8000` puis ouvrir http://localhost:8000
-- Commandes du projet : `/verifier`, `/revue-equite`, `/ajouter-variante <description>`
+- Commandes du projet (`.claude/commands/`) : `/verifier`, `/revue-equite`, `/ajouter-variante <description>`
 
 ## Façon de travailler
 
