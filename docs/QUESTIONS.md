@@ -1,7 +1,7 @@
 # Questions de l'entretien
 
 > **Statut : barème validé le 17/09/2026.** Les questions, les options, les points et les drapeaux
-> ci-dessous sont ceux à implémenter dans `CONFIG` à l'étape 2. En cas d'écart avec `docs/SPEC.md`,
+> ci-dessous sont ceux implémentés dans `CONFIG` (`index.html`). En cas d'écart avec `docs/SPEC.md`,
 > c'est ce document qui fait foi (`CLAUDE.md`).
 >
 > **Décision du 17/09/2026 : l'app est en français uniquement.** Les brouillons zarma et haoussa restent
@@ -47,7 +47,7 @@ Deux précisions honnêtes sur la qualité de ces brouillons :
 - **Zarma** : brouillon **faible**. Plusieurs tournures sont probablement fautives. Il vaut mieux faire
   **réécrire** ces phrases par un locuteur natif à partir du français que les corriger mot à mot.
 
-Ces mentions doivent rester visibles dans l'app, à côté de chaque traduction.
+Si ces traductions reviennent un jour dans l'app, ces mentions doivent rester visibles à côté de chacune.
 
 ---
 
@@ -372,7 +372,7 @@ Le nom est **modifiable dans Réglages** (le dépôt est public : un nom figé f
 | Hésite, puis reconnaît ne pas connaître après la relance | 6 | — |
 | « Oui, je connais / je l'ai déjà utilisé », et elle en décrit un usage | 0 | `surdeclaration` — **bloquant** |
 
-### Trois noms proposés — à vérifier au marché avant de coder
+### Trois noms proposés — à vérifier au marché
 
 Aucun de ces trois noms ne doit exister. **Je ne peux pas le garantir** : la vérification au marché de Niamey
 et chez les grossistes reste à faire, comme prévu.
@@ -591,19 +591,19 @@ Sans épreuve pratique, Compétences = 100 % entretien. Aucune candidate n'est p
 
 | id | Niveau | Question | Message affiché |
 |---|---|---|---|
-| `incoherence_q1_q2` | bloquant | Q2 | Compétence annoncée mais impossible à expliquer. À faire montrer avant toute embauche. |
-| `geste_dangereux` | bloquant | Q4 | Geste dangereux avec le feu, le gaz ou les produits. À corriger avant qu'elle touche à la cuisine. |
-| `electromenager_sans_autorisation` | leger | Q5 | Utiliserait un appareil sans demander. Poser la règle par écrit dès le premier jour. |
-| `integrite` | bloquant | Q6 A, Q6 B | Réponse à risque sur l'honnêteté. Appeler les références avant de décider. |
-| `integrite` | leger ✱ | Q6 A, Q6 B | Réponse en demi-teinte sur l'honnêteté. À reposer autrement et à vérifier auprès des références. |
-| `se_sert_sans_demander` | leger | Q6 C | Se servirait sans demander. Dire clairement ce qui est permis pour les repas. |
-| `surdeclaration` | bloquant | Q7 | Dit connaître un produit qui n'existe pas. Vérifier une par une les compétences annoncées. |
-| `reponse_trop_parfaite` | leger | Q8 | Réponses trop parfaites. Creuser avec des exemples concrets, sans conclure au mensonge. |
-| `absence_sans_prevenir` | leger | Q9 | Elle ne prévient pas en cas d'empêchement ou d'absence. Convenir d'un moyen simple de prévenir, quelle que soit la situation. |
-| `disponibilite_trop_parfaite` | leger ✱ | Q9 (loge sur place) | Elle dit ne pas avoir besoin de repos. Une réponse trop généreuse s'use vite : fixer quand même un jour de repos fixe. |
-| `engagement_irrealiste` | leger | Q10 | Promet de ne jamais prendre de congés. Risque de départ brusque : fixer un calendrier écrit. |
-| `engagement_incoherent` | leger | Q10 | Ce qu'elle promet sur la durée ne tient pas avec ce qu'elle a dit sur sa disponibilité. En reparler et fixer un calendrier écrit. |
-| `hygiene_risquee` | leger ✱ | Q3 | Pratique d'hygiène à risque. Montrer la façon de faire de la maison dès le premier jour. |
+| `incoherence_q1_q2` | bloquant | Q2 | Elle annonce une compétence qu'elle n'arrive pas à expliquer. La lui faire montrer avant de l'embaucher. |
+| `geste_dangereux` | bloquant | Q4 | Elle a décrit un geste dangereux avec le feu, le gaz ou les produits. À corriger avec elle avant qu'elle touche à la cuisine. |
+| `electromenager_sans_autorisation` | leger | Q5 | Elle utiliserait un appareil de la maison sans demander. Poser la règle par écrit dès le premier jour. |
+| `integrite` | bloquant | Q6 A, Q6 B | Sa réponse sur l'honnêteté est inquiétante. En parler franchement avec elle, et écrire la règle sur l'argent et les objets avant le premier jour. |
+| `integrite` | leger ✱ | Q6 A, Q6 B | Sa réponse sur l'honnêteté est en demi-teinte. Reposer la question autrement, et écrire clairement la règle sur l'argent et les objets. |
+| `se_sert_sans_demander` | leger | Q6 C | Elle se servirait dans la nourriture sans demander. Dire clairement ce qui est permis pour les repas. |
+| `surdeclaration` | bloquant | Q7 | Elle dit connaître un produit qui n'existe pas. Ses autres compétences annoncées sont donc à vérifier une par une. |
+| `reponse_trop_parfaite` | leger | Q8 | Ses réponses sont trop parfaites pour être vraies. Lui demander des exemples concrets, sans en conclure qu'elle ment. |
+| `absence_sans_prevenir` | leger | Q9 | Elle ne prévient pas en cas d'empêchement ou d'absence. Convenir dès le départ d'un moyen simple de prévenir, quelle que soit la situation. |
+| `disponibilite_trop_parfaite` | leger ✱ | Q9 (loge sur place) | Elle dit ne pas avoir besoin de repos. Une réponse trop généreuse s'use vite : fixer quand même un jour de repos fixe chaque semaine. |
+| `engagement_irrealiste` | leger | Q10 | Elle promet de ne jamais prendre de congés, ce qui finit rarement bien. Fixer avec elle un calendrier écrit dès le départ. |
+| `engagement_incoherent` | leger | Q10 | Ce qu'elle promet sur la durée ne tient pas avec ce qu'elle a dit sur sa disponibilité au jour le jour. En reparler avec elle et fixer un calendrier écrit. |
+| `hygiene_risquee` | leger ✱ | Q3 | Elle a décrit une pratique d'hygiène à risque. Lui montrer la façon de faire de la maison dès le premier jour. |
 
 Rappel SPEC § 5 : 1 drapeau bloquant → verdict au mieux `approfondir` ; 2 bloquants ou plus → `non_recommande` ;
 3 drapeaux légers ou plus → verdict au mieux `approfondir`. Tous les drapeaux sont affichés, quel que soit le score.
@@ -638,7 +638,7 @@ Points **bruts** de l'entretien. Chaque sous-score est ensuite ramené sur 100, 
 
 ## Décisions validées (règles hors SPEC)
 
-Validé le 17/09/2026. Ces douze points ne figurent pas dans `docs/SPEC.md` : ils sont décidés ici et
+Validé le 17/09/2026, complété le 18/09/2026. Ces points ne figurent pas dans `docs/SPEC.md` : ils sont décidés ici et
 marqués ✱ dans le corps du document. Les tableaux ci-dessus font foi pour les valeurs exactes.
 
 1. **Drapeau `hygiene_risquee` (leger) en Q3** : retenu. Il se déclenche sur chaque option d'hygiène à

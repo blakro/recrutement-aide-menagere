@@ -48,7 +48,7 @@ Sur mon téléphone, les options de Q3 débordent de l'écran. Corrige l'afficha
 ```
 
 ```
-Dans les points à vérifier, ajoute une phrase type que je peux lire au téléphone pour interroger l'ancienne employeuse.
+Dans les points à vérifier, ajoute une phrase que je peux lire à la candidate le premier jour pour lui expliquer l'essai payé.
 ```
 
 ```
