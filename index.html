@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
+<meta name="theme-color" content="#1f4f8f">
+<meta name="apple-mobile-web-app-title" content="Entretien">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%231f4f8f'/%3E%3Cpath d='M5.6 11.6 12 6.4l6.4 5.2M7.2 10.6v7.4h9.6v-7.4M10.4 18v-3.6h3.2V18' fill='none' stroke='%23fff' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <title>Entretien aide ménagère — Niamey</title>
 <style>
 :root{
@@ -246,7 +249,7 @@ html[data-contraste=fort] .hero .verdict-detail,html[data-contraste=fort] .hero 
 .sous-score .ligne em{font-style:normal;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--t)}
 .sous-score .resume{display:block;font-size:.82rem;color:var(--encre-douce);margin-top:2px}
 .jauge{height:11px;background:#e3d9c9;border-radius:999px;overflow:hidden;margin-top:7px;border:1px solid var(--trait)}
-.jauge i{display:block;height:100%;border-radius:999px;background:var(--t)}
+.jauge i{display:block;height:100%;border-radius:999px;background:var(--t);transition:width .9s cubic-bezier(.2,.7,.3,1)}
 
 .drapeau{border-radius:var(--rayon-petit);padding:13px 14px;margin:10px 0;border:var(--bord) solid;display:flex;gap:12px;box-shadow:var(--ombre-douce)}
 .drapeau .pic{width:26px;height:26px;stroke-width:1.9;margin-top:1px}
@@ -1457,7 +1460,7 @@ function anneauScore(total) {
   const valeur = Math.max(0, Math.min(100, total));
   return '<svg class="anneau" width="124" height="124" viewBox="0 0 100 100" role="img" aria-label="Score ' + valeur + ' sur 100">' +
     '<circle cx="50" cy="50" r="' + rayon + '" fill="none" stroke="rgba(125,125,125,.38)" stroke-width="11"/>' +
-    '<circle cx="50" cy="50" r="' + rayon + '" fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round"' +
+    '<circle class="progres" cx="50" cy="50" r="' + rayon + '" fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round"' +
       ' stroke-dasharray="' + (tour * valeur / 100).toFixed(1) + ' ' + tour.toFixed(1) + '" transform="rotate(-90 50 50)"/>' +
     '<text class="valeur" x="50" y="48" text-anchor="middle" dominant-baseline="middle">' + valeur + '</text>' +
     '<text class="sur" x="50" y="68" text-anchor="middle">sur 100</text></svg>';
@@ -1830,7 +1833,7 @@ function rendreSommaire() {
     aller('entretien');
   });
   brancher('[data-aller]', 'click', function (e) { aller(e.currentTarget.getAttribute('data-aller')); });
-  surClic('voirResultat', calculerEtAfficher);
+  surClic('voirResultat', demanderResultat);
 }
 
 /* ---------- Entretien ---------- */
@@ -2062,8 +2065,8 @@ function rendrePratique() {
     planifierSauvegarde();
   });
   surClic('retour', function () { etat.index = CONFIG.questions.length - 1; aller('entretien', 'arriere'); });
-  surClic('passer', function () { etat.pratique = {}; etat.pratiqueFaite = false; calculerEtAfficher(); });
-  surClic('terminer', calculerEtAfficher);
+  surClic('passer', function () { etat.pratique = {}; etat.pratiqueFaite = false; demanderResultat(); });
+  surClic('terminer', demanderResultat);
 }
 
 /* ---------- Résultat ---------- */
@@ -2091,9 +2094,34 @@ function construireAnswers() {
   };
 }
 
+function questionsIncompletes() {
+  return CONFIG.questions.filter(function (q) { return etatQuestion(q) !== 'complet'; });
+}
 function questionsSansReponse() {
-  return CONFIG.questions.filter(function (q) { return etatQuestion(q) !== 'complet'; })
-    .map(function (q) { return q.sujet.charAt(0).toLowerCase() + q.sujet.slice(1); });
+  return questionsIncompletes().map(function (q) { return q.sujet.charAt(0).toLowerCase() + q.sujet.slice(1); });
+}
+function allerAQuestion(question) {
+  etat.index = Math.max(0, CONFIG.questions.indexOf(question));
+  aller('entretien');
+}
+
+/* Avant le calcul : une question oubliée se rattrape plus facilement maintenant que devant le résultat. */
+function demanderResultat() {
+  const manquantes = questionsIncompletes();
+  if (!manquantes.length) { calculerEtAfficher(); return; }
+  const plusieurs = manquantes.length > 1;
+  dialogue({
+    titre: plusieurs ? 'Il reste ' + manquantes.length + ' questions sans réponse complète' : 'Il reste une question sans réponse complète',
+    message: (plusieurs ? 'Elles seront retirées' : 'Elle sera retirée') + ' du calcul si tu affiches le résultat maintenant :',
+    liste: manquantes.map(function (q) { return q.titre; }),
+    actions: [
+      { id: 'completer', libelle: plusieurs ? 'Les compléter' : 'La compléter' },
+      { id: 'voir', libelle: 'Voir le résultat quand même', style: 'secondaire' }
+    ]
+  }).then(function (choix) {
+    if (choix === 'completer') allerAQuestion(manquantes[0]);
+    else if (choix === 'voir') calculerEtAfficher();
+  });
 }
 
 function calculerEtAfficher() {
@@ -2139,7 +2167,7 @@ function rendreResultat() {
 
   let html = '<h1>Ce que dit l\u2019entretien</h1>';
   html += '<div class="hero ' + esc(r.verdict) + '"><div class="dedans">' + anneauScore(r.total) +
-    '<div class="texte"><p class="qui">' + esc(id.prenom || 'Candidate') + ' — ' + esc(id.date) + ' — ' +
+    '<div class="texte"><p class="qui">' + esc(id.prenom || 'Candidate') + ' — ' + esc(dateLisible(id.date)) + ' — ' +
     esc(libellePoste(id.poste)) + '</p>' +
     '<p class="verdict-titre">' + pic(iconeVerdict) + esc(verdict.libelle) + '</p>' +
     '<p class="verdict-detail">' + esc(verdict.detail) + '</p></div></div></div>';
@@ -2148,8 +2176,9 @@ function rendreResultat() {
     'Il signale des incohérences et des points à vérifier, pas des mensonges.</div>';
 
   if (manquantes.length) {
-    html += '<p class="encadre info"><b>Ces questions n\u2019ont pas reçu de réponse complète et sont retirées du calcul :</b> ' +
-      esc(manquantes.join(' ; ')) + '.</p>';
+    html += '<div class="encadre info"><b>Ces questions n\u2019ont pas reçu de réponse complète et sont retirées du calcul :</b> ' +
+      esc(manquantes.join(' ; ')) + '.' +
+      '<button class="bouton secondaire petit sansImpression" id="completer">Compléter ces réponses</button></div>';
   }
 
   html += '<h2>' + pic('balance') + 'Le détail par domaine</h2><div class="carte">';
@@ -2203,6 +2232,8 @@ function rendreResultat() {
     '<button class="bouton secondaire" data-aller="sommaire">Revoir les réponses</button>' +
     '<button class="bouton" id="nouveau">Nouvel entretien</button></div></div>';
 
+  animerResultat();
+  surClic('completer', function () { allerAQuestion(questionsIncompletes()[0]); });
   surClic('imprimer', function () { print(); });
   surClic('json', exporterJson);
   surClic('csv', exporterCsv);
@@ -2228,6 +2259,38 @@ function rendreResultat() {
       else if (choix === 'perdre') nouvelEntretien();
     });
   });
+}
+
+/* L'anneau se remplit, le score monte et les jauges s'allongent jusqu'à leur valeur.
+   Rien ne bouge si le téléphone demande moins de mouvement : les valeurs finales sont déjà dans la page. */
+function animerResultat() {
+  if (mouvementReduit() || typeof requestAnimationFrame !== 'function') return;
+  const cercle = $ecran.querySelector('.anneau .progres');
+  const valeur = $ecran.querySelector('.anneau .valeur');
+  const jauges = Array.prototype.slice.call($ecran.querySelectorAll('.jauge i'));
+  if (!cercle || !valeur) return;
+  const final = cercle.getAttribute('stroke-dasharray');
+  const cible = Number(valeur.textContent) || 0;
+  const largeurs = jauges.map(function (j) { return j.style.width; });
+  const duree = 900;
+
+  cercle.style.strokeDasharray = '0 ' + final.split(' ')[1];
+  jauges.forEach(function (j) { j.style.width = '0'; });
+  valeur.textContent = '0';
+
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      cercle.style.transition = 'stroke-dasharray ' + duree + 'ms cubic-bezier(.2,.7,.3,1)';
+      cercle.style.strokeDasharray = final;
+      jauges.forEach(function (j, i) { j.style.width = largeurs[i]; });
+    });
+  });
+  const debut = Date.now();
+  (function compter() {
+    const avance = Math.min(1, (Date.now() - debut) / duree);
+    valeur.textContent = String(Math.round(cible * (1 - Math.pow(1 - avance, 3))));
+    if (avance < 1) requestAnimationFrame(compter);
+  })();
 }
 
 /* ---------- Exports ---------- */
@@ -2329,6 +2392,10 @@ function enregistrerHistorique() {
   return true;
 }
 
+function compterDrapeaux(n) {
+  return n === 0 ? 'aucun drapeau' : (n === 1 ? '1 drapeau' : n + ' drapeaux');
+}
+
 function rendreHistorique() {
   const liste = lireStockage(CLES.historique, []);
   let html = '<h1>Historique</h1>';
@@ -2343,8 +2410,8 @@ function rendreHistorique() {
       const res = item.resultat || {};
       html += '<li><div class="fil"><b>' + esc((item.identite || {}).prenom || 'Candidate') + '</b>' +
         '<span class="chip ' + esc(res.verdict || 'vide') + '">' + esc(res.total != null ? res.total + '/100' : '—') + '</span></div>' +
-        '<p class="petit">' + esc((item.identite || {}).date || '') + ' — ' + esc(libellePoste(item.poste)) +
-        ' — ' + ((res.drapeaux || []).length) + ' drapeau(x)</p>' +
+        '<p class="petit">' + esc(dateLisible((item.identite || {}).date)) + ' — ' + esc(libellePoste(item.poste)) +
+        ' — ' + compterDrapeaux((res.drapeaux || []).length) + '</p>' +
         '<button class="bouton secondaire petit" data-ouvrir="' + position + '">Ouvrir</button></li>';
     });
     html += '</ul><button class="bouton danger" id="effacer">Effacer l’historique</button>';
@@ -2536,6 +2603,10 @@ function rendreSelftest() {
   try {
     addEventListener('beforeprint', function () {
       document.querySelectorAll('details').forEach(function (d) { d.open = true; });
+      if (etat.ecran === 'resultat' && etat.resultat) {
+        const valeur = $ecran.querySelector('.anneau .valeur');
+        if (valeur) valeur.textContent = String(etat.resultat.total);
+      }
     });
   } catch (e) { /* sans effet hors navigateur */ }
 
