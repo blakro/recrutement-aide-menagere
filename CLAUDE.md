@@ -3,7 +3,7 @@
 ## Le projet
 
 App web d'aide à l'entretien d'embauche d'**aides ménagères** et d'**aides cuisinières** à Niamey (Niger).
-L'employeur pose 10 questions à l'oral **en français**, coche les réponses de la candidate
+L'employeur pose 5 questions à l'oral **en français**, coche les réponses de la candidate
 et obtient un score, des sous-scores, des drapeaux et une liste de points à vérifier.
 
 - Spécification complète : `docs/SPEC.md`
@@ -56,6 +56,6 @@ const TEST_CASES = [ /* { name, answers, expect } */ ];
 
 - Questions, variantes, barèmes et seuils se modifient dans `CONFIG`, jamais en dur dans la logique.
 - Toute nouvelle règle de notation s'accompagne d'au moins un `TEST_CASE`.
-- Petits commits, messages en français à l'impératif (ex. « Ajoute la variante Javel à Q4 »).
+- Petits commits, messages en français à l'impératif (ex. « Ajoute la variante Javel à Q3 »).
 - Avant de terminer une tâche : tests verts, puis `/revue-equite` sur le diff.
 - En cas de doute sur une règle métier (ce qui est grave ou non, un seuil), demander plutôt que deviner.

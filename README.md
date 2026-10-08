@@ -3,7 +3,7 @@
 <p align="center">
   Un outil d'aide à l'entretien d'embauche des <b>aides ménagères</b> et <b>aides cuisinières</b>,
   pensé pour les familles de Niamey.<br>
-  Dix questions posées à l'oral, un score, et la liste de ce qu'il reste à faire avant d'embaucher.
+  Cinq questions posées à l'oral, un score, et la liste de ce qu'il reste à faire avant d'embaucher.
 </p>
 
 <p align="center">
@@ -14,7 +14,8 @@
 
 > [!IMPORTANT]
 > **Cet outil est une aide à la décision, pas un détecteur de mensonge.**
-> Il repère des incohérences et des points à vérifier. Rien ne remplace un essai court et payé de quelques jours.
+> Il repère des incohérences et des points à vérifier. Rien ne remplace l'épreuve pratique et l'observation
+> de ses premiers jours de travail.
 
 ---
 
@@ -23,7 +24,7 @@
 À Niamey, l'entretien se résume souvent à « sais-tu cuisiner ? ». La famille découvre après l'embauche des
 compétences surévaluées, des gestes dangereux dans la cuisine ou des départs brusques.
 
-Cet outil donne à l'employeur une trame : les mêmes dix questions pour toutes les candidates, des scénarios
+Cet outil donne à l'employeur une trame courte : les mêmes cinq questions pour toutes les candidates, des scénarios
 concrets tirés au hasard, et un compte rendu écrit qu'on peut relire, imprimer et comparer.
 
 ## Utiliser l'app
@@ -36,36 +37,31 @@ concrets tirés au hasard, et un compte rendu écrit qu'on peut relire, imprimer
 
 Une fois la page chargée, tout fonctionne sans réseau. Les réponses restent sur le téléphone.
 
-## Les dix questions
+## Les cinq questions
 
 | | Question | Ce qu'elle regarde | Sous-score |
 |---:|---|---|---|
-| 1 | Compétences déclarées | Ce qu'elle dit savoir faire dans la maison | Compétences |
-| 2 | Démonstration orale | Sa façon d'expliquer une tâche, étape par étape | Compétences · Cohérence |
-| 3 | Hygiène alimentaire | Son hygiène pour la nourriture et pour l'eau | Hygiène & sécurité |
-| 4 | Sécurité | Sa réaction devant un danger dans la cuisine | Hygiène & sécurité |
-| 5 | Règles de la maison | Le respect des règles de la maison | Intégrité |
-| 6 | Intégrité | Son honnêteté devant une tentation | Intégrité |
-| 7 | Produit fictif | Sa réaction devant un produit qui n'existe pas | Cohérence |
-| 8 | Désirabilité sociale | Sa façon de parler de ses propres erreurs | Cohérence |
-| 9 | Disponibilité | Ce qu'il faut pour qu'elle soit là chaque jour | Stabilité |
-| 10 | Projet et congés | Le temps qu'elle compte rester et ses congés | Stabilité · Cohérence |
+| 1 | Compétences | Ce qu'elle dit savoir faire, puis une tâche qu'elle explique étape par étape | Compétences · Cohérence |
+| 2 | Hygiène | Ses gestes avec la nourriture : mains, légumes crus, viande crue, restes | Hygiène & sécurité |
+| 3 | Sécurité | Sa réaction devant un danger dans la cuisine | Hygiène & sécurité |
+| 4 | Honnêteté | Son honnêteté et son respect des règles de la maison | Intégrité |
+| 5 | Disponibilité | Ce qu'il faut pour qu'elle soit là chaque jour | Stabilité |
 
-> La question 9 a deux versions : beaucoup d'aides ménagères venues d'autres pays logent dans la maison
+> La question 5 a deux versions : beaucoup d'aides ménagères venues d'autres pays logent dans la maison
 > plutôt que de rentrer chaque soir. Le logement se choisit sur la fiche avant l'entretien, comme le poste,
 > et non l'inverse — les questions posées à la candidate changent en conséquence.
 
-Trois mécanismes font le travail :
+Deux mécanismes font le travail :
 
-- **Les questions en miroir.** Une compétence annoncée doit pouvoir s'expliquer étape par étape. Ce qu'elle
-  promet sur la durée doit tenir avec les heures qu'elle peut faire.
+- **La question en miroir.** Une compétence annoncée doit pouvoir s'expliquer : l'app tire au hasard une des
+  tâches qu'elle vient d'annoncer, et elle explique comment elle s'y prend.
 - **Les scénarios tirés au hasard.** L'huile qui prend feu, l'odeur de gaz, le billet trouvé sous le lit, le
-  verre cassé. La variante change d'une candidate à l'autre, pour que les réponses ne circulent pas.
-- **Le produit qui n'existe pas.** Dire qu'on le connaît ne prouve pas un mensonge, mais signale que les
-  compétences annoncées demandent toutes à être vérifiées. Le nom se change dans les Réglages.
+  verre cassé, le micro-ondes de la maison. La variante change d'une candidate à l'autre, pour que les
+  réponses ne circulent pas.
 
-Une **épreuve pratique** facultative complète l'entretien : cinq gestes observés, notés réussi, partiel,
-non fait ou non observé.
+Une **épreuve pratique** recommandée complète l'entretien : cinq gestes observés sur place, notés réussi,
+partiel, non fait ou non observé. Il n'y a pas d'essai payé au Niger : c'est la seule façon de voir ses gestes
+avant de décider, et le rapport la demande quand elle n'a pas été faite.
 
 ## Le score
 
@@ -77,7 +73,7 @@ Cinq sous-scores sur 100, pondérés selon le poste :
 | Aide cuisinière | 25 | 30 | 20 | 15 | 10 |
 | Polyvalente | 25 | 25 | 20 | 15 | 15 |
 
-Le total donne un verdict : **période d'essai recommandée** à partir de 70, **à approfondir** entre 50 et 69,
+Le total donne un verdict : **embauche recommandée** à partir de 70, **à approfondir** entre 50 et 69,
 **non recommandé** en dessous. Un drapeau bloquant ramène le verdict à « à approfondir » au mieux ; deux
 drapeaux bloquants, ou trois drapeaux légers, pèsent davantage.
 
@@ -87,7 +83,8 @@ Ces seuils sont des valeurs de départ, à recalibrer après une quinzaine d'ent
 
 - **Aucune question sur les employeurs précédents**, et aucune demande de citer une personne de référence :
   les joindre est rarement possible ici, et une candidate n'a pas à être notée sur des gens qu'on n'appellera
-  pas. La vérification passe par l'essai payé, le seul contrôle qui dépende de l'employeur.
+  pas. La vérification passe par l'épreuve pratique et les premiers jours de travail, qui ne dépendent que
+  de l'employeur.
 - **Aucune question sur la garde d'enfants** : c'est un autre métier, hors périmètre.
 - **Aucun numéro de pièce d'identité, aucune photo.**
 - **Aucun serveur, aucun compte.** Rien ne sort du téléphone tant que l'employeur n'exporte pas lui-même.
@@ -125,7 +122,7 @@ python3 -m http.server 8000     # aperçu local sur http://localhost:8000
 |---|---|
 | [`CLAUDE.md`](CLAUDE.md) | Contraintes du projet et façon de travailler |
 | [`docs/SPEC.md`](docs/SPEC.md) | Spécification complète et contrat technique |
-| [`docs/QUESTIONS.md`](docs/QUESTIONS.md) | Les dix questions, leurs options, leurs points et leurs drapeaux |
+| [`docs/QUESTIONS.md`](docs/QUESTIONS.md) | Les cinq questions, leurs options, leurs points et leurs drapeaux |
 | [`docs/ROADMAP.md`](docs/ROADMAP.md) | Ce qui reste à faire |
 
 Développé avec [Claude Code](https://claude.com/claude-code).
