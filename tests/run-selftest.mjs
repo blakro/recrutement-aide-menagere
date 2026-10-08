@@ -13,7 +13,7 @@ const file = join(root, 'index.html');
 
 const SOUS_SCORES = ['competences', 'hygieneSecurite', 'integrite', 'coherence', 'stabilite'];
 const POSTES = ['menage', 'cuisine', 'polyvalent'];
-const VERDICTS = ['essai', 'approfondir', 'non_recommande'];
+const VERDICTS = ['recommande', 'approfondir', 'non_recommande'];
 const CHAMPS_INTERDITS = ['fiche', 'situationFamiliale', 'nationalite', 'ethnie', 'religion', 'langueEntretien'];
 
 let echecs = 0;
@@ -117,12 +117,15 @@ for (const tc of TEST_CASES) {
   if (e.maxTotal != null && r.total > e.maxTotal) err.push(`total ${r.total} > ${e.maxTotal}`);
   for (const id of e.drapeauxInclus || []) if (!ids.includes(id)) err.push(`drapeau manquant : ${id}`);
   for (const id of e.drapeauxExclus || []) if (ids.includes(id)) err.push(`drapeau inattendu : ${id}`);
+  for (const texte of e.pointsInclus || []) {
+    if (!r.pointsAVerifier.some((p) => p.includes(texte))) err.push(`point à vérifier manquant : « ${texte} »`);
+  }
 
   // Règles de plafonnement (SPEC § 5)
   const bloquants = r.drapeaux.filter((d) => d.niveau === 'bloquant').length;
   const legers = r.drapeaux.filter((d) => d.niveau === 'leger').length;
   if (bloquants >= 2 && r.verdict !== 'non_recommande') err.push(`${bloquants} drapeaux bloquants mais verdict « ${r.verdict} »`);
-  if ((bloquants === 1 || legers >= 3) && r.verdict === 'essai') err.push('verdict « essai » malgré un plafonnement');
+  if ((bloquants === 1 || legers >= 3) && r.verdict === 'recommande') err.push('verdict « recommande » malgré un plafonnement');
 
   // Équité : injecter une fausse fiche ne doit rien changer
   const reference = resume(r);
