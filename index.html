@@ -1119,6 +1119,13 @@ const TEST_CASES = [
     name: '17. Aucune tâche cochée : rien n’est à expliquer, aucun drapeau d’incohérence',
     answers: candidate('menage', { q1: { familles: [], famille: null, tache: null, explication: null } }, PRATIQUE_REUSSIE),
     expect: { maxTotal: 80, drapeauxExclus: ['incoherence_competence'] }
+  },
+  {
+    name: '18. Explication d’une tâche dont la famille n’est pas cochée : elle ne compte pas',
+    answers: candidate('menage', {
+      q1: { familles: ['f_lessive'], famille: 'f_menage', tache: 'nettoyer des toilettes', explication: 'incapable' }
+    }, PRATIQUE_REUSSIE),
+    expect: { drapeauxExclus: ['incoherence_competence'] }
   }
 ];
 // @@TESTS-END
