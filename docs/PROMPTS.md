@@ -6,6 +6,8 @@
 
 ## Étape 1 — Rédiger les questions (aucun code)
 
+*Fait. Gardé pour mémoire : le questionnaire a depuis été ramené à cinq questions (`docs/QUESTIONS.md`).*
+
 ```
 Lis CLAUDE.md et docs/SPEC.md.
 Rédige docs/QUESTIONS.md avec les 10 questions. Pour chacune :
@@ -23,6 +25,8 @@ Avant de valider : faire relire le zarma et le haoussa par un locuteur natif, et
 ---
 
 ## Étape 2 — Construire l'app
+
+*Fait. Gardé pour mémoire.*
 
 ```
 docs/QUESTIONS.md est validé.
@@ -44,11 +48,11 @@ Sur mon téléphone, les options de Q3 débordent de l'écran. Corrige l'afficha
 ```
 
 ```
-/ajouter-variante Q6 : un inconnu appelle la maison et demande si Madame est là et à quelle heure elle rentre
+/ajouter-variante Q4 : un inconnu appelle la maison et demande si Madame est là et à quelle heure elle rentre
 ```
 
 ```
-Dans les points à vérifier, ajoute une phrase que je peux lire à la candidate le premier jour pour lui expliquer l'essai payé.
+Dans les points à vérifier, ajoute une phrase que je peux lire à la candidate le premier jour pour lui expliquer comment se passeront ses premiers jours.
 ```
 
 ```
@@ -69,8 +73,8 @@ Tester le lien sur téléphone et l'ajouter à l'écran d'accueil.
 Anonymiser d'abord les exports : retirer prénoms, contacts et notes libres.
 
 ```
-Voici des exports JSON anonymisés d'entretiens, avec pour chacun le résultat de la période d'essai (champ essai_reussi : true/false).
-Analyse si les seuils et les pondérations séparent bien les essais réussis des échecs.
+Voici des exports JSON anonymisés d'entretiens, avec pour chacun le bilan de ses premiers mois de travail (champ embauche_reussie : true/false).
+Analyse si les seuils et les pondérations séparent bien les embauches réussies des échecs.
 Propose des ajustements de CONFIG, avec les TEST_CASES correspondants.
 Ne committe aucune de ces données.
 ```
